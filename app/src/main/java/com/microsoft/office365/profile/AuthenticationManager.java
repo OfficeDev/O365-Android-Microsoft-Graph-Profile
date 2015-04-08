@@ -23,7 +23,7 @@ import com.microsoft.services.odata.interfaces.LogLevel;
  */
 
 public class AuthenticationManager {
-    private static String TAG = "AuthenticationManager";
+    private static final String TAG = "AuthenticationManager";
 
     private AuthenticationContext authContext;
     private ADALDependencyResolver dependencyResolver;
@@ -97,7 +97,7 @@ public class AuthenticationManager {
      *
      * @return A signal to wait on before continuing execution.
      */
-    public SettableFuture<AuthenticationResult> initialize() {
+    public synchronized SettableFuture<AuthenticationResult> initialize() {
 
         final SettableFuture<AuthenticationResult> result = SettableFuture.create();
 

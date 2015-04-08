@@ -1,9 +1,11 @@
 package com.microsoft.office365.profile;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,8 +13,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.SettableFuture;
+import com.microsoft.aad.adal.AuthenticationResult;
+
 
 public class ProfileActivity extends ActionBarActivity {
+    private static final String TAG = "ProfileActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +31,34 @@ public class ProfileActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+
+        AuthenticationManager
+                .getInstance()
+                .setContextActivity(this);
+
+        RequestManager
+                .getInstance()
+                .sendRequests();
     }
 
+    /**
+     * This activity gets notified about the completion of the ADAL activity through this method.
+     * @param requestCode The integer request code originally supplied to startActivityForResult(),
+     *                    allowing you to identify who this result came from.
+     * @param resultCode The integer result code returned by the child activity through its
+     *                   setResult().
+     * @param data An Intent, which can return result data to the caller (various data
+     *             can be attached to Intent "extras").
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(TAG, "onActivityResult - AuthenticationActivity has come back with results");
+        super.onActivityResult(requestCode, resultCode, data);
+        AuthenticationManager
+                .getInstance()
+                .getAuthenticationContext()
+                .onActivityResult(requestCode, resultCode, data);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
