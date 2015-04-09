@@ -2,7 +2,14 @@ package com.microsoft.office365.profile;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import com.microsoft.aad.adal.AuthenticationResult;
+import com.microsoft.office365.profile.model.BasicInfo;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,6 +37,7 @@ import javax.net.ssl.X509TrustManager;
 public class RequestManager {
     protected ExecutorService mExecutor;
     protected static final int MAX_NUM_THREADS = 4;
+    private static final String THUMBNAIL_PHOTO_ENDPOINT = "patsoldemo4.onmicrosoft.com/users('de2cbe30-d534-4ff0-ad44-f28b4c56eb96')/thumbnailPhoto";
 
     private static RequestManager INSTANCE;
 
@@ -44,78 +52,80 @@ public class RequestManager {
         return INSTANCE;
     }
 
-    protected void sendRequests(){
-        RequestRunnable basicInfo = null;
-        try {
-            basicInfo = new RequestRunnable(new URL(Constants.GRAPH_RESOURCE_URL + "me"));
-            } catch (MalformedURLException e){
-            // TODO: handle the case where the URL is malformed
-        }
-
-        mExecutor.submit(basicInfo);
+    protected void sendRequest(URL endpoint, RequestListener requestListener){
+        RequestRunnable requestRunnable = new RequestRunnable(endpoint, requestListener);
+        mExecutor.submit(requestRunnable);
     }
 
     private class RequestRunnable implements Runnable {
         protected static final String TAG = "RequestRunnable";
+        protected static final String ACCEPT_HEADER = "application/json;odata.metadata=minimal;odata.streaming=true";
         protected URL mEndpoint;
-        protected String mAccessToken = null;
-        protected InputStream mResponseStream;
-        protected HttpsURLConnection mHttpsConnection;
-        protected BufferedReader mBufferedReader;
+        protected RequestListener mRequestListener;
 
-        public RequestRunnable(URL endpoint) {
+        protected RequestRunnable(URL endpoint, RequestListener requestListener) {
             mEndpoint = endpoint;
+            mRequestListener = requestListener;
         }
 
         @Override
         public void run(){
+            InputStream responseStream = null;
+            HttpsURLConnection httpsConnection = null;
+            JsonElement jsonElement = null;
+
+            try {
+                disableSSLVerification();
+                httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
+
+                httpsConnection.setRequestMethod("GET");
+                httpsConnection.setRequestProperty("Authorization", "Bearer " + getAccessToken());
+                httpsConnection.setRequestProperty("accept", ACCEPT_HEADER);
+
+                httpsConnection.connect();
+
+                // Get the contents
+                responseStream = httpsConnection.getInputStream();
+
+                JsonReader jsonReader = new JsonReader(new InputStreamReader(responseStream));
+                JsonParser jsonParser = new JsonParser();
+                jsonElement =  jsonParser.parse(jsonReader).getAsJsonObject();
+            } catch (IOException e) {
+                Log.e(TAG, e.getMessage());
+                //TODO: Handle the case where the execution is cancelled
+            } finally {
+                //TODO: Figure out if we need to close these objects or not.
+                if(httpsConnection != null){
+                    httpsConnection.disconnect();
+                    httpsConnection = null;
+                }
+                if (responseStream != null) {
+                    try {
+                        responseStream.close();
+                        responseStream = null;
+                    } catch (IOException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                }
+
+                mRequestListener.onRequestSuccess(jsonElement);
+            }
+        }
+
+        protected String getAccessToken(){
+            String accessToken = null;
             try {
                 AuthenticationResult authenticationResult = AuthenticationManager
                         .getInstance()
                         .initialize()
                         .get();
-                mAccessToken = authenticationResult.getAccessToken();
+                accessToken = authenticationResult.getAccessToken();
             } catch (InterruptedException | ExecutionException e){
                 Log.e(TAG, e.getMessage());
                 //TODO: Handle the case where the execution is cancelled
             }
 
-            try {
-                disableSSLVerification();
-                mHttpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
-
-                mHttpsConnection.setRequestMethod("GET");
-                mHttpsConnection.setRequestProperty("Authorization", "Bearer " + mAccessToken);
-                mHttpsConnection.setRequestProperty("accept", "application/json;odata.metadata=minimal;odata.streaming=true");
-
-                mHttpsConnection.connect();
-
-                // Get the contents
-                mResponseStream = mHttpsConnection.getInputStream();
-                mBufferedReader = new BufferedReader(new InputStreamReader(mResponseStream));
-
-
-                // Get the contents in a string variable
-                StringBuilder stringBuilder = new StringBuilder();
-
-                String line = null;
-                while ((line = mBufferedReader.readLine()) != null) {
-                    stringBuilder.append(line + "\n");
-                }
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-                //TODO: Handle the case where the execution is cancelled
-            } finally {
-                mHttpsConnection.disconnect();
-                try {
-
-                    mResponseStream.close();
-                    mBufferedReader.close();
-                } catch (IOException e) {
-                    Log.e(TAG, e.getMessage());
-                    //TODO: Handle the case where the execution is cancelled
-                }
-            }
+            return accessToken;
         }
 
         //Method used for bypassing SSL verification

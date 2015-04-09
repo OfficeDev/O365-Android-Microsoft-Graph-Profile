@@ -4,21 +4,21 @@
 package com.microsoft.office365.profile;
 
 interface Constants {
-//    public static final String AUTHORITY_URL = "https://login.microsoftonline.com/common";
-//    public static final String GRAPH_RESOURCE_URL = "https://graph.microsoft.com/beta/";
-//    public static final String GRAPH_RESOURCE_ID = "https://graph.microsoft.com/";
-//
-//    // Update these two constants with the values for your application:
-//    public static final String CLIENT_ID = "766540c9-a6f1-4eb0-9469-316903c18d5c";
-//    public static final String REDIRECT_URI = "https://graphconnect.office365.microsoft.com";
-
-    public static final String AUTHORITY_URL = "https://login.windows-ppe.net/common";
-    public static final String GRAPH_RESOURCE_URL = "https://graph.microsoft-ppe.com/beta/";
-    public static final String GRAPH_RESOURCE_ID = "https://graph.microsoft-ppe.com/";
+    static final String AUTHORITY_URL = "https://login.microsoftonline.com/common";
+    static final String GRAPH_RESOURCE_URL = "https://graph.microsoft.com/beta/";
+    static final String GRAPH_RESOURCE_ID = "https://graph.microsoft.com/";
 
     // Update these two constants with the values for your application:
-    public static final String CLIENT_ID = "7bcbf0c4-0be6-4176-9326-7aab20376a44";
-    public static final String REDIRECT_URI = "https://graphsample.dkershawtest10.ccsctp.net";
+    static final String CLIENT_ID = "766540c9-a6f1-4eb0-9469-316903c18d5c";
+    static final String REDIRECT_URI = "https://graphconnect.office365.microsoft.com";
+
+//    static final String AUTHORITY_URL = "https://login.windows-ppe.net/common";
+//    static final String GRAPH_RESOURCE_URL = "https://graph.microsoft-ppe.com/beta/";
+//    static final String GRAPH_RESOURCE_ID = "https://graph.microsoft-ppe.com/";
+//
+//    // Update these two constants with the values for your application:
+//    static final String CLIENT_ID = "7bcbf0c4-0be6-4176-9326-7aab20376a44";
+//    static final String REDIRECT_URI = "https://graphsample.dkershawtest10.ccsctp.net";
 }
 
 // *********************************************************

@@ -17,6 +17,11 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.SettableFuture;
 import com.microsoft.aad.adal.AuthenticationResult;
+import com.microsoft.aad.adal.AuthenticationSettings;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.security.SecureRandom;
 
 
 public class ProfileActivity extends ActionBarActivity {
@@ -26,19 +31,33 @@ public class ProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+
+        // Devices with API level lower than 18 must setup an encryption key.
+        if (Build.VERSION.SDK_INT < 18 && AuthenticationSettings.INSTANCE.getSecretKeyData() == null) {
+            AuthenticationSettings.INSTANCE.setSecretKey(generateSecretKey());
         }
+
+        // We're not using Microsoft Intune's Company portal app,
+        // skip the broker check so we don't get warnings about the following permissions
+        // in manifest:
+        // GET_ACCOUNTS
+        // USE_CREDENTIALS
+        // MANAGE_ACCOUNTS
+        AuthenticationSettings.INSTANCE.setSkipBroker(true);
 
         AuthenticationManager
                 .getInstance()
                 .setContextActivity(this);
+    }
 
-        RequestManager
-                .getInstance()
-                .sendRequests();
+    /**
+     * Randomly generates an encryption key for devices with API level lower than 18.
+     * @return The encryption key in a 32 byte long array.
+     */
+    protected byte[] generateSecretKey() {
+        byte[] key = new byte[32];
+        new SecureRandom().nextBytes(key);
+        return key;
     }
 
     /**
@@ -80,21 +99,5 @@ public class ProfileActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_basicinfo, container, false);
-            return rootView;
-        }
     }
 }
