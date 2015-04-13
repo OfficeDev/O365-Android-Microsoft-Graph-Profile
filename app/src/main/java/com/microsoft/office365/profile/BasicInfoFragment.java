@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.microsoft.office365.profile.model.BasicInfo;
+import com.microsoft.office365.profile.model.UserInfo;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -54,6 +54,9 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
             RequestManager
                     .getInstance()
                     .sendRequest(new URL(Constants.GRAPH_RESOURCE_URL + ME_ENDPOINT), this);
+//            RequestManager
+//                    .getInstance()
+//                    .sendRequest(new URL(Constants.GRAPH_RESOURCE_URL + "beta/patsoldemo4.onmicrosoft.com/users('1577a977-5b53-43b5-aa73-6ad1c2e1d7a1')/thumbnailPhoto"), this);
         } catch (MalformedURLException e) {
             // TODO: handle the case where the URL is malformed
         }
@@ -64,16 +67,16 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
     @Override
     public void onRequestSuccess(JsonElement data) {
         Gson gson = new Gson();
-        BasicInfo basicInfo = gson.fromJson(data, BasicInfo.class);
+        UserInfo userInfo = gson.fromJson(data, UserInfo.class);
 
-        mDisplayNameTextView.setText(basicInfo.displayName);
-        mJobTitleTextView.setText(basicInfo.jobTitle);
-        mDepartmentTextView.setText(basicInfo.department);
-        mHireDateTextView.setText(basicInfo.hireDate);
-        mMailTextView.setText("" + basicInfo.mail);
-        mTelephoneNumberTextView.setText(basicInfo.telephoneNumber);
-        mStateTextView.setText(basicInfo.state);
-        mCountryTextView.setText(basicInfo.country);
+        mDisplayNameTextView.setText(userInfo.displayName);
+        mJobTitleTextView.setText(userInfo.jobTitle);
+        mDepartmentTextView.setText(userInfo.department);
+        mHireDateTextView.setText(userInfo.hireDate);
+        mMailTextView.setText(userInfo.mail);
+        mTelephoneNumberTextView.setText(userInfo.telephoneNumber);
+        mStateTextView.setText(userInfo.state);
+        mCountryTextView.setText(userInfo.country);
     }
 
     @Override

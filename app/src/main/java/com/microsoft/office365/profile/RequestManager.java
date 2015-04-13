@@ -2,20 +2,14 @@ package com.microsoft.office365.profile;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.microsoft.aad.adal.AuthenticationResult;
-import com.microsoft.office365.profile.model.BasicInfo;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -59,7 +53,7 @@ public class RequestManager {
 
     private class RequestRunnable implements Runnable {
         protected static final String TAG = "RequestRunnable";
-        protected static final String ACCEPT_HEADER = "application/json;odata.metadata=minimal;odata.streaming=true";
+        protected static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
         protected URL mEndpoint;
         protected RequestListener mRequestListener;
 
@@ -72,6 +66,7 @@ public class RequestManager {
         public void run(){
             InputStream responseStream = null;
             HttpsURLConnection httpsConnection = null;
+            JsonReader jsonReader = null;
             JsonElement jsonElement = null;
 
             try {
@@ -87,7 +82,7 @@ public class RequestManager {
                 // Get the contents
                 responseStream = httpsConnection.getInputStream();
 
-                JsonReader jsonReader = new JsonReader(new InputStreamReader(responseStream));
+                jsonReader = new JsonReader(new InputStreamReader(responseStream));
                 JsonParser jsonParser = new JsonParser();
                 jsonElement =  jsonParser.parse(jsonReader).getAsJsonObject();
             } catch (IOException e) {
@@ -99,6 +94,14 @@ public class RequestManager {
                     httpsConnection.disconnect();
                     httpsConnection = null;
                 }
+                if(jsonReader != null) {
+                    try {
+                        jsonReader.close();
+                        jsonReader = null;
+                    } catch (IOException e) {
+                        Log.e(TAG, e.getMessage());
+                    }
+                }
                 if (responseStream != null) {
                     try {
                         responseStream.close();
@@ -107,7 +110,6 @@ public class RequestManager {
                         Log.e(TAG, e.getMessage());
                     }
                 }
-
                 mRequestListener.onRequestSuccess(jsonElement);
             }
         }

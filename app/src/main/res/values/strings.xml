@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Profile</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_profile2">Profile2</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="fragment_manager_title">Manager</string>
+    <string name="fragment_direct_reports_title">Direct Reports</string>
+    <string name="fragment_membership_title">Membership</string>
+    <string name="fragment_files_title">Files</string>
 </resources>
