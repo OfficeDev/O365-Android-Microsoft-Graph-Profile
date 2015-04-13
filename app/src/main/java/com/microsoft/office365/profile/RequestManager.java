@@ -30,18 +30,13 @@ import javax.net.ssl.X509TrustManager;
  */
 public class RequestManager {
     protected ExecutorService mExecutor;
-    protected static final int MAX_NUM_THREADS = 4;
-    private static final String THUMBNAIL_PHOTO_ENDPOINT = "patsoldemo4.onmicrosoft.com/users('de2cbe30-d534-4ff0-ad44-f28b4c56eb96')/thumbnailPhoto";
-
     private static RequestManager INSTANCE;
 
     public static synchronized RequestManager getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new RequestManager();
             int numProcessors = Runtime.getRuntime().availableProcessors();
-            INSTANCE.mExecutor = MAX_NUM_THREADS < numProcessors ?
-                    Executors.newFixedThreadPool(MAX_NUM_THREADS) :
-                    Executors.newFixedThreadPool(numProcessors);
+            INSTANCE.mExecutor = Executors.newFixedThreadPool(numProcessors);
         }
         return INSTANCE;
     }
@@ -70,7 +65,7 @@ public class RequestManager {
             JsonElement jsonElement = null;
 
             try {
-                disableSSLVerification();
+                //disableSSLVerification();
                 httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
 
                 httpsConnection.setRequestMethod("GET");
@@ -92,12 +87,10 @@ public class RequestManager {
                 //TODO: Figure out if we need to close these objects or not.
                 if(httpsConnection != null){
                     httpsConnection.disconnect();
-                    httpsConnection = null;
                 }
                 if(jsonReader != null) {
                     try {
                         jsonReader.close();
-                        jsonReader = null;
                     } catch (IOException e) {
                         Log.e(TAG, e.getMessage());
                     }
@@ -105,7 +98,6 @@ public class RequestManager {
                 if (responseStream != null) {
                     try {
                         responseStream.close();
-                        responseStream = null;
                     } catch (IOException e) {
                         Log.e(TAG, e.getMessage());
                     }

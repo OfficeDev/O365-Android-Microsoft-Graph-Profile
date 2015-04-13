@@ -2,6 +2,7 @@ package com.microsoft.office365.profile;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import java.net.URL;
  * Created by Administrator on 4/9/2015.
  */
 public class BasicInfoFragment extends Fragment implements RequestListener {
+    private static final String TAG = "BasicInfoFragment";
     protected static final String ME_ENDPOINT = "me";
     protected TextView mDisplayNameTextView;
     protected TextView mJobTitleTextView;
@@ -58,6 +60,8 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
 //                    .getInstance()
 //                    .sendRequest(new URL(Constants.GRAPH_RESOURCE_URL + "beta/patsoldemo4.onmicrosoft.com/users('1577a977-5b53-43b5-aa73-6ad1c2e1d7a1')/thumbnailPhoto"), this);
         } catch (MalformedURLException e) {
+            Log.e(TAG, e.getMessage());
+            e.printStackTrace();
             // TODO: handle the case where the URL is malformed
         }
 
@@ -65,22 +69,29 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
     }
 
     @Override
-    public void onRequestSuccess(JsonElement data) {
+    public void onRequestSuccess(final JsonElement data) {
         Gson gson = new Gson();
-        UserInfo userInfo = gson.fromJson(data, UserInfo.class);
+        final UserInfo userInfo = gson.fromJson(data, UserInfo.class);
 
-        mDisplayNameTextView.setText(userInfo.displayName);
-        mJobTitleTextView.setText(userInfo.jobTitle);
-        mDepartmentTextView.setText(userInfo.department);
-        mHireDateTextView.setText(userInfo.hireDate);
-        mMailTextView.setText(userInfo.mail);
-        mTelephoneNumberTextView.setText(userInfo.telephoneNumber);
-        mStateTextView.setText(userInfo.state);
-        mCountryTextView.setText(userInfo.country);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mDisplayNameTextView.setText(userInfo.displayName);
+                mJobTitleTextView.setText(userInfo.jobTitle);
+                mDepartmentTextView.setText(userInfo.department);
+                mHireDateTextView.setText(userInfo.hireDate);
+                mMailTextView.setText(userInfo.mail);
+                mTelephoneNumberTextView.setText(userInfo.telephoneNumber);
+                mStateTextView.setText(userInfo.state);
+                mCountryTextView.setText(userInfo.country);
+            }
+        });
     }
 
     @Override
     public void onRequestFailure(Exception e) {
+        Log.e(TAG, e.getMessage());
+        e.printStackTrace();
         //TODO: Implement error interface
     }
 }

@@ -32,6 +32,10 @@ public class ProfileActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        AuthenticationManager
+                .getInstance()
+                .setContextActivity(this);
+
         // Devices with API level lower than 18 must setup an encryption key.
         if (Build.VERSION.SDK_INT < 18 && AuthenticationSettings.INSTANCE.getSecretKeyData() == null) {
             AuthenticationSettings.INSTANCE.setSecretKey(generateSecretKey());
@@ -44,10 +48,6 @@ public class ProfileActivity extends ActionBarActivity {
         // USE_CREDENTIALS
         // MANAGE_ACCOUNTS
         AuthenticationSettings.INSTANCE.setSkipBroker(true);
-
-        AuthenticationManager
-                .getInstance()
-                .setContextActivity(this);
     }
 
     /**

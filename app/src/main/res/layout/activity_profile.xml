@@ -15,7 +15,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"/>
 
-    <fragment android:id="@+id/managerFragment"
+    <!--<fragment android:id="@+id/managerFragment"
               android:name="com.microsoft.office365.profile.ManagerFragment"
               tools:layout="@layout/fragment_manager"
               android:layout_width="match_parent"
@@ -37,5 +37,5 @@
               android:name="com.microsoft.office365.profile.FilesFragment"
               tools:layout="@layout/fragment_files"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
+              android:layout_height="wrap_content"/>-->
 </LinearLayout>
