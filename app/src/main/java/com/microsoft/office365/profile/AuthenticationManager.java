@@ -47,11 +47,6 @@ public class AuthenticationManager {
         resourceId = Constants.GRAPH_RESOURCE_ID;
     }
 
-    private AuthenticationManager(final Activity contextActivity){
-        this();
-        this.contextActivity = contextActivity;
-    }
-
     /**
      * Set the context activity before initializing to the currently active activity.
      *
@@ -63,33 +58,6 @@ public class AuthenticationManager {
     }
 
     /**
-     * Change from the default Resource ID set in ServiceConstants to a different
-     * resource ID.
-     * This can be called at anytime without requiring another interactive prompt.
-     * @param resourceId URL of resource ID to be accessed on behalf of user.
-     */
-    public void setResourceId(final String resourceId) {
-        this.resourceId = resourceId;
-        this.dependencyResolver.setResourceId(resourceId);
-    }
-
-    /**
-     * Turn on logging.
-     * @param level LogLevel to set.
-     */
-    public void enableLogging(LogLevel level) {
-        this.dependencyResolver.getLogger().setEnabled(true);
-        this.dependencyResolver.getLogger().setLogLevel(level);
-    }
-
-    /**
-     * Turn off logging.
-     */
-    public void disableLogging() {
-        this.dependencyResolver.getLogger().setEnabled(false);
-    }
-
-    /**
      * Description: Calls AuthenticationContext.acquireToken(...) once to initialize with
      * user's credentials and avoid interactive prompt on later calls.
      * If all tokens expire, app must call initialize() again to prompt user interactively and
@@ -97,7 +65,7 @@ public class AuthenticationManager {
      *
      * @return A signal to wait on before continuing execution.
      */
-    public synchronized SettableFuture<AuthenticationResult> initialize() {
+    public synchronized SettableFuture<AuthenticationResult> initialize(final AuthenticationListener authenticationListener) {
 
         final SettableFuture<AuthenticationResult> result = SettableFuture.create();
 
@@ -118,13 +86,15 @@ public class AuthenticationManager {
                                         getAuthenticationContext(),
                                         resourceId,
                                         Constants.CLIENT_ID);
+                                authenticationListener.onAuthenticationSuccess(authenticationResult);
                                 result.set(authenticationResult);
                             }
                         }
 
                         @Override
-                        public void onError(Exception t) {
-                            result.setException(t);
+                        public void onError(Exception e) {
+                            authenticationListener.onAuthenticationFailure(e);
+                            result.setException(e);
                         }
                     }
             );

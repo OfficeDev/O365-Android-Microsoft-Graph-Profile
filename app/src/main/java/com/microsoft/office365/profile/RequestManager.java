@@ -44,8 +44,8 @@ public class RequestManager {
         INSTANCE = null;
     }
 
-    protected void sendRequest(URL endpoint, RequestListener requestListener){
-        RequestRunnable requestRunnable = new RequestRunnable(endpoint, requestListener);
+    protected void sendRequest(URL endpoint, RequestListener requestListener, AuthenticationListener authenticationListener){
+        RequestRunnable requestRunnable = new RequestRunnable(endpoint, requestListener, authenticationListener);
         mExecutor.submit(requestRunnable);
     }
 
@@ -54,10 +54,12 @@ public class RequestManager {
         protected static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
         protected URL mEndpoint;
         protected RequestListener mRequestListener;
+        protected AuthenticationListener mAuthenticationListener;
 
-        protected RequestRunnable(URL endpoint, RequestListener requestListener) {
+        protected RequestRunnable(URL endpoint, RequestListener requestListener, AuthenticationListener authenticationListener) {
             mEndpoint = endpoint;
             mRequestListener = requestListener;
+            mAuthenticationListener = authenticationListener;
         }
 
         @Override
@@ -65,10 +67,11 @@ public class RequestManager {
             InputStream responseStream = null;
             HttpsURLConnection httpsConnection = null;
             JsonReader jsonReader = null;
-            JsonElement jsonElement = null;
+
 
             try {
-                //disableSSLVerification();
+                //TODO: In Production, we don't need to disable SSL verification
+                disableSSLVerification();
                 httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
 
                 httpsConnection.setRequestMethod("GET");
@@ -82,12 +85,14 @@ public class RequestManager {
 
                 jsonReader = new JsonReader(new InputStreamReader(responseStream));
                 JsonParser jsonParser = new JsonParser();
-                jsonElement =  jsonParser.parse(jsonReader).getAsJsonObject();
+                JsonElement jsonElement =  jsonParser.parse(jsonReader).getAsJsonObject();
+                mRequestListener.onRequestSuccess(jsonElement);
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
+                mRequestListener.onRequestFailure(e);
                 //TODO: Handle the case where the execution is cancelled
             } finally {
-                //TODO: Figure out if we need to close these objects or not.
+                //TODO: Figure out if we need tofire close these objects or not.
                 if(httpsConnection != null){
                     httpsConnection.disconnect();
                 }
@@ -105,7 +110,6 @@ public class RequestManager {
                         Log.e(TAG, e.getMessage());
                     }
                 }
-                mRequestListener.onRequestSuccess(jsonElement);
             }
         }
 
@@ -114,7 +118,7 @@ public class RequestManager {
             try {
                 AuthenticationResult authenticationResult = AuthenticationManager
                         .getInstance()
-                        .initialize()
+                        .initialize(mAuthenticationListener)
                         .get();
                 accessToken = authenticationResult.getAccessToken();
             } catch (InterruptedException | ExecutionException e){

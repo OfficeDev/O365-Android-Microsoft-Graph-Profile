@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.AuthenticationSettings;
+import com.microsoft.aad.adal.UserInfo;
 
 import java.security.SecureRandom;
 import java.util.concurrent.ExecutionException;
@@ -50,7 +51,9 @@ public class ProfileApplication extends Application implements AuthenticationLis
 
     @Override
     public void onAuthenticationSuccess(AuthenticationResult authenticationResult) {
-
+        UserInfo userInfo = authenticationResult.getUserInfo();
+        setDisplayableId(userInfo.getDisplayableId());
+        setDisplayName(userInfo.getGivenName() + " " + userInfo.getGivenName());
     }
 
     @Override

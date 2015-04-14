@@ -40,9 +40,9 @@ public class BaseActivity extends ActionBarActivity {
                     .setContextActivity(this);
         }
 
-        if(!mApplication.isUserSignedIn()){
-            new AuthenticateTask().execute();
-        }
+//        if(!mApplication.isUserSignedIn()){
+//            new AuthenticateTask().execute();
+//        }
     }
 
     /**
@@ -119,16 +119,10 @@ public class BaseActivity extends ActionBarActivity {
             try{
                 authenticationResult = AuthenticationManager
                         .getInstance()
-                        .initialize()
+                        .initialize(mApplication)
                         .get();
             } catch (InterruptedException | ExecutionException e) {
                 Log.e(TAG, "doInBackground - " + e.getMessage());
-            }
-
-            if(authenticationResult != null) {
-                UserInfo userInfo = authenticationResult.getUserInfo();
-                mApplication.setDisplayableId(userInfo.getDisplayableId());
-                mApplication.setDisplayName(userInfo.getGivenName() + " " + userInfo.getGivenName());
             }
 
             return authenticationResult;

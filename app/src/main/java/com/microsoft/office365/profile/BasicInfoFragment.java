@@ -20,7 +20,12 @@ import java.net.URL;
  */
 public class BasicInfoFragment extends Fragment implements RequestListener {
     private static final String TAG = "BasicInfoFragment";
-    protected static final String ME_ENDPOINT = "me";
+    protected static final String USER_ENDPOINT = "me";
+    //protected static final String USER_ENDPOINT = "me";
+    //protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "me/thumbnailPhoto";
+    protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "patsoldemo4.onmicrosoft.com/users('236a9865-c42f-4535-9e26-30747979f5a3')/thumbnailPhoto";
+    //protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "dkershawtest10.ccsctp.net/users('a5b04667-f6f1-46ce-81df-13416d3aeacd')/thumbnailPhoto";
+    // protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "dkershawtest10.ccsctp.net/users/('a5b04667-f6f1-46ce-81df-13416d3aeacd')/thumbnailPhoto";
     protected TextView mDisplayNameTextView;
     protected TextView mJobTitleTextView;
     protected TextView mDepartmentTextView;
@@ -55,10 +60,10 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
         try {
             RequestManager
                     .getInstance()
-                    .sendRequest(new URL(Constants.GRAPH_RESOURCE_URL + ME_ENDPOINT), this);
+                    .sendRequest(new URL(Constants.GRAPH_RESOURCE_URL + USER_ENDPOINT), this);
 //            RequestManager
 //                    .getInstance()
-//                    .sendRequest(new URL(Constants.GRAPH_RESOURCE_URL + "beta/patsoldemo4.onmicrosoft.com/users('1577a977-5b53-43b5-aa73-6ad1c2e1d7a1')/thumbnailPhoto"), this);
+//                    .sendRequest(new URL(Constants.GRAPH_RESOURCE_URL + MY_THUMBNAILPHOTO_ENDPOINT), this);
         } catch (MalformedURLException e) {
             Log.e(TAG, e.getMessage());
             e.printStackTrace();
