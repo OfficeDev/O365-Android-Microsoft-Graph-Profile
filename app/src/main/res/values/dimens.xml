@@ -2,4 +2,16 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!-- Material design recommends using multiples of 8dp for padding -->
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding_medium">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+
+    <!-- Result in 16dp padding for the entire file and 8dp padding for all of the children-->
+    <dimen name="padding_half">4dp</dimen>
+    <dimen name="padding_layout_file">12dp</dimen>
+    <dimen name="header_text_size">16sp</dimen>
+    <dimen name="subheading_size">14sp</dimen>
+    <dimen name="title_size">18sp</dimen>
 </resources>
