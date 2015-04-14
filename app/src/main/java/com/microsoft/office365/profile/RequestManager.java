@@ -40,6 +40,9 @@ public class RequestManager {
         }
         return INSTANCE;
     }
+    public static synchronized void resetInstance() {
+        INSTANCE = null;
+    }
 
     protected void sendRequest(URL endpoint, RequestListener requestListener){
         RequestRunnable requestRunnable = new RequestRunnable(endpoint, requestListener);
