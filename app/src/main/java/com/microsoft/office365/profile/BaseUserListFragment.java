@@ -21,6 +21,7 @@ import com.google.gson.reflect.TypeToken;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.office365.profile.model.BasicUserInfo;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -133,10 +134,23 @@ public abstract class BaseUserListFragment extends ListFragment implements Reque
                 ListView listView = getListView();
                 listView.addHeaderView(header);
 
-                setListAdapter(new BasicUserInfoAdapter(
-                        getActivity(),
-                        R.layout.list_item_basic_user_info,
-                        basicUserInfoList));
+                if(basicUserInfoList.size() > 0) {
+                    setListAdapter(new BasicUserInfoAdapter(
+                            getActivity(),
+                            R.layout.list_item_basic_user_info,
+                            basicUserInfoList));
+                } else {
+                    ArrayList<String> notAvailableList = new ArrayList<>();
+                    notAvailableList.add("Nobody reports to him");
+
+                    listView.setClickable(false);
+                    listView.setEnabled(false);
+
+                    setListAdapter(new ArrayAdapter<>(
+                            getActivity(),
+                            android.R.layout.simple_list_item_1,
+                            notAvailableList));
+                }
                 setListShown(true);
              }
         });
@@ -145,8 +159,32 @@ public abstract class BaseUserListFragment extends ListFragment implements Reque
     @Override
     public void onRequestFailure(Exception e) {
         Log.e(TAG, e.getMessage());
-        e.printStackTrace();
-        //TODO: Implement error interface
+
+        if(e.getClass().equals(FileNotFoundException.class)) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+                    View header = layoutInflater.inflate(R.layout.header_user_list, null);
+                    TextView title = (TextView) header.findViewById(R.id.title);
+                    title.setText(getTitleResourceId());
+
+                    ArrayList<String> notAvailableList = new ArrayList<>();
+                    notAvailableList.add("He doesn't report to anybody");
+
+                    ListView listView = getListView();
+                    listView.addHeaderView(header);
+                    listView.setClickable(false);
+                    listView.setEnabled(false);
+
+                    setListAdapter(new ArrayAdapter<>(
+                            getActivity(),
+                            android.R.layout.simple_list_item_1,
+                            notAvailableList));
+                    setListShown(true);
+                }
+            });
+        }
     }
 
     private class BasicUserInfoAdapter extends ArrayAdapter<BasicUserInfo>{
