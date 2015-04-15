@@ -86,14 +86,18 @@ public class AuthenticationManager {
                                         getAuthenticationContext(),
                                         resourceId,
                                         Constants.CLIENT_ID);
-                                authenticationListener.onAuthenticationSuccess(authenticationResult);
+                                if(authenticationListener != null) {
+                                    authenticationListener.onAuthenticationSuccess(authenticationResult);
+                                }
                                 result.set(authenticationResult);
                             }
                         }
 
                         @Override
                         public void onError(Exception e) {
-                            authenticationListener.onAuthenticationFailure(e);
+                            if(authenticationListener != null) {
+                                authenticationListener.onAuthenticationFailure(e);
+                            }
                             result.setException(e);
                         }
                     }

@@ -20,12 +20,12 @@ import java.net.URL;
  */
 public class BasicInfoFragment extends Fragment implements RequestListener {
     private static final String TAG = "BasicInfoFragment";
-    protected static final String USER_ENDPOINT = "me";
-    //protected static final String USER_ENDPOINT = "me";
+    protected static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
     //protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "me/thumbnailPhoto";
     protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "patsoldemo4.onmicrosoft.com/users('236a9865-c42f-4535-9e26-30747979f5a3')/thumbnailPhoto";
     //protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "dkershawtest10.ccsctp.net/users('a5b04667-f6f1-46ce-81df-13416d3aeacd')/thumbnailPhoto";
     // protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "dkershawtest10.ccsctp.net/users/('a5b04667-f6f1-46ce-81df-13416d3aeacd')/thumbnailPhoto";
+
     protected TextView mDisplayNameTextView;
     protected TextView mJobTitleTextView;
     protected TextView mDepartmentTextView;
@@ -38,8 +38,6 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //TODO: remove this override if we're not using it
     }
 
     @Override
@@ -58,9 +56,13 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
         mCountryTextView = (TextView)fragmentView.findViewById(R.id.countryTextView);
 
         try {
+            ProfileApplication application = (ProfileApplication)getActivity().getApplication();
+            String userEndpoint = application.getTenant() + "/users/" + ((ProfileActivity)getActivity()).getUserId();
             RequestManager
                     .getInstance()
-                    .sendRequest(new URL(Constants.GRAPH_RESOURCE_URL + USER_ENDPOINT), this);
+                    .executeRequest(new URL(Constants.GRAPH_RESOURCE_URL + userEndpoint),
+                            ACCEPT_HEADER,
+                            this);
 //            RequestManager
 //                    .getInstance()
 //                    .sendRequest(new URL(Constants.GRAPH_RESOURCE_URL + MY_THUMBNAILPHOTO_ENDPOINT), this);

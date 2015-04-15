@@ -1,7 +1,6 @@
 package com.microsoft.office365.profile;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
 import com.microsoft.aad.adal.AuthenticationResult;
-import com.microsoft.aad.adal.UserInfo;
 
 import java.util.concurrent.ExecutionException;
 
@@ -33,16 +31,6 @@ public class BaseActivity extends ActionBarActivity {
         mApplication = (ProfileApplication)getApplication();
 
         mApplication.mSharedPreferences = getSharedPreferences(PREFERENCES_NAME, MODE_APPEND);
-
-        if(AuthenticationManager.getInstance().getAuthenticationContext() == null) {
-            AuthenticationManager
-                    .getInstance()
-                    .setContextActivity(this);
-        }
-
-//        if(!mApplication.isUserSignedIn()){
-//            new AuthenticateTask().execute();
-//        }
     }
 
     /**
@@ -91,6 +79,8 @@ public class BaseActivity extends ActionBarActivity {
             RequestManager.resetInstance();
             mApplication.resetDisplayName();
             mApplication.resetDisplayableId();
+            mApplication.resetTenant();
+            mApplication.resetUserId();
 
             AuthenticationManager.getInstance().setContextActivity(this);
             new AuthenticateTask().execute();

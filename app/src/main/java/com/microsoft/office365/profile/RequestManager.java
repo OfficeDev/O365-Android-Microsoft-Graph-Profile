@@ -44,22 +44,21 @@ public class RequestManager {
         INSTANCE = null;
     }
 
-    protected void sendRequest(URL endpoint, RequestListener requestListener, AuthenticationListener authenticationListener){
-        RequestRunnable requestRunnable = new RequestRunnable(endpoint, requestListener, authenticationListener);
+    protected void executeRequest(URL endpoint, String acceptHeader, RequestListener requestListener){
+        RequestRunnable requestRunnable = new RequestRunnable(endpoint, acceptHeader, requestListener);
         mExecutor.submit(requestRunnable);
     }
 
     private class RequestRunnable implements Runnable {
         protected static final String TAG = "RequestRunnable";
-        protected static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
         protected URL mEndpoint;
         protected RequestListener mRequestListener;
-        protected AuthenticationListener mAuthenticationListener;
+        protected String mAcceptHeader;
 
-        protected RequestRunnable(URL endpoint, RequestListener requestListener, AuthenticationListener authenticationListener) {
+        protected RequestRunnable(URL endpoint, String acceptHeader, RequestListener requestListener) {
             mEndpoint = endpoint;
             mRequestListener = requestListener;
-            mAuthenticationListener = authenticationListener;
+            mAcceptHeader = acceptHeader;
         }
 
         @Override
@@ -71,12 +70,12 @@ public class RequestManager {
 
             try {
                 //TODO: In Production, we don't need to disable SSL verification
-                disableSSLVerification();
+                //disableSSLVerification();
                 httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
 
                 httpsConnection.setRequestMethod("GET");
                 httpsConnection.setRequestProperty("Authorization", "Bearer " + getAccessToken());
-                httpsConnection.setRequestProperty("accept", ACCEPT_HEADER);
+                httpsConnection.setRequestProperty("accept", mAcceptHeader);
 
                 httpsConnection.connect();
 
@@ -118,7 +117,7 @@ public class RequestManager {
             try {
                 AuthenticationResult authenticationResult = AuthenticationManager
                         .getInstance()
-                        .initialize(mAuthenticationListener)
+                        .initialize(null)
                         .get();
                 accessToken = authenticationResult.getAccessToken();
             } catch (InterruptedException | ExecutionException e){

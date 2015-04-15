@@ -26,6 +26,7 @@ import java.security.SecureRandom;
 
 public class ProfileActivity extends BaseActivity {
     private static final String TAG = "ProfileActivity";
+    protected String mUserId;
 
 //    @Override
 //    protected int getActivityLayoutId() {
@@ -34,9 +35,17 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mUserId = getIntent().hasExtra("userId") ? getIntent().getStringExtra("userId") : mApplication.getUserId();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // If the activity was launched with a user id attached, load that user information
+        // else, load the current user information
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    public String getUserId() {
+        return mUserId;
     }
 }

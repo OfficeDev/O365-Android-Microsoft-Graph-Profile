@@ -30,17 +30,17 @@ import java.util.ArrayList;
  * <p/>
  * <p/>
  */
-public class ManagerFragment extends BaseUserListFragment {
-    protected static final String TAG = "ManagerFragment";
-
+public class MainUserListFragment extends BaseUserListFragment {
+    protected static final String TAG = "MainUserListFragment";
+    protected static final String LAST_SECTION_ENDPOINT = "/users";
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public ManagerFragment() {
+    public MainUserListFragment() {
     }
 
     public void setEndpoint(){
-        mEndpoint = "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/manager";
+        mEndpoint = LAST_SECTION_ENDPOINT;
     }
 }

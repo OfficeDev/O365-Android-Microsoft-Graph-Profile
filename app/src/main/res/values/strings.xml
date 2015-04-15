@@ -5,4 +5,9 @@
     <string name="fragment_membership_title">Membership</string>
     <string name="fragment_files_title">Files</string>
     <string name="sign_out_settings">Sign out</string>
+    <string name="title_activity_user_list">User List</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="fragment_user_list_title">User list</string>
 </resources>
