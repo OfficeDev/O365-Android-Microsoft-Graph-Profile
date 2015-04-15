@@ -35,7 +35,7 @@ public abstract class BaseUserListFragment extends ListFragment implements Reque
     private static final String TAG = "BaseUserListFragment";
     protected static final String ACCEPT_HEADER = "application/json;odata.metadata=minimal;odata.streaming=true";
 
-    protected String mEndpoint;
+
     protected ProfileApplication mApplication;
     ArrayList<BasicUserInfo> mBasicUserInfoList;
 
@@ -45,14 +45,14 @@ public abstract class BaseUserListFragment extends ListFragment implements Reque
      */
     public BaseUserListFragment() { }
 
-    public abstract void setEndpoint();
+    public abstract String getEndpoint();
+    public abstract int getTitleResourceId();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mApplication = (ProfileApplication)getActivity().getApplication();
 
-        setEndpoint();
+        mApplication = (ProfileApplication)getActivity().getApplication();
 
         AuthenticationManager
                 .getInstance()
@@ -63,7 +63,7 @@ public abstract class BaseUserListFragment extends ListFragment implements Reque
                     .getInstance()
                     .initialize(this);
         } else {
-            String endpoint = Constants.GRAPH_RESOURCE_URL + mApplication.getTenant() + mEndpoint;
+            String endpoint = Constants.GRAPH_RESOURCE_URL + mApplication.getTenant() + getEndpoint();
             sendRequest(endpoint);
         }
     }
@@ -87,15 +87,14 @@ public abstract class BaseUserListFragment extends ListFragment implements Reque
         super.onListItemClick(l, v, position, id);
         final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
         // Send the user's given name and displayable id to the SendMail activity
-        profileActivityIntent.putExtra("userId", mBasicUserInfoList.get(position).objectId);
+        profileActivityIntent.putExtra("userId", mBasicUserInfoList.get((int)id).objectId);
         startActivity(profileActivityIntent);
     }
 
     @Override
     public void onAuthenticationSuccess(AuthenticationResult authenticationResult) {
         mApplication.onAuthenticationSuccess(authenticationResult);
-        mEndpoint = mApplication.getTenant() + "/users";
-        String endpoint = Constants.GRAPH_RESOURCE_URL + mApplication.getTenant() + mEndpoint;
+        String endpoint = Constants.GRAPH_RESOURCE_URL + mApplication.getTenant() + getEndpoint();
         sendRequest(endpoint);
     }
 
@@ -126,12 +125,20 @@ public abstract class BaseUserListFragment extends ListFragment implements Reque
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                LayoutInflater layoutInflater = (LayoutInflater)getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+                View header = layoutInflater.inflate(R.layout.header_user_list, null);
+                TextView title = (TextView)header.findViewById(R.id.title);
+                title.setText(getTitleResourceId());
+
+                ListView listView = getListView();
+                listView.addHeaderView(header);
+
                 setListAdapter(new BasicUserInfoAdapter(
                         getActivity(),
                         R.layout.list_item_basic_user_info,
                         basicUserInfoList));
                 setListShown(true);
-            }
+             }
         });
     }
 

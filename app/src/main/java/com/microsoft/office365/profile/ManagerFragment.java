@@ -40,7 +40,12 @@ public class ManagerFragment extends BaseUserListFragment {
     public ManagerFragment() {
     }
 
-    public void setEndpoint(){
-        mEndpoint = "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/manager";
+    public String getEndpoint(){
+        return "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/manager";
+    }
+
+    @Override
+    public int getTitleResourceId() {
+        return R.string.fragment_manager_title;
     }
 }

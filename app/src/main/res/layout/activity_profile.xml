@@ -20,13 +20,13 @@
               tools:layout="@layout/fragment_user_list"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"/>
-    <!--
-        <fragment android:id="@+id/directReportsFragment"
-                  android:name="com.microsoft.office365.profile.DirectReportsFragment"
-                  tools:layout="@layout/fragment_direct_reports"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"/>
 
+    <fragment android:id="@+id/directReportsFragment"
+              android:name="com.microsoft.office365.profile.DirectReportsFragment"
+              tools:layout="@layout/fragment_user_list"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+<!--
         <fragment android:id="@+id/membershipFragment"
                   android:name="com.microsoft.office365.profile.MembershipFragment"
                   tools:layout="@layout/fragment_membership"
