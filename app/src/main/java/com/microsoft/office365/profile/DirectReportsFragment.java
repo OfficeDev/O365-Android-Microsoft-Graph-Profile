@@ -48,4 +48,9 @@ public class DirectReportsFragment extends BaseUserListFragment {
     public int getTitleResourceId() {
         return R.string.fragment_direct_reports_title;
     }
+
+    @Override
+    public CharSequence getEmptyArrayMessage() {
+        return getResources().getText(R.string.empty_array_direct_reports_fragment_message);
+    }
 }

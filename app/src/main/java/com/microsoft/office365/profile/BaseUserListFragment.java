@@ -51,6 +51,19 @@ public abstract class BaseUserListFragment extends ListFragment implements JsonR
     public abstract String getEndpoint();
     public abstract int getTitleResourceId();
 
+    /**
+     * Returns the message to display when a FileNotFoundException is thrown by a request.
+     * In some cases, this might not be an error per-se. For example, if the request looks for the manager
+     * property and it doesn't find it, it may be possible that the user just doesn't have a manager.
+     * @return The message to display when a FileNotFoundException is thrown.
+     */
+    public CharSequence getFileNotFoundExceptionMessage(){
+        return getResources().getText(R.string.file_not_found_exception_default_message);
+    }
+    public CharSequence getEmptyArrayMessage(){
+        return getResources().getText(R.string.empty_array_default_message);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,8 +150,8 @@ public abstract class BaseUserListFragment extends ListFragment implements JsonR
                             R.layout.list_item_basic_user_info,
                             mBasicUserInfoList));
                 } else {
-                    ArrayList<String> notAvailableList = new ArrayList<>();
-                    notAvailableList.add("Nobody reports to him");
+                    ArrayList<CharSequence> notAvailableList = new ArrayList<>();
+                    notAvailableList.add(getEmptyArrayMessage());
 
                     listView.setClickable(false);
                     listView.setEnabled(false);
@@ -166,8 +179,8 @@ public abstract class BaseUserListFragment extends ListFragment implements JsonR
                     TextView title = (TextView) header.findViewById(R.id.title);
                     title.setText(getTitleResourceId());
 
-                    ArrayList<String> notAvailableList = new ArrayList<>();
-                    notAvailableList.add("He doesn't report to anybody");
+                    ArrayList<CharSequence> notAvailableList = new ArrayList<>();
+                    notAvailableList.add(getFileNotFoundExceptionMessage());
 
                     ListView listView = getListView();
                     listView.addHeaderView(header);

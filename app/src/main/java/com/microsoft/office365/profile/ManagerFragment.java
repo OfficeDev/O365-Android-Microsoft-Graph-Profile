@@ -48,4 +48,9 @@ public class ManagerFragment extends BaseUserListFragment {
     public int getTitleResourceId() {
         return R.string.fragment_manager_title;
     }
+
+    @Override
+    public CharSequence getFileNotFoundExceptionMessage() {
+        return getResources().getText(R.string.file_not_found_exception_manager_fragment_message);
+    }
 }
