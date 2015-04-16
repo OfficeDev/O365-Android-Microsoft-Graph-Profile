@@ -44,20 +44,25 @@ public class RequestManager {
         INSTANCE = null;
     }
 
-    protected void executeRequest(URL endpoint, String acceptHeader, RequestListener requestListener){
-        RequestRunnable requestRunnable = new RequestRunnable(endpoint, acceptHeader, requestListener);
+    protected void executeRequest(URL endpoint, String acceptHeader, JsonRequestListener requestListener){
+        JsonRequestRunnable jsonRequestRunnable = new JsonRequestRunnable(endpoint, acceptHeader, requestListener);
+        mExecutor.submit(jsonRequestRunnable);
+    }
+
+    protected void executeRequest(URL endpoint, InputStreamRequestListener requestListener){
+        InputStreamRequestRunnable requestRunnable = new InputStreamRequestRunnable(endpoint, requestListener);
         mExecutor.submit(requestRunnable);
     }
 
-    private class RequestRunnable implements Runnable {
+    private class JsonRequestRunnable implements Runnable {
         protected static final String TAG = "RequestRunnable";
         protected URL mEndpoint;
-        protected RequestListener mRequestListener;
+        protected JsonRequestListener mJsonRequestListener;
         protected String mAcceptHeader;
 
-        protected RequestRunnable(URL endpoint, String acceptHeader, RequestListener requestListener) {
+        protected JsonRequestRunnable(URL endpoint, String acceptHeader, JsonRequestListener jsonRequestListener) {
             mEndpoint = endpoint;
-            mRequestListener = requestListener;
+            mJsonRequestListener = jsonRequestListener;
             mAcceptHeader = acceptHeader;
         }
 
@@ -65,8 +70,6 @@ public class RequestManager {
         public void run(){
             InputStream responseStream = null;
             HttpsURLConnection httpsConnection = null;
-            JsonReader jsonReader = null;
-
 
             try {
                 //TODO: In Production, we don't need to disable SSL verification
@@ -74,33 +77,28 @@ public class RequestManager {
                 httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
 
                 httpsConnection.setRequestMethod("GET");
-                httpsConnection.setRequestProperty("Authorization", "Bearer " + getAccessToken());
+                String accessToken = AuthenticationManager
+                        .getInstance()
+                        .initialize(null)
+                        .get().getAccessToken();
+                httpsConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
                 httpsConnection.setRequestProperty("accept", mAcceptHeader);
 
                 httpsConnection.connect();
 
                 // Get the contents
                 responseStream = httpsConnection.getInputStream();
-
-                jsonReader = new JsonReader(new InputStreamReader(responseStream));
+                JsonReader jsonReader = new JsonReader(new InputStreamReader(responseStream));
                 JsonParser jsonParser = new JsonParser();
                 JsonElement jsonElement =  jsonParser.parse(jsonReader).getAsJsonObject();
-                mRequestListener.onRequestSuccess(jsonElement);
-            } catch (IOException e) {
+                mJsonRequestListener.onRequestSuccess(jsonElement);
+            } catch (IOException | InterruptedException | ExecutionException e) {
                 Log.e(TAG, e.getMessage());
-                mRequestListener.onRequestFailure(e);
-                //TODO: Handle the case where the execution is cancelled
+                mJsonRequestListener.onRequestFailure(e);
             } finally {
-                //TODO: Figure out if we need tofire close these objects or not.
+                //TODO: Figure out if we need to close these objects or not.
                 if(httpsConnection != null){
                     httpsConnection.disconnect();
-                }
-                if(jsonReader != null) {
-                    try {
-                        jsonReader.close();
-                    } catch (IOException e) {
-                        Log.e(TAG, e.getMessage());
-                    }
                 }
                 if (responseStream != null) {
                     try {
@@ -112,20 +110,80 @@ public class RequestManager {
             }
         }
 
-        protected String getAccessToken(){
-            String accessToken = null;
+        //Method used for bypassing SSL verification
+        protected void disableSSLVerification() {
+
+            TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+
+            } };
+
+            SSLContext sc = null;
             try {
-                AuthenticationResult authenticationResult = AuthenticationManager
+                sc = SSLContext.getInstance("SSL");
+                sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        }
+    }
+    private class InputStreamRequestRunnable implements Runnable {
+        protected static final String TAG = "RequestRunnable";
+        protected URL mEndpoint;
+        protected InputStreamRequestListener mInputStreamRequestListener;
+
+        protected InputStreamRequestRunnable(URL endpoint, InputStreamRequestListener inputStreamRequestListener) {
+            mEndpoint = endpoint;
+            mInputStreamRequestListener = inputStreamRequestListener;
+        }
+
+        @Override
+        public void run(){
+            InputStream responseStream = null;
+            HttpsURLConnection httpsConnection = null;
+
+            try {
+                //TODO: In Production, we don't need to disable SSL verification
+                //disableSSLVerification();
+                httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
+
+                httpsConnection.setRequestMethod("GET");
+                String accessToken = AuthenticationManager
                         .getInstance()
                         .initialize(null)
-                        .get();
-                accessToken = authenticationResult.getAccessToken();
-            } catch (InterruptedException | ExecutionException e){
-                Log.e(TAG, e.getMessage());
-                //TODO: Handle the case where the execution is cancelled
-            }
+                        .get().getAccessToken();
+                httpsConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
 
-            return accessToken;
+                httpsConnection.connect();
+
+                mInputStreamRequestListener.onRequestSuccess(httpsConnection.getInputStream());
+            } catch (IOException | InterruptedException | ExecutionException e) {
+                Log.e(TAG, e.getMessage());
+                mInputStreamRequestListener.onRequestFailure(e);
+            } finally {
+                //TODO: Figure out if we need to close these objects or not.
+                if(httpsConnection != null){
+                    httpsConnection.disconnect();
+                }
+            }
         }
 
         //Method used for bypassing SSL verification

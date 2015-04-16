@@ -1,30 +1,33 @@
 package com.microsoft.office365.profile;
 
 import android.app.Fragment;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.microsoft.office365.profile.model.UserInfo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
  * Created by Administrator on 4/9/2015.
  */
-public class BasicInfoFragment extends Fragment implements RequestListener {
+public class BasicInfoFragment extends Fragment implements JsonRequestListener, InputStreamRequestListener {
     private static final String TAG = "BasicInfoFragment";
     protected static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
-    //protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "me/thumbnailPhoto";
-    protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "patsoldemo4.onmicrosoft.com/users('236a9865-c42f-4535-9e26-30747979f5a3')/thumbnailPhoto";
-    //protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "dkershawtest10.ccsctp.net/users('a5b04667-f6f1-46ce-81df-13416d3aeacd')/thumbnailPhoto";
-    // protected static final String MY_THUMBNAILPHOTO_ENDPOINT = "dkershawtest10.ccsctp.net/users/('a5b04667-f6f1-46ce-81df-13416d3aeacd')/thumbnailPhoto";
 
     protected TextView mDisplayNameTextView;
     protected TextView mJobTitleTextView;
@@ -34,6 +37,7 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
     protected TextView mTelephoneNumberTextView;
     protected TextView mStateTextView;
     protected TextView mCountryTextView;
+    protected ImageView mThumbnailPhotoImageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -54,18 +58,21 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
         mTelephoneNumberTextView = (TextView)fragmentView.findViewById(R.id.telephoneNumberTextView);
         mStateTextView = (TextView)fragmentView.findViewById(R.id.stateTextView);
         mCountryTextView = (TextView)fragmentView.findViewById(R.id.countryTextView);
+        mThumbnailPhotoImageView = (ImageView)fragmentView.findViewById(R.id.thumbnailPhotoImageView);
 
         try {
             ProfileApplication application = (ProfileApplication)getActivity().getApplication();
             String userEndpoint = application.getTenant() + "/users/" + ((ProfileActivity)getActivity()).getUserId();
+            String thumbnailPhotoEndpoint = application.getTenant() + "/users('" + ((ProfileActivity)getActivity()).getUserId() + "')/thumbnailphoto";
             RequestManager
                     .getInstance()
                     .executeRequest(new URL(Constants.GRAPH_RESOURCE_URL + userEndpoint),
                             ACCEPT_HEADER,
                             this);
-//            RequestManager
-//                    .getInstance()
-//                    .sendRequest(new URL(Constants.GRAPH_RESOURCE_URL + MY_THUMBNAILPHOTO_ENDPOINT), this);
+            RequestManager
+                    .getInstance()
+                    .executeRequest(new URL(Constants.GRAPH_RESOURCE_URL + thumbnailPhotoEndpoint),
+                            this);
         } catch (MalformedURLException e) {
             Log.e(TAG, e.getMessage());
             e.printStackTrace();
@@ -91,6 +98,22 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
                 mTelephoneNumberTextView.setText(userInfo.telephoneNumber);
                 mStateTextView.setText(userInfo.state);
                 mCountryTextView.setText(userInfo.country);
+            }
+        });
+    }
+
+    @Override
+    public void onRequestSuccess(InputStream data) {
+        final Drawable thumbnailPhotoDrawable = Drawable.createFromStream(data, null);
+        try {
+            data.close();
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mThumbnailPhotoImageView.setImageDrawable(thumbnailPhotoDrawable);
             }
         });
     }
