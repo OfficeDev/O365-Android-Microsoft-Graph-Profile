@@ -5,7 +5,7 @@ package com.microsoft.office365.profile;
  * <p/>
  * <p/>
  */
-public class GroupsFragment extends BaseUserListFragment {
+public class GroupsFragment extends UserListFragment {
     protected static final String TAG = "GroupsFragment";
 
     /**

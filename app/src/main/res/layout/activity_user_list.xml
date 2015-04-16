@@ -9,7 +9,7 @@
                 tools:context="com.microsoft.office365.profile.UserListActivity">
 
     <fragment android:id="@+id/userListFragment"
-              android:name="com.microsoft.office365.profile.MainUserListFragment"
+              android:name="com.microsoft.office365.profile.MainListFragment"
               tools:layout="@layout/fragment_user_list"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"/>
