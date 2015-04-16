@@ -12,25 +12,20 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
 import com.microsoft.office365.profile.model.UserInfo;
-import com.microsoft.services.odata.interfaces.JsonSerializer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
  * Created by Administrator on 4/9/2015.
  */
-public class BasicInfoFragment extends Fragment implements RequestListener {
+public class BasicInfoFragment extends Fragment implements JsonRequestListener, InputStreamRequestListener {
     private static final String TAG = "BasicInfoFragment";
     protected static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
 
@@ -77,7 +72,6 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
             RequestManager
                     .getInstance()
                     .executeRequest(new URL(Constants.GRAPH_RESOURCE_URL + thumbnailPhotoEndpoint),
-                            null,
                             this);
         } catch (MalformedURLException e) {
             Log.e(TAG, e.getMessage());
@@ -89,46 +83,39 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
     }
 
     @Override
-    public void onRequestSuccess(final Object data) {
-        try {
-            //TODO: I don't want to validate JSON data with an exception, look for a better alternative
-            new JSONObject((String)data);
+    public void onRequestSuccess(final JsonElement data) {
+        Gson gson = new Gson();
+        final UserInfo userInfo = gson.fromJson(data, UserInfo.class);
 
-            Gson gson = new Gson();
-            final UserInfo userInfo = gson.fromJson((String)data, UserInfo.class);
-
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mDisplayNameTextView.setText(userInfo.displayName);
-                    mJobTitleTextView.setText(userInfo.jobTitle);
-                    mDepartmentTextView.setText(userInfo.department);
-                    mHireDateTextView.setText(userInfo.hireDate);
-                    mMailTextView.setText(userInfo.mail);
-                    mTelephoneNumberTextView.setText(userInfo.telephoneNumber);
-                    mStateTextView.setText(userInfo.state);
-                    mCountryTextView.setText(userInfo.country);
-                }
-            });
-        }
-        catch (JSONException | ClassCastException e) {
-            //TODO: Implement the flow where we got an image
-            Log.i(TAG, "We got an image");
-
-            final Drawable thumbnailPhotoDrawable = Drawable.createFromStream((InputStream)data, null);
-            try {
-                ((InputStream) data).close();
-            } catch (IOException ioe) {
-                Log.e(TAG, ioe.getMessage());
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mDisplayNameTextView.setText(userInfo.displayName);
+                mJobTitleTextView.setText(userInfo.jobTitle);
+                mDepartmentTextView.setText(userInfo.department);
+                mHireDateTextView.setText(userInfo.hireDate);
+                mMailTextView.setText(userInfo.mail);
+                mTelephoneNumberTextView.setText(userInfo.telephoneNumber);
+                mStateTextView.setText(userInfo.state);
+                mCountryTextView.setText(userInfo.country);
             }
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    mThumbnailPhotoImageView.setImageDrawable(thumbnailPhotoDrawable);
-                }
-            });
-        }
+        });
+    }
 
+    @Override
+    public void onRequestSuccess(InputStream data) {
+        final Drawable thumbnailPhotoDrawable = Drawable.createFromStream(data, null);
+        try {
+            data.close();
+        } catch (IOException e) {
+            Log.e(TAG, e.getMessage());
+        }
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mThumbnailPhotoImageView.setImageDrawable(thumbnailPhotoDrawable);
+            }
+        });
     }
 
     @Override

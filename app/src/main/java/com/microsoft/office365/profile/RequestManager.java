@@ -1,6 +1,5 @@
 package com.microsoft.office365.profile;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.JsonElement;
@@ -8,9 +7,6 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.microsoft.aad.adal.AuthenticationResult;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,20 +44,25 @@ public class RequestManager {
         INSTANCE = null;
     }
 
-    protected void executeRequest(URL endpoint, String acceptHeader, RequestListener requestListener){
-        RequestRunnable requestRunnable = new RequestRunnable(endpoint, acceptHeader, requestListener);
+    protected void executeRequest(URL endpoint, String acceptHeader, JsonRequestListener requestListener){
+        JsonRequestRunnable jsonRequestRunnable = new JsonRequestRunnable(endpoint, acceptHeader, requestListener);
+        mExecutor.submit(jsonRequestRunnable);
+    }
+
+    protected void executeRequest(URL endpoint, InputStreamRequestListener requestListener){
+        InputStreamRequestRunnable requestRunnable = new InputStreamRequestRunnable(endpoint, requestListener);
         mExecutor.submit(requestRunnable);
     }
 
-    private class RequestRunnable implements Runnable {
+    private class JsonRequestRunnable implements Runnable {
         protected static final String TAG = "RequestRunnable";
         protected URL mEndpoint;
-        protected RequestListener mRequestListener;
+        protected JsonRequestListener mJsonRequestListener;
         protected String mAcceptHeader;
 
-        protected RequestRunnable(URL endpoint, String acceptHeader, RequestListener requestListener) {
+        protected JsonRequestRunnable(URL endpoint, String acceptHeader, JsonRequestListener jsonRequestListener) {
             mEndpoint = endpoint;
-            mRequestListener = requestListener;
+            mJsonRequestListener = jsonRequestListener;
             mAcceptHeader = acceptHeader;
         }
 
@@ -76,34 +77,24 @@ public class RequestManager {
                 httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
 
                 httpsConnection.setRequestMethod("GET");
-                httpsConnection.setRequestProperty("Authorization", "Bearer " + getAccessToken());
-                if(mAcceptHeader != null){
-                    httpsConnection.setRequestProperty("accept", mAcceptHeader);
-                }
+                String accessToken = AuthenticationManager
+                        .getInstance()
+                        .initialize(null)
+                        .get().getAccessToken();
+                httpsConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
+                httpsConnection.setRequestProperty("accept", mAcceptHeader);
 
                 httpsConnection.connect();
 
                 // Get the contents
                 responseStream = httpsConnection.getInputStream();
-                //TODO: For now, if the endpoint ends with thumbnailPhoto just send the inputStream. Client will be responsible to close the stream
-                if(mEndpoint.getPath().endsWith("thumbnailphoto")){
-                    mRequestListener.onRequestSuccess(responseStream);
-                } else {
-
-                    //TODO: I'd really want to return a byte[] instead, but I'd need the Content length and the service always returns Content-length = -1
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
-                    StringBuilder stringBuilder = new StringBuilder();
-                    String line;
-                    while ((line = bufferedReader.readLine()) != null) {
-                        stringBuilder.append(line);
-                        stringBuilder.append(System.getProperty("line.separator"));
-                    }
-
-                    mRequestListener.onRequestSuccess(stringBuilder.toString());
-                }
-            } catch (IOException e) {
+                JsonReader jsonReader = new JsonReader(new InputStreamReader(responseStream));
+                JsonParser jsonParser = new JsonParser();
+                JsonElement jsonElement =  jsonParser.parse(jsonReader).getAsJsonObject();
+                mJsonRequestListener.onRequestSuccess(jsonElement);
+            } catch (IOException | InterruptedException | ExecutionException e) {
                 Log.e(TAG, e.getMessage());
-                mRequestListener.onRequestFailure(e);
+                mJsonRequestListener.onRequestFailure(e);
             } finally {
                 //TODO: Figure out if we need to close these objects or not.
                 if(httpsConnection != null){
@@ -119,20 +110,80 @@ public class RequestManager {
             }
         }
 
-        protected String getAccessToken(){
-            String accessToken = null;
+        //Method used for bypassing SSL verification
+        protected void disableSSLVerification() {
+
+            TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
+                public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+
+                public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                }
+
+                public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                }
+
+            } };
+
+            SSLContext sc = null;
             try {
-                AuthenticationResult authenticationResult = AuthenticationManager
+                sc = SSLContext.getInstance("SSL");
+                sc.init(null, trustAllCerts, new java.security.SecureRandom());
+            } catch (KeyManagementException e) {
+                e.printStackTrace();
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+            HostnameVerifier allHostsValid = new HostnameVerifier() {
+                public boolean verify(String hostname, SSLSession session) {
+                    return true;
+                }
+            };
+            HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+        }
+    }
+    private class InputStreamRequestRunnable implements Runnable {
+        protected static final String TAG = "RequestRunnable";
+        protected URL mEndpoint;
+        protected InputStreamRequestListener mInputStreamRequestListener;
+
+        protected InputStreamRequestRunnable(URL endpoint, InputStreamRequestListener inputStreamRequestListener) {
+            mEndpoint = endpoint;
+            mInputStreamRequestListener = inputStreamRequestListener;
+        }
+
+        @Override
+        public void run(){
+            InputStream responseStream = null;
+            HttpsURLConnection httpsConnection = null;
+
+            try {
+                //TODO: In Production, we don't need to disable SSL verification
+                //disableSSLVerification();
+                httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
+
+                httpsConnection.setRequestMethod("GET");
+                String accessToken = AuthenticationManager
                         .getInstance()
                         .initialize(null)
-                        .get();
-                accessToken = authenticationResult.getAccessToken();
-            } catch (InterruptedException | ExecutionException e){
-                Log.e(TAG, e.getMessage());
-                //TODO: Handle the case where the execution is cancelled
-            }
+                        .get().getAccessToken();
+                httpsConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
 
-            return accessToken;
+                httpsConnection.connect();
+
+                mInputStreamRequestListener.onRequestSuccess(httpsConnection.getInputStream());
+            } catch (IOException | InterruptedException | ExecutionException e) {
+                Log.e(TAG, e.getMessage());
+                mInputStreamRequestListener.onRequestFailure(e);
+            } finally {
+                //TODO: Figure out if we need to close these objects or not.
+                if(httpsConnection != null){
+                    httpsConnection.disconnect();
+                }
+            }
         }
 
         //Method used for bypassing SSL verification

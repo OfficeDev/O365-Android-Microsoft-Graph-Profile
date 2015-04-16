@@ -7,7 +7,7 @@ import java.io.InputStream;
 /**
  * Created by Administrator on 4/9/2015.
  */
-public interface RequestListener {
-    void onRequestSuccess(Object data);
+public interface JsonRequestListener {
+    void onRequestSuccess(JsonElement data);
     void onRequestFailure(Exception e);
 }

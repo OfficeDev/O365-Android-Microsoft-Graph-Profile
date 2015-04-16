@@ -1,6 +1,5 @@
 package com.microsoft.office365.profile;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,7 +34,7 @@ import java.util.ArrayList;
  * <p/>
  * <p/>
   */
-public abstract class BaseUserListFragment extends ListFragment implements RequestListener, AuthenticationListener {
+public abstract class BaseUserListFragment extends ListFragment implements JsonRequestListener, AuthenticationListener {
     private static final String TAG = "BaseUserListFragment";
     protected static final String ACCEPT_HEADER = "application/json;odata.metadata=minimal;odata.streaming=true";
 
@@ -108,24 +107,17 @@ public abstract class BaseUserListFragment extends ListFragment implements Reque
     }
 
     @Override
-    public void onRequestSuccess(final Object data) {
+    public void onRequestSuccess(final JsonElement data) {
         Gson gson = new Gson();
 
         Type listType = new TypeToken<ArrayList<BasicUserInfo>>() { }.getType();
-        //final ArrayList<BasicUserInfo> basicUserInfoList;
 
-        try {
-            JSONObject jsonData = new JSONObject((String)data);
-            if(jsonData.has("value")) {
-                mBasicUserInfoList = gson.fromJson(jsonData.getJSONArray("value").toString(), listType);
-            } else {
-                mBasicUserInfoList = new ArrayList<>();
-                BasicUserInfo justOneUser = gson.fromJson((String)data, BasicUserInfo.class);
-                mBasicUserInfoList.add(justOneUser);
-            }
-        } catch (JSONException e) {
-            Log.e(TAG, e.getMessage());
-            //TODO: Handle this exception
+        if(((JsonObject) data).has("value")) {
+            mBasicUserInfoList = gson.fromJson(((JsonObject) data).getAsJsonArray("value"), listType);
+        } else {
+            mBasicUserInfoList = new ArrayList<>();
+            BasicUserInfo justOneUser = gson.fromJson(data, BasicUserInfo.class);
+            mBasicUserInfoList.add(justOneUser);
         }
 
         getActivity().runOnUiThread(new Runnable() {
