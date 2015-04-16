@@ -4,13 +4,13 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              tools:context="com.microsoft.office365.profile.MembershipFragment">
+              tools:context="com.microsoft.office365.profile.GroupsFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/fragment_membership_title"
+        android:text="@string/fragment_groups_title"
         android:id="@+id/title" />
 
     <ListView
