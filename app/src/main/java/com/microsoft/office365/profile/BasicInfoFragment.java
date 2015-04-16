@@ -10,8 +10,14 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import com.microsoft.office365.profile.model.UserInfo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -75,23 +81,32 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
     }
 
     @Override
-    public void onRequestSuccess(final JsonElement data) {
-        Gson gson = new Gson();
-        final UserInfo userInfo = gson.fromJson(data, UserInfo.class);
+    public void onRequestSuccess(final String data) {
+        try {
+            //TODO: I don't want to validate JSON data with an exception, look for a better alternative
+            new JSONObject(data);
+            Gson gson = new Gson();
+            final UserInfo userInfo = gson.fromJson(data, UserInfo.class);
 
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mDisplayNameTextView.setText(userInfo.displayName);
-                mJobTitleTextView.setText(userInfo.jobTitle);
-                mDepartmentTextView.setText(userInfo.department);
-                mHireDateTextView.setText(userInfo.hireDate);
-                mMailTextView.setText(userInfo.mail);
-                mTelephoneNumberTextView.setText(userInfo.telephoneNumber);
-                mStateTextView.setText(userInfo.state);
-                mCountryTextView.setText(userInfo.country);
-            }
-        });
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mDisplayNameTextView.setText(userInfo.displayName);
+                    mJobTitleTextView.setText(userInfo.jobTitle);
+                    mDepartmentTextView.setText(userInfo.department);
+                    mHireDateTextView.setText(userInfo.hireDate);
+                    mMailTextView.setText(userInfo.mail);
+                    mTelephoneNumberTextView.setText(userInfo.telephoneNumber);
+                    mStateTextView.setText(userInfo.state);
+                    mCountryTextView.setText(userInfo.country);
+                }
+            });
+        }
+        catch (JSONException e) {
+            //TODO: Implement the flow where we got an image
+            Log.i(TAG, "We got an image");
+        }
+
     }
 
     @Override

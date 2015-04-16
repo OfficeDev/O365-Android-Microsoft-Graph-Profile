@@ -6,6 +6,6 @@ import com.google.gson.JsonElement;
  * Created by Administrator on 4/9/2015.
  */
 public interface RequestListener {
-    void onRequestSuccess(JsonElement data);
+    void onRequestSuccess(String data);
     void onRequestFailure(Exception e);
 }

@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.microsoft.aad.adal.AuthenticationResult;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -65,8 +66,6 @@ public class RequestManager {
         public void run(){
             InputStream responseStream = null;
             HttpsURLConnection httpsConnection = null;
-            JsonReader jsonReader = null;
-
 
             try {
                 //TODO: In Production, we don't need to disable SSL verification
@@ -84,10 +83,16 @@ public class RequestManager {
                 // Get the contents
                 responseStream = httpsConnection.getInputStream();
 
-                jsonReader = new JsonReader(new InputStreamReader(responseStream));
-                JsonParser jsonParser = new JsonParser();
-                JsonElement jsonElement =  jsonParser.parse(jsonReader).getAsJsonObject();
-                mRequestListener.onRequestSuccess(jsonElement);
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
+                StringBuilder stringBuilder = new StringBuilder();
+                String newLine = System.getProperty("line.separator");
+                String line;
+                while ((line = bufferedReader.readLine()) != null) {
+                    stringBuilder.append(line);
+                    stringBuilder.append(newLine);
+                }
+
+                mRequestListener.onRequestSuccess(stringBuilder.toString());
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
                 mRequestListener.onRequestFailure(e);
@@ -96,13 +101,6 @@ public class RequestManager {
                 //TODO: Figure out if we need tofire close these objects or not.
                 if(httpsConnection != null){
                     httpsConnection.disconnect();
-                }
-                if(jsonReader != null) {
-                    try {
-                        jsonReader.close();
-                    } catch (IOException e) {
-                        Log.e(TAG, e.getMessage());
-                    }
                 }
                 if (responseStream != null) {
                     try {

@@ -21,6 +21,9 @@ import com.google.gson.reflect.TypeToken;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.office365.profile.model.BasicUserInfo;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.net.MalformedURLException;
@@ -105,23 +108,25 @@ public abstract class BaseUserListFragment extends ListFragment implements Reque
     }
 
     @Override
-    public void onRequestSuccess(final JsonElement data) {
+    public void onRequestSuccess(final String data) {
         Gson gson = new Gson();
 
-        Type listType = new TypeToken<ArrayList<BasicUserInfo>>() {
-        }.getType();
-        final ArrayList<BasicUserInfo> basicUserInfoList;
+        Type listType = new TypeToken<ArrayList<BasicUserInfo>>() { }.getType();
+        //final ArrayList<BasicUserInfo> basicUserInfoList;
 
-        if(((JsonObject) data).has("value")) {
-            basicUserInfoList = gson.fromJson(((JsonObject) data).getAsJsonArray("value"), listType);
-        } else {
-            basicUserInfoList = new ArrayList<>();
-            BasicUserInfo justOneUser = gson.fromJson(data, BasicUserInfo.class);
-            basicUserInfoList.add(justOneUser);
+        try {
+            JSONObject jsonData = new JSONObject(data);
+            if(jsonData.has("value")) {
+                mBasicUserInfoList = gson.fromJson(jsonData.getJSONArray("value").toString(), listType);
+            } else {
+                mBasicUserInfoList = new ArrayList<>();
+                BasicUserInfo justOneUser = gson.fromJson(data, BasicUserInfo.class);
+                mBasicUserInfoList.add(justOneUser);
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, e.getMessage());
+            //TODO: Handle this exception
         }
-
-        // Make the data available to the entire class
-        mBasicUserInfoList = basicUserInfoList;
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -134,11 +139,11 @@ public abstract class BaseUserListFragment extends ListFragment implements Reque
                 ListView listView = getListView();
                 listView.addHeaderView(header);
 
-                if(basicUserInfoList.size() > 0) {
+                if(mBasicUserInfoList.size() > 0) {
                     setListAdapter(new BasicUserInfoAdapter(
                             getActivity(),
                             R.layout.list_item_basic_user_info,
-                            basicUserInfoList));
+                            mBasicUserInfoList));
                 } else {
                     ArrayList<String> notAvailableList = new ArrayList<>();
                     notAvailableList.add("Nobody reports to him");
