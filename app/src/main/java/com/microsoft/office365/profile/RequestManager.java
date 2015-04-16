@@ -1,5 +1,6 @@
 package com.microsoft.office365.profile;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.gson.JsonElement;
@@ -8,6 +9,8 @@ import com.google.gson.stream.JsonReader;
 import com.microsoft.aad.adal.AuthenticationResult;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -85,20 +88,18 @@ public class RequestManager {
 
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
                 StringBuilder stringBuilder = new StringBuilder();
-                String newLine = System.getProperty("line.separator");
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
                     stringBuilder.append(line);
-                    stringBuilder.append(newLine);
+                    stringBuilder.append(System.getProperty("line.separator"));
                 }
 
                 mRequestListener.onRequestSuccess(stringBuilder.toString());
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
                 mRequestListener.onRequestFailure(e);
-                //TODO: Handle the case where the execution is cancelled
             } finally {
-                //TODO: Figure out if we need tofire close these objects or not.
+                //TODO: Figure out if we need to close these objects or not.
                 if(httpsConnection != null){
                     httpsConnection.disconnect();
                 }
