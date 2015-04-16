@@ -49,6 +49,10 @@ public class DirectReportsFragment extends BaseUserListFragment {
         return R.string.fragment_direct_reports_title;
     }
 
+    /**
+     * Returns the message to display when there are no direct reports returned by a request.
+     * @return The message to display if there are no direct reports.
+     */
     @Override
     public CharSequence getEmptyArrayMessage() {
         return getResources().getText(R.string.empty_array_direct_reports_fragment_message);

@@ -60,6 +60,11 @@ public abstract class BaseUserListFragment extends ListFragment implements JsonR
     public CharSequence getFileNotFoundExceptionMessage(){
         return getResources().getText(R.string.file_not_found_exception_default_message);
     }
+    /**
+     * Returns the message to display when an empty array returned by a request.
+     * For example, if the request looks for the direct reports and there's none.
+     * @return The message to display when a an empty array is returned.
+     */
     public CharSequence getEmptyArrayMessage(){
         return getResources().getText(R.string.empty_array_default_message);
     }
