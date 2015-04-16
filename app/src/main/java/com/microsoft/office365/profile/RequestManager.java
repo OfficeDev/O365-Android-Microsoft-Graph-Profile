@@ -75,7 +75,9 @@ public class RequestManager {
 
                 httpsConnection.setRequestMethod("GET");
                 httpsConnection.setRequestProperty("Authorization", "Bearer " + getAccessToken());
-                httpsConnection.setRequestProperty("accept", mAcceptHeader);
+                if(mAcceptHeader != null){
+                    httpsConnection.setRequestProperty("accept", mAcceptHeader);
+                }
 
                 httpsConnection.connect();
 
