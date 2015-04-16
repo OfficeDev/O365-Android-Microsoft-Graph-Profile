@@ -85,16 +85,22 @@ public class RequestManager {
 
                 // Get the contents
                 responseStream = httpsConnection.getInputStream();
+                //TODO: For now, if the endpoint ends with thumbnailPhoto just send the inputStream. Client will be responsible to close the stream
+                if(mEndpoint.getPath().endsWith("thumbnailphoto")){
+                    mRequestListener.onRequestSuccess(responseStream);
+                } else {
 
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
-                StringBuilder stringBuilder = new StringBuilder();
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    stringBuilder.append(line);
-                    stringBuilder.append(System.getProperty("line.separator"));
+                    //TODO: I'd really want to return a byte[] instead, but I'd need the Content length and the service always returns Content-length = -1
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseStream));
+                    StringBuilder stringBuilder = new StringBuilder();
+                    String line;
+                    while ((line = bufferedReader.readLine()) != null) {
+                        stringBuilder.append(line);
+                        stringBuilder.append(System.getProperty("line.separator"));
+                    }
+
+                    mRequestListener.onRequestSuccess(stringBuilder.toString());
                 }
-
-                mRequestListener.onRequestSuccess(stringBuilder.toString());
             } catch (IOException e) {
                 Log.e(TAG, e.getMessage());
                 mRequestListener.onRequestFailure(e);

@@ -1,11 +1,13 @@
 package com.microsoft.office365.profile;
 
 import android.app.Fragment;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -13,10 +15,14 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 import com.microsoft.office365.profile.model.UserInfo;
+import com.microsoft.services.odata.interfaces.JsonSerializer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,6 +42,7 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
     protected TextView mTelephoneNumberTextView;
     protected TextView mStateTextView;
     protected TextView mCountryTextView;
+    protected ImageView mThumbnailPhotoImageView;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,6 +63,7 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
         mTelephoneNumberTextView = (TextView)fragmentView.findViewById(R.id.telephoneNumberTextView);
         mStateTextView = (TextView)fragmentView.findViewById(R.id.stateTextView);
         mCountryTextView = (TextView)fragmentView.findViewById(R.id.countryTextView);
+        mThumbnailPhotoImageView = (ImageView)fragmentView.findViewById(R.id.thumbnailPhotoImageView);
 
         try {
             ProfileApplication application = (ProfileApplication)getActivity().getApplication();
@@ -81,12 +89,13 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
     }
 
     @Override
-    public void onRequestSuccess(final String data) {
+    public void onRequestSuccess(final Object data) {
         try {
             //TODO: I don't want to validate JSON data with an exception, look for a better alternative
-            new JSONObject(data);
+            new JSONObject((String)data);
+
             Gson gson = new Gson();
-            final UserInfo userInfo = gson.fromJson(data, UserInfo.class);
+            final UserInfo userInfo = gson.fromJson((String)data, UserInfo.class);
 
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -102,9 +111,22 @@ public class BasicInfoFragment extends Fragment implements RequestListener {
                 }
             });
         }
-        catch (JSONException e) {
+        catch (JSONException | ClassCastException e) {
             //TODO: Implement the flow where we got an image
             Log.i(TAG, "We got an image");
+
+            final Drawable thumbnailPhotoDrawable = Drawable.createFromStream((InputStream)data, null);
+            try {
+                ((InputStream) data).close();
+            } catch (IOException ioe) {
+                Log.e(TAG, ioe.getMessage());
+            }
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mThumbnailPhotoImageView.setImageDrawable(thumbnailPhotoDrawable);
+                }
+            });
         }
 
     }

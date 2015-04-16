@@ -108,19 +108,19 @@ public abstract class BaseUserListFragment extends ListFragment implements Reque
     }
 
     @Override
-    public void onRequestSuccess(final String data) {
+    public void onRequestSuccess(final Object data) {
         Gson gson = new Gson();
 
         Type listType = new TypeToken<ArrayList<BasicUserInfo>>() { }.getType();
         //final ArrayList<BasicUserInfo> basicUserInfoList;
 
         try {
-            JSONObject jsonData = new JSONObject(data);
+            JSONObject jsonData = new JSONObject((String)data);
             if(jsonData.has("value")) {
                 mBasicUserInfoList = gson.fromJson(jsonData.getJSONArray("value").toString(), listType);
             } else {
                 mBasicUserInfoList = new ArrayList<>();
-                BasicUserInfo justOneUser = gson.fromJson(data, BasicUserInfo.class);
+                BasicUserInfo justOneUser = gson.fromJson((String)data, BasicUserInfo.class);
                 mBasicUserInfoList.add(justOneUser);
             }
         } catch (JSONException e) {
