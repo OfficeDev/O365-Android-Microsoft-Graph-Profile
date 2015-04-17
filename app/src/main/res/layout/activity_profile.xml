@@ -26,13 +26,13 @@
               tools:layout="@layout/fragment_user_list"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"/>
-<!--
-        <fragment android:id="@+id/membershipFragment"
-                  android:name="com.microsoft.office365.profile.MembershipFragment"
-                  tools:layout="@layout/fragment_membership"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"/>
 
+    <fragment android:id="@+id/groupsFragment"
+              android:name="com.microsoft.office365.profile.GroupsFragment"
+              tools:layout="@layout/fragment_groups"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"/>
+<!--
         <fragment android:id="@+id/filesFragment"
                   android:name="com.microsoft.office365.profile.FilesFragment"
                   tools:layout="@layout/fragment_files"
