@@ -112,4 +112,10 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
     public void onAuthenticationFailure(Exception e) {
         //TODO: implement this
     }
+
+    @Override
+    public void onRequestFailure(Exception e) {
+        // TODO: implement failure...
+        Log.e(TAG, e.getMessage());
+    }
 }
