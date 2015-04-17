@@ -61,22 +61,24 @@ public abstract class UserListFragment extends BaseListFragment {
                 ListView listView = getListView();
                 listView.addHeaderView(header);
 
-                if(mBasicUserInfoList.size() > 0) {
-                    setListAdapter(new BasicUserInfoAdapter(
-                            getActivity(),
-                            R.layout.list_item_basic_user_info,
-                            mBasicUserInfoList));
-                } else {
-                    ArrayList<CharSequence> notAvailableList = new ArrayList<>();
-                    notAvailableList.add(getEmptyArrayMessage());
-
+                // If there are no elements, display a custom message
+                if (mBasicUserInfoList.size() == 0) {
                     // I don't want to accept any clicks
                     listView.setEnabled(false);
+
+                    BasicUserInfo noData = new BasicUserInfo();
+                    noData.displayName = (String)getEmptyArrayMessage();
+                    mBasicUserInfoList.add(noData);
 
                     setListAdapter(new ArrayAdapter<>(
                             getActivity(),
                             android.R.layout.simple_list_item_1,
-                            notAvailableList));
+                            mBasicUserInfoList));
+                } else {
+                    setListAdapter(new BasicUserInfoAdapter(
+                            getActivity(),
+                            R.layout.list_item_basic_user_info,
+                            mBasicUserInfoList));
                 }
                 setListShown(true);
             }
