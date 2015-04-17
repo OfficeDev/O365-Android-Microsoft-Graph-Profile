@@ -82,22 +82,16 @@ public class GroupsFragment extends BaseListFragment {
                 // I don't want to accept any clicks
                 listView.setEnabled(false);
 
-                //TODO: I used gson to quickly populate group objects but now I only need an array of Strings
-                // See if we can get rid of the group model or if we need it to clarify how we're getting data
-                // I may be able to create a CustomAdapter but I don't think that should be necessary
-                ArrayList<CharSequence> stringList = new ArrayList<>();
-                for (Group group : mGroupList) {
-                    stringList.add(group.displayName);
-                }
-
                 // If there are no elements, display a custom message
                 if (mGroupList.size() == 0) {
-                    stringList.add(getEmptyArrayMessage());
+                    Group noData = new Group();
+                    noData.displayName = (String)getEmptyArrayMessage();
+                    mGroupList.add(noData);
                 }
                 setListAdapter(new ArrayAdapter<>(
                         getActivity(),
                         android.R.layout.simple_list_item_1,
-                        stringList));
+                        mGroupList));
                 setListShown(true);
             }
         });
