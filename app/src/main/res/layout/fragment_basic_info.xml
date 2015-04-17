@@ -1,168 +1,173 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context="com.microsoft.office365.profile.BasicInfoFragment">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="David Longmuir"
-        android:id="@+id/displayNameTextView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context="com.microsoft.office365.profile.BasicInfoFragment">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/thumbnailPhotoImageView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:minHeight="240dp"
-        android:minWidth="240dp"
-        android:src="@mipmap/thumbnail_photo_not_available"
-        android:layout_below="@+id/displayNameTextView"
-        android:maxHeight="240dp"
-        android:maxWidth="240dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="David Longmuir"
+            android:id="@+id/displayNameTextView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+    
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/thumbnailPhotoImageView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:minHeight="240dp"
+            android:minWidth="240dp"
+            android:src="@mipmap/thumbnail_photo_not_available"
+            android:layout_below="@+id/displayNameTextView"
+            android:maxHeight="240dp"
+            android:maxWidth="240dp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Job Title:"
-        android:id="@+id/jobTitleLabelTextView"
-        android:layout_below="@+id/thumbnailPhotoImageView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Job Title:"
+            android:id="@+id/jobTitleLabelTextView"
+            android:layout_below="@+id/thumbnailPhotoImageView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Department:"
-        android:id="@+id/departmentLabelTextView"
-        android:layout_below="@+id/jobTitleLabelTextView"
-        android:layout_alignLeft="@+id/jobTitleLabelTextView"
-        android:layout_alignStart="@+id/jobTitleLabelTextView"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Department:"
+            android:id="@+id/departmentLabelTextView"
+            android:layout_below="@+id/jobTitleLabelTextView"
+            android:layout_alignLeft="@+id/jobTitleLabelTextView"
+            android:layout_alignStart="@+id/jobTitleLabelTextView"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Hire Date:"
-        android:id="@+id/hireDateLabelTextView"
-        android:layout_below="@+id/departmentLabelTextView"
-        android:layout_alignLeft="@+id/departmentLabelTextView"
-        android:layout_alignStart="@+id/departmentLabelTextView"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Hire Date:"
+            android:id="@+id/hireDateLabelTextView"
+            android:layout_below="@+id/departmentLabelTextView"
+            android:layout_alignLeft="@+id/departmentLabelTextView"
+            android:layout_alignStart="@+id/departmentLabelTextView"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Mail:"
-        android:id="@+id/mailLabelTextView"
-        android:layout_below="@+id/hireDateLabelTextView"
-        android:layout_alignLeft="@+id/hireDateLabelTextView"
-        android:layout_alignStart="@+id/hireDateLabelTextView"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Mail:"
+            android:id="@+id/mailLabelTextView"
+            android:layout_below="@+id/hireDateLabelTextView"
+            android:layout_alignLeft="@+id/hireDateLabelTextView"
+            android:layout_alignStart="@+id/hireDateLabelTextView"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Phone:"
-        android:id="@+id/telephoneNumberLabelTextView"
-        android:layout_below="@+id/mailLabelTextView"
-        android:layout_alignLeft="@+id/mailLabelTextView"
-        android:layout_alignStart="@+id/mailLabelTextView"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Phone:"
+            android:id="@+id/telephoneNumberLabelTextView"
+            android:layout_below="@+id/mailLabelTextView"
+            android:layout_alignLeft="@+id/mailLabelTextView"
+            android:layout_alignStart="@+id/mailLabelTextView"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="State:"
-        android:id="@+id/stateLabelTextView"
-        android:layout_below="@+id/telephoneNumberLabelTextView"
-        android:layout_alignLeft="@+id/telephoneNumberLabelTextView"
-        android:layout_alignStart="@+id/telephoneNumberLabelTextView"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="State:"
+            android:id="@+id/stateLabelTextView"
+            android:layout_below="@+id/telephoneNumberLabelTextView"
+            android:layout_alignLeft="@+id/telephoneNumberLabelTextView"
+            android:layout_alignStart="@+id/telephoneNumberLabelTextView"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Country:"
-        android:id="@+id/countryLabelTextView"
-        android:layout_below="@+id/stateLabelTextView"
-        android:layout_alignLeft="@+id/stateLabelTextView"
-        android:layout_alignStart="@+id/stateLabelTextView"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Country:"
+            android:id="@+id/countryLabelTextView"
+            android:layout_below="@+id/stateLabelTextView"
+            android:layout_alignLeft="@+id/stateLabelTextView"
+            android:layout_alignStart="@+id/stateLabelTextView"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Corporate Security Officer"
-        android:id="@+id/jobTitleTextView"
-        android:layout_alignTop="@+id/jobTitleLabelTextView"
-        android:layout_toRightOf="@+id/departmentLabelTextView"
-        android:layout_toEndOf="@+id/departmentLabelTextView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Corporate Security Officer"
+            android:id="@+id/jobTitleTextView"
+            android:layout_alignTop="@+id/jobTitleLabelTextView"
+            android:layout_toRightOf="@+id/departmentLabelTextView"
+            android:layout_toEndOf="@+id/departmentLabelTextView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Operations"
-        android:id="@+id/departmentTextView"
-        android:layout_alignTop="@+id/departmentLabelTextView"
-        android:layout_toRightOf="@+id/departmentLabelTextView"
-        android:layout_toEndOf="@+id/departmentLabelTextView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Operations"
+            android:id="@+id/departmentTextView"
+            android:layout_alignTop="@+id/departmentLabelTextView"
+            android:layout_toRightOf="@+id/departmentLabelTextView"
+            android:layout_toEndOf="@+id/departmentLabelTextView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="03/04/2012"
-        android:id="@+id/hireDateTextView"
-        android:layout_alignTop="@+id/hireDateLabelTextView"
-        android:layout_toRightOf="@+id/departmentLabelTextView"
-        android:layout_toEndOf="@+id/departmentLabelTextView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="03/04/2012"
+            android:id="@+id/hireDateTextView"
+            android:layout_alignTop="@+id/hireDateLabelTextView"
+            android:layout_toRightOf="@+id/departmentLabelTextView"
+            android:layout_toEndOf="@+id/departmentLabelTextView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="davidl@patsoldemo4.com"
-        android:id="@+id/mailTextView"
-        android:layout_below="@+id/hireDateLabelTextView"
-        android:layout_alignLeft="@+id/hireDateTextView"
-        android:layout_alignStart="@+id/hireDateTextView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="davidl@patsoldemo4.com"
+            android:id="@+id/mailTextView"
+            android:layout_below="@+id/hireDateLabelTextView"
+            android:layout_alignLeft="@+id/hireDateTextView"
+            android:layout_alignStart="@+id/hireDateTextView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="+1 262 555 0106"
-        android:id="@+id/telephoneNumberTextView"
-        android:layout_alignTop="@+id/telephoneNumberLabelTextView"
-        android:layout_alignLeft="@+id/mailTextView"
-        android:layout_alignStart="@+id/mailTextView"
-        android:phoneNumber="false" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="+1 262 555 0106"
+            android:id="@+id/telephoneNumberTextView"
+            android:layout_alignTop="@+id/telephoneNumberLabelTextView"
+            android:layout_alignLeft="@+id/mailTextView"
+            android:layout_alignStart="@+id/mailTextView"
+            android:phoneNumber="false" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="WA"
-        android:id="@+id/stateTextView"
-        android:layout_below="@+id/telephoneNumberLabelTextView"
-        android:layout_alignLeft="@+id/telephoneNumberTextView"
-        android:layout_alignStart="@+id/telephoneNumberTextView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="WA"
+            android:id="@+id/stateTextView"
+            android:layout_below="@+id/telephoneNumberLabelTextView"
+            android:layout_alignLeft="@+id/telephoneNumberTextView"
+            android:layout_alignStart="@+id/telephoneNumberTextView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="United States"
-        android:id="@+id/countryTextView"
-        android:layout_alignTop="@+id/countryLabelTextView"
-        android:layout_alignLeft="@+id/stateTextView"
-        android:layout_alignStart="@+id/stateTextView" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="United States"
+            android:id="@+id/countryTextView"
+            android:layout_alignTop="@+id/countryLabelTextView"
+            android:layout_alignLeft="@+id/stateTextView"
+            android:layout_alignStart="@+id/stateTextView" />
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>
