@@ -7,7 +7,7 @@ package com.microsoft.office365.profile;
  */
 public class MainListFragment extends UserListFragment {
     protected static final String TAG = "MainUserListFragment";
-    protected static final String LAST_SECTION_ENDPOINT = "/users";
+    protected static final String LAST_SECTION_ENDPOINT = "/users?$filter=userType%20eq%20'Member'";
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
