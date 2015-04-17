@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.TabHost;
 
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
@@ -39,8 +40,28 @@ public class ProfileActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        // If the activity was launched with a user id attached, load that user information
-        // else, load the current user information
+        TabHost tabs=(TabHost)findViewById(R.id.tabHost);
+        tabs.setup();
+        TabHost.TabSpec spec=tabs.newTabSpec("tag1");
+        spec.setContent(R.id.basicInfoFragment);
+        spec.setIndicator("General");
+        tabs.addTab(spec);
+        spec=tabs.newTabSpec("tag2");
+        spec.setContent(R.id.managerFragment);
+        spec.setIndicator("Manager");
+        tabs.addTab(spec);
+        spec=tabs.newTabSpec("tag3");
+        spec.setContent(R.id.directReportsFragment);
+        spec.setIndicator("Direct Reports");
+        tabs.addTab(spec);
+        spec=tabs.newTabSpec("tag4");
+        spec.setContent(R.id.groupsFragment);
+        spec.setIndicator("Groups");
+        tabs.addTab(spec);
+        spec=tabs.newTabSpec("tag5");
+        spec.setContent(R.id.filesFragment);
+        spec.setIndicator("Files");
+        tabs.addTab(spec);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

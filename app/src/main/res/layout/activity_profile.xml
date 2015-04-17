@@ -1,37 +1,56 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              tools:context="com.microsoft.office365.profile.ProfileActivity">
+<TabHost
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/tabHost"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <fragment android:id="@+id/basicInfoFragment"
-              android:name="com.microsoft.office365.profile.BasicInfoFragment"
-              tools:layout="@layout/fragment_basic_info"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="com.microsoft.office365.profile.ProfileActivity">
 
-    <fragment android:id="@+id/managerFragment"
-              android:name="com.microsoft.office365.profile.ManagerFragment"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
+        <TabWidget
+            android:id="@android:id/tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TabWidget>
 
-    <fragment android:id="@+id/directReportsFragment"
-              android:name="com.microsoft.office365.profile.DirectReportsFragment"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <fragment android:id="@+id/groupsFragment"
-              android:name="com.microsoft.office365.profile.GroupsFragment"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
+            <fragment android:id="@+id/basicInfoFragment"
+                      android:name="com.microsoft.office365.profile.BasicInfoFragment"
+                      tools:layout="@layout/fragment_basic_info"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"/>
 
-    <fragment android:id="@+id/filesFragment"
-              android:name="com.microsoft.office365.profile.FilesFragment"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"/>
-</LinearLayout>
+            <fragment android:id="@+id/managerFragment"
+                      android:name="com.microsoft.office365.profile.ManagerFragment"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"/>
+
+            <fragment android:id="@+id/directReportsFragment"
+                      android:name="com.microsoft.office365.profile.DirectReportsFragment"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"/>
+
+            <fragment android:id="@+id/groupsFragment"
+                      android:name="com.microsoft.office365.profile.GroupsFragment"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"/>
+
+            <fragment android:id="@+id/filesFragment"
+                      android:name="com.microsoft.office365.profile.FilesFragment"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content"/>
+        </FrameLayout>
+    </LinearLayout>
+</TabHost>
