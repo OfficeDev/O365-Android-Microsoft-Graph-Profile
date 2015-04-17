@@ -54,7 +54,7 @@ public abstract class UserListFragment extends BaseListFragment {
             @Override
             public void run() {
                 LayoutInflater layoutInflater = (LayoutInflater)getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
-                View header = layoutInflater.inflate(R.layout.header_user_list, null);
+                View header = layoutInflater.inflate(R.layout.header_base_list, null);
                 TextView title = (TextView)header.findViewById(R.id.title);
                 title.setText(getTitleResourceId());
 
@@ -81,37 +81,6 @@ public abstract class UserListFragment extends BaseListFragment {
                 setListShown(true);
             }
         });
-    }
-
-    @Override
-    public void onRequestFailure(Exception e) {
-        Log.e(TAG, e.getMessage());
-
-        if(e.getClass().equals(FileNotFoundException.class)) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
-                    View header = layoutInflater.inflate(R.layout.header_user_list, null);
-                    TextView title = (TextView) header.findViewById(R.id.title);
-                    title.setText(getTitleResourceId());
-
-                    ArrayList<CharSequence> notAvailableList = new ArrayList<>();
-                    notAvailableList.add(getFileNotFoundExceptionMessage());
-
-                    ListView listView = getListView();
-                    listView.addHeaderView(header);
-                    listView.setClickable(false);
-                    listView.setEnabled(false);
-
-                    setListAdapter(new ArrayAdapter<>(
-                            getActivity(),
-                            android.R.layout.simple_list_item_1,
-                            notAvailableList));
-                    setListShown(true);
-                }
-            });
-        }
     }
 
     private class BasicUserInfoAdapter extends ArrayAdapter<BasicUserInfo>{
