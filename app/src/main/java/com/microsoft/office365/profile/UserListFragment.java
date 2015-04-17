@@ -70,7 +70,7 @@ public abstract class UserListFragment extends BaseListFragment {
                     ArrayList<CharSequence> notAvailableList = new ArrayList<>();
                     notAvailableList.add(getEmptyArrayMessage());
 
-                    listView.setClickable(false);
+                    // I don't want to accept any clicks
                     listView.setEnabled(false);
 
                     setListAdapter(new ArrayAdapter<>(

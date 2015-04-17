@@ -71,13 +71,16 @@ public class GroupsFragment extends BaseListFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LayoutInflater layoutInflater = (LayoutInflater)getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
+                LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
                 View header = layoutInflater.inflate(R.layout.header_base_list, null);
-                TextView title = (TextView)header.findViewById(R.id.title);
+                TextView title = (TextView) header.findViewById(R.id.title);
                 title.setText(getTitleResourceId());
 
                 ListView listView = getListView();
                 listView.addHeaderView(header);
+
+                // I don't want to accept any clicks
+                listView.setEnabled(false);
 
                 //TODO: I used gson to quickly populate group objects but now I only need an array of Strings
                 // See if we can get rid of the group model or if we need it to clarify how we're getting data
@@ -88,7 +91,7 @@ public class GroupsFragment extends BaseListFragment {
                 }
 
                 // If there are no elements, display a custom message
-                if(mGroupList.size() == 0) {
+                if (mGroupList.size() == 0) {
                     stringList.add(getEmptyArrayMessage());
                 }
                 setListAdapter(new ArrayAdapter<>(
