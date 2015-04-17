@@ -6,6 +6,7 @@ package com.microsoft.office365.profile.model;
 public class BasicUserInfo implements CharSequence {
     public String objectId;
     public String displayName;
+    public String jobTitle;
 
     @Override
     public int length() {
@@ -18,9 +19,12 @@ public class BasicUserInfo implements CharSequence {
     }
 
     @Override
+    public String toString() {
+        return displayName;
+    }
+
+    @Override
     public CharSequence subSequence(int start, int end) {
         return displayName.subSequence(start, end);
     }
-
-    public String jobTitle;
 }
