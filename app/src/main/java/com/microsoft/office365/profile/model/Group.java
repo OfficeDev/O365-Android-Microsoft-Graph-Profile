@@ -19,7 +19,6 @@ public class Group implements CharSequence {
         return displayName.charAt(index);
     }
 
-    @NonNull
     @Override
     public String toString() {
         return displayName;
