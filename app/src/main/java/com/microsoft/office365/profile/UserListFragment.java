@@ -2,7 +2,6 @@ package com.microsoft.office365.profile;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.microsoft.office365.profile.model.BasicUserInfo;
 
-import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
@@ -77,7 +75,7 @@ public abstract class UserListFragment extends BaseListFragment {
                 } else {
                     setListAdapter(new BasicUserInfoAdapter(
                             getActivity(),
-                            R.layout.list_item_basic_user_info,
+                            android.R.layout.two_line_list_item,
                             mBasicUserInfoList));
                 }
                 setListShown(true);
@@ -109,9 +107,9 @@ public abstract class UserListFragment extends BaseListFragment {
             } else {
                 row = convertView;
             }
-            TextView v = (TextView) row.findViewById(R.id.displayName);
+            TextView v = (TextView) row.findViewById(android.R.id.text1);
             v.setText(mData.get(position).displayName);
-            v = (TextView) row.findViewById(R.id.jobTitle);
+            v = (TextView) row.findViewById(android.R.id.text2);
             v.setText(mData.get(position).jobTitle);
             return row;
         }
