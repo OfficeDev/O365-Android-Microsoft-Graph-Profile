@@ -31,12 +31,12 @@ import javax.net.ssl.X509TrustManager;
 public class RequestManager {
     protected ExecutorService mExecutor;
     private static RequestManager INSTANCE;
+    private static final int MAX_NUMBER_OF_THREADS = 6;
 
     public static synchronized RequestManager getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new RequestManager();
-            int numProcessors = Runtime.getRuntime().availableProcessors();
-            INSTANCE.mExecutor = Executors.newFixedThreadPool(numProcessors);
+            INSTANCE.mExecutor = Executors.newFixedThreadPool(MAX_NUMBER_OF_THREADS);
         }
         return INSTANCE;
     }
