@@ -38,6 +38,11 @@ public class BasicInfoFragment extends Fragment implements JsonRequestListener, 
     protected TextView mStateTextView;
     protected TextView mCountryTextView;
     protected ImageView mThumbnailPhotoImageView;
+    protected TextView mManagerDisplayName;
+    protected TextView mManagerJobTitle;
+    protected URL mUserEndpoint;
+    protected URL mManagerEndpoint;
+    protected URL mThumbnailPhotoEndpoint;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,20 +64,39 @@ public class BasicInfoFragment extends Fragment implements JsonRequestListener, 
         mStateTextView = (TextView)fragmentView.findViewById(R.id.stateTextView);
         mCountryTextView = (TextView)fragmentView.findViewById(R.id.countryTextView);
         mThumbnailPhotoImageView = (ImageView)fragmentView.findViewById(R.id.thumbnailPhotoImageView);
+        mManagerDisplayName = (TextView)fragmentView.findViewById(R.id.managerDisplayName);
+        mManagerJobTitle = (TextView)fragmentView.findViewById(R.id.managerJobTitle);
 
         try {
             ProfileApplication application = (ProfileApplication)getActivity().getApplication();
-            String userEndpoint = application.getTenant() + "/users/" + ((ProfileActivity)getActivity()).getUserId();
-            String thumbnailPhotoEndpoint = application.getTenant() + "/users('" + ((ProfileActivity)getActivity()).getUserId() + "')/thumbnailphoto";
+            mUserEndpoint = new URL(
+                    Constants.GRAPH_RESOURCE_URL +
+                    application.getTenant() +
+                    "/users/" + ((ProfileActivity)getActivity()).getUserId());
+            mThumbnailPhotoEndpoint = new URL(
+                    Constants.GRAPH_RESOURCE_URL +
+                    application.getTenant() +
+                    "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/thumbnailphoto");
+            mManagerEndpoint = new URL(
+                    Constants.GRAPH_RESOURCE_URL +
+                    application.getTenant() +application.getTenant() +
+                    "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/manager");
+
             RequestManager
                     .getInstance()
-                    .executeRequest(new URL(Constants.GRAPH_RESOURCE_URL + userEndpoint),
+                    .executeRequest(mUserEndpoint,
                             ACCEPT_HEADER,
                             this);
             RequestManager
                     .getInstance()
-                    .executeRequest(new URL(Constants.GRAPH_RESOURCE_URL + thumbnailPhotoEndpoint),
+                    .executeRequest(mThumbnailPhotoEndpoint,
                             this);
+            RequestManager
+                    .getInstance()
+                    .executeRequest(mManagerEndpoint,
+                            ACCEPT_HEADER,
+                            this);
+
         } catch (MalformedURLException e) {
             Log.e(TAG, e.getMessage());
             e.printStackTrace();
@@ -83,27 +107,32 @@ public class BasicInfoFragment extends Fragment implements JsonRequestListener, 
     }
 
     @Override
-    public void onRequestSuccess(final JsonElement data) {
+    public void onRequestSuccess(final URL requestedEndpoint, final JsonElement data) {
         Gson gson = new Gson();
         final UserInfo userInfo = gson.fromJson(data, UserInfo.class);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mDisplayNameTextView.setText(userInfo.displayName);
-                mJobTitleTextView.setText(userInfo.jobTitle);
-                mDepartmentTextView.setText(userInfo.department);
-                mHireDateTextView.setText(userInfo.hireDate);
-                mMailTextView.setText(userInfo.mail);
-                mTelephoneNumberTextView.setText(userInfo.telephoneNumber);
-                mStateTextView.setText(userInfo.state);
-                mCountryTextView.setText(userInfo.country);
+                if(requestedEndpoint.sameFile(mUserEndpoint)) {
+                    mDisplayNameTextView.setText(userInfo.displayName);
+                    mJobTitleTextView.setText(userInfo.jobTitle);
+                    mDepartmentTextView.setText(userInfo.department);
+                    mHireDateTextView.setText(userInfo.hireDate);
+                    mMailTextView.setText(userInfo.mail);
+                    mTelephoneNumberTextView.setText(userInfo.telephoneNumber);
+                    mStateTextView.setText(userInfo.state);
+                    mCountryTextView.setText(userInfo.country);
+                } else {
+                    mManagerDisplayName.setText(userInfo.displayName);
+                    mManagerJobTitle.setText(userInfo.jobTitle);
+                }
             }
         });
     }
 
     @Override
-    public void onRequestSuccess(InputStream data) {
+    public void onRequestSuccess(URL requestedEndpoint, InputStream data) {
         final Drawable thumbnailPhotoDrawable = Drawable.createFromStream(data, null);
         try {
             data.close();
@@ -119,7 +148,7 @@ public class BasicInfoFragment extends Fragment implements JsonRequestListener, 
     }
 
     @Override
-    public void onRequestFailure(Exception e) {
+    public void onRequestFailure(URL requestedEndpoint, Exception e) {
         Log.e(TAG, e.getMessage());
         e.printStackTrace();
         //TODO: Implement error interface

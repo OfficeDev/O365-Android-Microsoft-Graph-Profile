@@ -8,6 +8,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.FileNotFoundException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -44,7 +45,7 @@ public class ManagerFragment extends UserListFragment {
     }
 
     @Override
-    public void onRequestFailure(Exception e) {
+    public void onRequestFailure(URL requestedEndpoint, Exception e) {
         Log.e(TAG, e.getMessage());
 
         //If we have a FileNotFoundException it's because this user doesn't have a manager
@@ -73,7 +74,7 @@ public class ManagerFragment extends UserListFragment {
                 }
             });
         } else { // If it's not a FileNotFoundException then let the parent handle the error
-            super.onRequestFailure(e);
+            super.onRequestFailure(requestedEndpoint, e);
         }
     }
 }

@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import com.microsoft.office365.profile.model.BasicUserInfo;
 
 import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
@@ -35,7 +36,7 @@ public abstract class UserListFragment extends BaseListFragment {
     }
 
     @Override
-    public void onRequestSuccess(final JsonElement data) {
+    public void onRequestSuccess(URL requestedEndpoint, final JsonElement data) {
         Gson gson = new Gson();
 
         Type listType = new TypeToken<ArrayList<BasicUserInfo>>() { }.getType();

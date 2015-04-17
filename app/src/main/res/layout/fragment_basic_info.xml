@@ -168,6 +168,31 @@
             android:layout_alignLeft="@+id/stateTextView"
             android:layout_alignStart="@+id/stateTextView" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/managerSectionTitle"
+            android:text="@string/fragment_manager_title"
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_below="@+id/countryLabelTextView"
+            android:layout_alignLeft="@+id/countryLabelTextView"/>
+
+        <TextView android:id="@+id/managerDisplayName"
+              android:textSize="16sp"
+              android:textStyle="bold"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/managerSectionTitle"
+              android:layout_alignLeft="@+id/managerSectionTitle"/>
+
+        <TextView android:id="@+id/managerJobTitle"
+              android:textSize="16sp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/managerDisplayName"
+              android:layout_alignLeft="@+id/managerDisplayName"/>
+
     </RelativeLayout>
 
 </ScrollView>

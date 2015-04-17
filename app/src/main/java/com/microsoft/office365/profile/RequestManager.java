@@ -91,10 +91,10 @@ public class RequestManager {
                 JsonReader jsonReader = new JsonReader(new InputStreamReader(responseStream));
                 JsonParser jsonParser = new JsonParser();
                 JsonElement jsonElement =  jsonParser.parse(jsonReader).getAsJsonObject();
-                mJsonRequestListener.onRequestSuccess(jsonElement);
+                mJsonRequestListener.onRequestSuccess(mEndpoint, jsonElement);
             } catch (IOException | InterruptedException | ExecutionException e) {
                 Log.e(TAG, e.getMessage());
-                mJsonRequestListener.onRequestFailure(e);
+                mJsonRequestListener.onRequestFailure(mEndpoint, e);
             } finally {
                 //TODO: Figure out if we need to close these objects or not.
                 if(httpsConnection != null){
@@ -174,10 +174,10 @@ public class RequestManager {
 
                 httpsConnection.connect();
 
-                mInputStreamRequestListener.onRequestSuccess(httpsConnection.getInputStream());
+                mInputStreamRequestListener.onRequestSuccess(mEndpoint, httpsConnection.getInputStream());
             } catch (IOException | InterruptedException | ExecutionException e) {
                 Log.e(TAG, e.getMessage());
-                mInputStreamRequestListener.onRequestFailure(e);
+                mInputStreamRequestListener.onRequestFailure(mEndpoint, e);
             } finally {
                 //TODO: Figure out if we need to close these objects or not.
                 if(httpsConnection != null){
