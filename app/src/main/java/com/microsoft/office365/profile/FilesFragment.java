@@ -1,7 +1,10 @@
 package com.microsoft.office365.profile;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.microsoft.office365.profile.model.BasicUserInfo;
 import com.microsoft.office365.profile.model.File;
 
 import java.lang.reflect.Type;
@@ -50,6 +54,15 @@ public class FilesFragment extends BaseListFragment {
     }
 
     @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id);
+        final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
+        // Send the user's given name and displayable id to the SendMail activity
+        profileActivityIntent.putExtra("userId", mFileList.get((int)id).lastModifiedBy.user.id);
+        startActivity(profileActivityIntent);
+    }
+
+    @Override
     public void onRequestSuccess(final JsonElement data) {
         Gson gson = new Gson();
 
@@ -74,21 +87,50 @@ public class FilesFragment extends BaseListFragment {
                 ListView listView = getListView();
                 listView.addHeaderView(header);
 
-                // I don't want to accept any clicks
-                listView.setEnabled(false);
-
                 // If there are no elements, display a custom message
                 if (mFileList.size() == 0) {
                     File noData = new File();
                     noData.name = (String)getEmptyArrayMessage();
                     mFileList.add(noData);
                 }
-                setListAdapter(new ArrayAdapter<>(
+                setListAdapter(new FileAdapter(
                         getActivity(),
-                        android.R.layout.simple_list_item_1,
+                        android.R.layout.two_line_list_item,
                         mFileList));
                 setListShown(true);
             }
         });
+    }
+
+    private class FileAdapter extends ArrayAdapter<File>{
+        protected Context mContext;
+        protected ArrayList<File> mData;
+        protected int mLayoutResourceId;
+        protected LayoutInflater mLayoutInflater;
+
+        public FileAdapter(Context context, int layoutResourceId, ArrayList<File> data) {
+            super(context, layoutResourceId, data);
+
+            this.mLayoutResourceId = layoutResourceId;
+            this.mContext = context;
+            this.mData = data;
+
+            mLayoutInflater = (LayoutInflater)mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View row;
+            if(convertView == null) {
+                row = mLayoutInflater.inflate(mLayoutResourceId, null);
+            } else {
+                row = convertView;
+            }
+            TextView v = (TextView) row.findViewById(android.R.id.text1);
+            v.setText(mData.get(position).name);
+            v = (TextView) row.findViewById(android.R.id.text2);
+            v.setText("Last modified by: " + mData.get(position).lastModifiedBy.user.displayName);
+            return row;
+        }
     }
 }

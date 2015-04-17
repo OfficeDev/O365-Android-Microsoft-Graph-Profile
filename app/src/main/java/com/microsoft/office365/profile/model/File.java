@@ -32,7 +32,7 @@ public class File implements CharSequence {
         return name.subSequence(start, end);
     }
 
-    static class Node{
-        BasicUserInfo user;
+    public static class Node{
+        public BasicUserInfo user;
     }
 }
