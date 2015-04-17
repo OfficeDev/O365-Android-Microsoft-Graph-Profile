@@ -2,13 +2,15 @@ package com.microsoft.office365.profile.model;
 
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
 /**
  * Created by ricardol on 4/16/2015.
  */
 public class File implements CharSequence {
     public String id;
     public String name;
-    public BasicUserInfo lastModifiedBy;
+    public Node lastModifiedBy;
 
     @Override
     public int length() {
@@ -28,5 +30,9 @@ public class File implements CharSequence {
     @Override
     public CharSequence subSequence(int start, int end) {
         return name.subSequence(start, end);
+    }
+
+    static class Node{
+        BasicUserInfo user;
     }
 }
