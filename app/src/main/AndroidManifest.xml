@@ -31,6 +31,11 @@
             android:screenOrientation="portrait"
             android:parentActivityName=".UserListActivity" >
         </activity>
+        <activity
+            android:name="com.microsoft.aad.adal.AuthenticationActivity"
+            android:label="@string/adal_title"
+            android:screenOrientation="portrait" >
+        </activity>
     </application>
 
 </manifest>

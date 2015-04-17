@@ -15,4 +15,6 @@
     <string name="file_not_found_exception_manager_fragment_message">He doesn\'t report to anybody</string>
     <string name="empty_array_direct_reports_fragment_message">Nobody reports to him</string>
     <string name="empty_array_groups_fragment_message">He is not part of any group</string>
+
+    <string name="adal_title">Sign in to Office 365</string>
 </resources>
