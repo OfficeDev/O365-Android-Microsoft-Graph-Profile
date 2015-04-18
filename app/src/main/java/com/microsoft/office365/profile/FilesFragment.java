@@ -80,14 +80,6 @@ public class FilesFragment extends BaseListFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
-                View header = layoutInflater.inflate(R.layout.header_base_list, null);
-                TextView title = (TextView) header.findViewById(R.id.title);
-                title.setText(getTitleResourceId());
-
-                ListView listView = getListView();
-                listView.addHeaderView(header);
-
                 // If there are no elements, display a custom message
                 if (mFileList.size() == 0) {
                     File noData = new File();

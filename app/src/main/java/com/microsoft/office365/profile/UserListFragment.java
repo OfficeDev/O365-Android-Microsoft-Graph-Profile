@@ -46,21 +46,14 @@ public abstract class UserListFragment extends BaseListFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LayoutInflater layoutInflater = (LayoutInflater)getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
-                View header = layoutInflater.inflate(R.layout.header_base_list, null);
-                TextView title = (TextView)header.findViewById(R.id.title);
-                title.setText(getTitleResourceId());
-
-                ListView listView = getListView();
-                listView.addHeaderView(header);
-
                 // If there are no elements, display a custom message
                 if (mBasicUserInfoList.size() == 0) {
+                    ListView listView = getListView();
                     // I don't want to accept any clicks
                     listView.setEnabled(false);
 
                     BasicUserInfo noData = new BasicUserInfo();
-                    noData.displayName = (String)getEmptyArrayMessage();
+                    noData.displayName = (String) getEmptyArrayMessage();
                     mBasicUserInfoList.add(noData);
 
                     setListAdapter(new ArrayAdapter<>(

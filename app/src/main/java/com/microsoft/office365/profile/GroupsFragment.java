@@ -72,14 +72,7 @@ public class GroupsFragment extends BaseListFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(getActivity().LAYOUT_INFLATER_SERVICE);
-                View header = layoutInflater.inflate(R.layout.header_base_list, null);
-                TextView title = (TextView) header.findViewById(R.id.title);
-                title.setText(getTitleResourceId());
-
                 ListView listView = getListView();
-                listView.addHeaderView(header);
-
                 // I don't want to accept any clicks
                 listView.setEnabled(false);
 
