@@ -82,6 +82,7 @@ public class BaseActivity extends ActionBarActivity {
                 CookieManager.getInstance().removeSessionCookies(null);
                 CookieManager.getInstance().flush();
             } else {
+                CookieSyncManager.createInstance(this);
                 CookieManager.getInstance().removeSessionCookie();
                 CookieSyncManager.getInstance().sync();
             }
