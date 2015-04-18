@@ -184,14 +184,16 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_below="@+id/managerSectionTitle"
-              android:layout_alignLeft="@+id/managerSectionTitle"/>
+              android:layout_alignLeft="@+id/managerSectionTitle"
+              android:clickable="true"/>
 
         <TextView android:id="@+id/managerJobTitle"
               android:textSize="16sp"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:layout_below="@+id/managerDisplayName"
-              android:layout_alignLeft="@+id/managerDisplayName"/>
+              android:layout_alignLeft="@+id/managerDisplayName"
+              android:clickable="true"/>
 
     </RelativeLayout>
 

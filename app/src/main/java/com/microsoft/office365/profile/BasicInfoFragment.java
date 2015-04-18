@@ -1,6 +1,7 @@
 package com.microsoft.office365.profile;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +26,8 @@ import java.net.URL;
 /**
  * Created by Administrator on 4/9/2015.
  */
-public class BasicInfoFragment extends Fragment implements JsonRequestListener, InputStreamRequestListener {
+public class BasicInfoFragment extends Fragment implements
+        JsonRequestListener, InputStreamRequestListener, View.OnClickListener {
     private static final String TAG = "BasicInfoFragment";
     protected static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
 
@@ -43,6 +45,7 @@ public class BasicInfoFragment extends Fragment implements JsonRequestListener, 
     protected URL mUserEndpoint;
     protected URL mManagerEndpoint;
     protected URL mThumbnailPhotoEndpoint;
+    protected UserInfo mManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,9 @@ public class BasicInfoFragment extends Fragment implements JsonRequestListener, 
         mManagerDisplayName = (TextView)fragmentView.findViewById(R.id.managerDisplayName);
         mManagerJobTitle = (TextView)fragmentView.findViewById(R.id.managerJobTitle);
 
+        mManagerDisplayName.setOnClickListener(this);
+        mManagerJobTitle.setOnClickListener(this);
+
         try {
             ProfileApplication application = (ProfileApplication)getActivity().getApplication();
             mUserEndpoint = new URL(
@@ -79,7 +85,7 @@ public class BasicInfoFragment extends Fragment implements JsonRequestListener, 
                     "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/thumbnailphoto");
             mManagerEndpoint = new URL(
                     Constants.GRAPH_RESOURCE_URL +
-                    application.getTenant() +application.getTenant() +
+                    application.getTenant() +
                     "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/manager");
 
             RequestManager
@@ -107,14 +113,20 @@ public class BasicInfoFragment extends Fragment implements JsonRequestListener, 
     }
 
     @Override
-    public void onRequestSuccess(final URL requestedEndpoint, final JsonElement data) {
-        Gson gson = new Gson();
-        final UserInfo userInfo = gson.fromJson(data, UserInfo.class);
+    public void onClick(View v){
+        final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
+        // Send the user's given name and displayable id to the SendMail activity
+        profileActivityIntent.putExtra("userId", mManager.objectId);
+        startActivity(profileActivityIntent);
+    }
 
+    @Override
+    public void onRequestSuccess(final URL requestedEndpoint, final JsonElement data) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if(requestedEndpoint.sameFile(mUserEndpoint)) {
+                    UserInfo userInfo = new Gson().fromJson(data, UserInfo.class);
                     mDisplayNameTextView.setText(userInfo.displayName);
                     mJobTitleTextView.setText(userInfo.jobTitle);
                     mDepartmentTextView.setText(userInfo.department);
@@ -124,8 +136,9 @@ public class BasicInfoFragment extends Fragment implements JsonRequestListener, 
                     mStateTextView.setText(userInfo.state);
                     mCountryTextView.setText(userInfo.country);
                 } else {
-                    mManagerDisplayName.setText(userInfo.displayName);
-                    mManagerJobTitle.setText(userInfo.jobTitle);
+                    mManager = new Gson().fromJson(data, UserInfo.class);
+                    mManagerDisplayName.setText(mManager.displayName);
+                    mManagerJobTitle.setText(mManager.jobTitle);
                 }
             }
         });
