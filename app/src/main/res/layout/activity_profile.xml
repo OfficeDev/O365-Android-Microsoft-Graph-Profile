@@ -32,11 +32,6 @@
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"/>
 
-            <fragment android:id="@+id/managerFragment"
-                      android:name="com.microsoft.office365.profile.ManagerFragment"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"/>
-
             <fragment android:id="@+id/directReportsFragment"
                       android:name="com.microsoft.office365.profile.DirectReportsFragment"
                       android:layout_width="match_parent"

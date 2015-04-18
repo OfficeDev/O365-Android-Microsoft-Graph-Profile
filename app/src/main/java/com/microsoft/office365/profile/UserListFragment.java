@@ -41,13 +41,7 @@ public abstract class UserListFragment extends BaseListFragment {
 
         Type listType = new TypeToken<ArrayList<BasicUserInfo>>() { }.getType();
 
-        if(((JsonObject) data).has("value")) {
-            mBasicUserInfoList = gson.fromJson(((JsonObject) data).getAsJsonArray("value"), listType);
-        } else {
-            mBasicUserInfoList = new ArrayList<>();
-            BasicUserInfo justOneUser = gson.fromJson(data, BasicUserInfo.class);
-            mBasicUserInfoList.add(justOneUser);
-        }
+        mBasicUserInfoList = gson.fromJson(((JsonObject) data).getAsJsonArray("value"), listType);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override

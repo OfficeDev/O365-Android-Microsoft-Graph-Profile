@@ -29,11 +29,6 @@ public class ProfileActivity extends BaseActivity {
     private static final String TAG = "ProfileActivity";
     protected String mUserId;
 
-//    @Override
-//    protected int getActivityLayoutId() {
-//        return R.layout.activity_profile;
-//    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mUserId = getIntent().hasExtra("userId") ? getIntent().getStringExtra("userId") : mApplication.getUserId();
@@ -47,18 +42,14 @@ public class ProfileActivity extends BaseActivity {
         spec.setIndicator("General");
         tabs.addTab(spec);
         spec=tabs.newTabSpec("tag2");
-        spec.setContent(R.id.managerFragment);
-        spec.setIndicator("Manager");
-        tabs.addTab(spec);
-        spec=tabs.newTabSpec("tag3");
         spec.setContent(R.id.directReportsFragment);
         spec.setIndicator("Direct Reports");
         tabs.addTab(spec);
-        spec=tabs.newTabSpec("tag4");
+        spec=tabs.newTabSpec("tag3");
         spec.setContent(R.id.groupsFragment);
         spec.setIndicator("Groups");
         tabs.addTab(spec);
-        spec=tabs.newTabSpec("tag5");
+        spec=tabs.newTabSpec("tag4");
         spec.setContent(R.id.filesFragment);
         spec.setIndicator("Files");
         tabs.addTab(spec);
