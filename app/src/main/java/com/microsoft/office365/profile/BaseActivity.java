@@ -82,9 +82,6 @@ public class BaseActivity extends ActionBarActivity {
             mApplication.resetTenant();
             mApplication.resetUserId();
 
-            AuthenticationManager.getInstance().setContextActivity(this);
-            new AuthenticateTask().execute();
-
             //Clear cookies.
             if(Build.VERSION.SDK_INT >= 21){
                 CookieManager.getInstance().removeSessionCookies(null);
@@ -94,28 +91,12 @@ public class BaseActivity extends ActionBarActivity {
                 CookieSyncManager.getInstance().sync();
             }
 
+            final Intent userListIntent = new Intent(this, UserListActivity.class);
+            startActivity(userListIntent);
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    protected class AuthenticateTask extends AsyncTask<Void, Void, AuthenticationResult> {
-        private static final String TAG = "AuthenticateTask";
-
-        @Override
-        protected AuthenticationResult doInBackground(Void... params) {
-            AuthenticationResult authenticationResult = null;
-            try{
-                authenticationResult = AuthenticationManager
-                        .getInstance()
-                        .initialize(mApplication)
-                        .get();
-            } catch (InterruptedException | ExecutionException e) {
-                Log.e(TAG, "doInBackground - " + e.getMessage());
-            }
-
-            return authenticationResult;
-        }
     }
 }
