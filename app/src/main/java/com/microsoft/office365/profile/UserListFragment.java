@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.microsoft.office365.profile.model.BasicUserInfo;
+import com.microsoft.office365.profile.model.User;
 
 import java.lang.reflect.Type;
 import java.net.URL;
@@ -24,14 +24,14 @@ import java.util.ArrayList;
  */
 public abstract class UserListFragment extends BaseListFragment {
     private static final String TAG = "UserListFragment";
-    ArrayList<BasicUserInfo> mBasicUserInfoList;
+    ArrayList<User> mUserList;
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
         // Send the user's given name and displayable id to the SendMail activity
-        profileActivityIntent.putExtra("userId", mBasicUserInfoList.get((int)id).objectId);
+        profileActivityIntent.putExtra("userId", mUserList.get((int)id).objectId);
         startActivity(profileActivityIntent);
     }
 
@@ -39,45 +39,45 @@ public abstract class UserListFragment extends BaseListFragment {
     public void onRequestSuccess(URL requestedEndpoint, final JsonElement data) {
         Gson gson = new Gson();
 
-        Type listType = new TypeToken<ArrayList<BasicUserInfo>>() { }.getType();
+        Type listType = new TypeToken<ArrayList<User>>() { }.getType();
 
-        mBasicUserInfoList = gson.fromJson(((JsonObject) data).getAsJsonArray("value"), listType);
+        mUserList = gson.fromJson(((JsonObject) data).getAsJsonArray("value"), listType);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 // If there are no elements, display a custom message
-                if (mBasicUserInfoList.size() == 0) {
+                if (mUserList.size() == 0) {
                     ListView listView = getListView();
                     // I don't want to accept any clicks
                     listView.setEnabled(false);
 
-                    BasicUserInfo noData = new BasicUserInfo();
+                    User noData = new User();
                     noData.displayName = (String) getEmptyArrayMessage();
-                    mBasicUserInfoList.add(noData);
+                    mUserList.add(noData);
 
                     setListAdapter(new ArrayAdapter<>(
                             getActivity(),
                             android.R.layout.simple_list_item_1,
-                            mBasicUserInfoList));
+                            mUserList));
                 } else {
-                    setListAdapter(new BasicUserInfoAdapter(
+                    setListAdapter(new UserAdapter(
                             getActivity(),
                             android.R.layout.two_line_list_item,
-                            mBasicUserInfoList));
+                            mUserList));
                 }
                 setListShown(true);
             }
         });
     }
 
-    private class BasicUserInfoAdapter extends ArrayAdapter<BasicUserInfo>{
+    private class UserAdapter extends ArrayAdapter<User>{
         protected Context mContext;
-        protected ArrayList<BasicUserInfo> mData;
+        protected ArrayList<User> mData;
         protected int mLayoutResourceId;
         protected LayoutInflater mLayoutInflater;
 
-        public BasicUserInfoAdapter(Context context, int layoutResourceId, ArrayList<BasicUserInfo> data) {
+        public UserAdapter(Context context, int layoutResourceId, ArrayList<User> data) {
             super(context, layoutResourceId, data);
 
             this.mLayoutResourceId = layoutResourceId;

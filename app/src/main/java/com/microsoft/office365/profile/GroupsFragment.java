@@ -13,7 +13,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.microsoft.office365.profile.model.BasicUserInfo;
 import com.microsoft.office365.profile.model.Group;
 
 import java.io.FileNotFoundException;

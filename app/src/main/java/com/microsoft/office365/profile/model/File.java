@@ -1,9 +1,5 @@
 package com.microsoft.office365.profile.model;
 
-import android.support.annotation.NonNull;
-
-import java.util.List;
-
 /**
  * Created by ricardol on 4/16/2015.
  */
@@ -33,6 +29,6 @@ public class File implements CharSequence {
     }
 
     public static class Node{
-        public BasicUserInfo user;
+        public User user;
     }
 }

@@ -18,7 +18,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.microsoft.aad.adal.AuthenticationResult;
-import com.microsoft.office365.profile.model.BasicUserInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;

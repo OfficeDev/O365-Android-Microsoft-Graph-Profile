@@ -14,10 +14,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.microsoft.office365.profile.model.UserInfo;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.microsoft.office365.profile.model.User;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,7 +45,7 @@ public class BasicInfoFragment extends Fragment implements
     protected URL mUserEndpoint;
     protected URL mManagerEndpoint;
     protected URL mThumbnailPhotoEndpoint;
-    protected UserInfo mManager;
+    protected User mManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,17 +127,17 @@ public class BasicInfoFragment extends Fragment implements
             @Override
             public void run() {
                 if(requestedEndpoint.sameFile(mUserEndpoint)) {
-                    UserInfo userInfo = new Gson().fromJson(data, UserInfo.class);
-                    mDisplayNameTextView.setText(userInfo.displayName);
-                    mJobTitleTextView.setText(userInfo.jobTitle);
-                    mDepartmentTextView.setText(userInfo.department);
-                    mHireDateTextView.setText(userInfo.hireDate);
-                    mMailTextView.setText(userInfo.mail);
-                    mTelephoneNumberTextView.setText(userInfo.telephoneNumber);
-                    mStateTextView.setText(userInfo.state);
-                    mCountryTextView.setText(userInfo.country);
+                    User user = new Gson().fromJson(data, User.class);
+                    mDisplayNameTextView.setText(user.displayName);
+                    mJobTitleTextView.setText(user.jobTitle);
+                    mDepartmentTextView.setText(user.department);
+                    mHireDateTextView.setText(user.hireDate);
+                    mMailTextView.setText(user.mail);
+                    mTelephoneNumberTextView.setText(user.telephoneNumber);
+                    mStateTextView.setText(user.state);
+                    mCountryTextView.setText(user.country);
                 } else {
-                    mManager = new Gson().fromJson(data, UserInfo.class);
+                    mManager = new Gson().fromJson(data, User.class);
                     mManagerDisplayName.setText(mManager.displayName);
                     mManagerJobTitle.setText(mManager.jobTitle);
                 }
