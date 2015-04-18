@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
-      tools:context=".ProfileActivity">
+      tools:context=".BaseActivity">
     <item android:id="@+id/sign_out"
           android:title="@string/sign_out_settings"
           android:orderInCategory="100"

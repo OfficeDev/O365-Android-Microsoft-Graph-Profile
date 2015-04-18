@@ -1,7 +1,6 @@
 package com.microsoft.office365.profile;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,10 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-
-import com.microsoft.aad.adal.AuthenticationResult;
-
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by ricardol on 4/13/2015.
@@ -55,7 +50,7 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_base, menu);
         return true;
     }
 
@@ -82,40 +77,22 @@ public class BaseActivity extends ActionBarActivity {
             mApplication.resetTenant();
             mApplication.resetUserId();
 
-            AuthenticationManager.getInstance().setContextActivity(this);
-            new AuthenticateTask().execute();
-
             //Clear cookies.
             if(Build.VERSION.SDK_INT >= 21){
                 CookieManager.getInstance().removeSessionCookies(null);
                 CookieManager.getInstance().flush();
             } else {
+                CookieSyncManager.createInstance(this);
                 CookieManager.getInstance().removeSessionCookie();
                 CookieSyncManager.getInstance().sync();
             }
+
+            final Intent userListIntent = new Intent(this, UserListActivity.class);
+            startActivity(userListIntent);
 
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    protected class AuthenticateTask extends AsyncTask<Void, Void, AuthenticationResult> {
-        private static final String TAG = "AuthenticateTask";
-
-        @Override
-        protected AuthenticationResult doInBackground(Void... params) {
-            AuthenticationResult authenticationResult = null;
-            try{
-                authenticationResult = AuthenticationManager
-                        .getInstance()
-                        .initialize(mApplication)
-                        .get();
-            } catch (InterruptedException | ExecutionException e) {
-                Log.e(TAG, "doInBackground - " + e.getMessage());
-            }
-
-            return authenticationResult;
-        }
     }
 }
