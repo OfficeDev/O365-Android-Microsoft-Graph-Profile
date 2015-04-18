@@ -1,7 +1,6 @@
 package com.microsoft.office365.profile;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -10,10 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-
-import com.microsoft.aad.adal.AuthenticationResult;
-
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by ricardol on 4/13/2015.
@@ -55,7 +50,7 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_profile, menu);
+        getMenuInflater().inflate(R.menu.menu_base, menu);
         return true;
     }
 
