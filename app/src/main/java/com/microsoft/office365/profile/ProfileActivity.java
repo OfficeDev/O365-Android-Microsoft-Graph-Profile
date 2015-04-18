@@ -39,19 +39,19 @@ public class ProfileActivity extends BaseActivity {
         tabs.setup();
         TabHost.TabSpec spec=tabs.newTabSpec("tag1");
         spec.setContent(R.id.basicInfoFragment);
-        spec.setIndicator("General");
+        spec.setIndicator(getResources().getString(R.string.fragment_general_title));
         tabs.addTab(spec);
         spec=tabs.newTabSpec("tag2");
         spec.setContent(R.id.directReportsFragment);
-        spec.setIndicator("Direct Reports");
+        spec.setIndicator(getResources().getString(R.string.fragment_direct_reports_title));
         tabs.addTab(spec);
         spec=tabs.newTabSpec("tag3");
         spec.setContent(R.id.groupsFragment);
-        spec.setIndicator("Groups");
+        spec.setIndicator(getResources().getString(R.string.fragment_groups_title));
         tabs.addTab(spec);
         spec=tabs.newTabSpec("tag4");
         spec.setContent(R.id.filesFragment);
-        spec.setIndicator("Files");
+        spec.setIndicator(getResources().getString(R.string.fragment_files_title));
         tabs.addTab(spec);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
