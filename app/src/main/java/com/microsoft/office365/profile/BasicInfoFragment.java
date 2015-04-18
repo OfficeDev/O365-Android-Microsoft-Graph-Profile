@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -42,6 +43,8 @@ public class BasicInfoFragment extends Fragment implements
     protected ImageView mThumbnailPhotoImageView;
     protected TextView mManagerDisplayName;
     protected TextView mManagerJobTitle;
+    protected TextView mNoManager;
+    protected LinearLayout mManagerSection;
     protected URL mUserEndpoint;
     protected URL mManagerEndpoint;
     protected URL mThumbnailPhotoEndpoint;
@@ -69,9 +72,10 @@ public class BasicInfoFragment extends Fragment implements
         mThumbnailPhotoImageView = (ImageView)fragmentView.findViewById(R.id.thumbnailPhotoImageView);
         mManagerDisplayName = (TextView)fragmentView.findViewById(R.id.managerDisplayName);
         mManagerJobTitle = (TextView)fragmentView.findViewById(R.id.managerJobTitle);
+        mNoManager = (TextView)fragmentView.findViewById(R.id.noManager);
+        mManagerSection = (LinearLayout)fragmentView.findViewById(R.id.managerSection);
 
-        mManagerDisplayName.setOnClickListener(this);
-        mManagerJobTitle.setOnClickListener(this);
+        mManagerSection.setOnClickListener(this);
 
         try {
             ProfileApplication application = (ProfileApplication)getActivity().getApplication();
@@ -163,7 +167,18 @@ public class BasicInfoFragment extends Fragment implements
     @Override
     public void onRequestFailure(URL requestedEndpoint, Exception e) {
         Log.e(TAG, e.getMessage());
-        e.printStackTrace();
-        //TODO: Implement error interface
+
+        if(requestedEndpoint.sameFile(mManagerEndpoint)){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mNoManager.setText(getResources().getText(R.string.file_not_found_exception_manager_fragment_message));
+                    mNoManager.setVisibility(View.VISIBLE);
+                    mManagerDisplayName.setVisibility(View.GONE);
+                    mManagerJobTitle.setVisibility(View.GONE);
+                    mManagerSection.setClickable(false);
+                }
+            });
+        }
     }
 }
