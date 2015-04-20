@@ -12,16 +12,12 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="David Longmuir"
-            android:id="@+id/displayNameTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:id="@+id/displayNameTextView"/>
     
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/thumbnailPhotoImageView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:minHeight="240dp"
             android:minWidth="240dp"
             android:src="@mipmap/thumbnail_photo_not_available"
@@ -30,143 +26,152 @@
             android:maxWidth="240dp"/>
 
         <TextView
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Job Title:"
             android:id="@+id/jobTitleLabelTextView"
-            android:layout_below="@+id/thumbnailPhotoImageView" />
+            android:layout_below="@+id/thumbnailPhotoImageView"
+            android:layout_alignRight="@+id/departmentLabelTextView"
+            android:paddingRight="?android:attr/listPreferredItemPaddingRight"/>
 
         <TextView
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Department:"
             android:id="@+id/departmentLabelTextView"
             android:layout_below="@+id/jobTitleLabelTextView"
-            android:layout_alignLeft="@+id/jobTitleLabelTextView"
-            android:layout_alignStart="@+id/jobTitleLabelTextView"/>
+            android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
+            android:paddingRight="?android:attr/listPreferredItemPaddingRight"/>
 
         <TextView
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Hire Date:"
             android:id="@+id/hireDateLabelTextView"
             android:layout_below="@+id/departmentLabelTextView"
-            android:layout_alignLeft="@+id/departmentLabelTextView"
-            android:layout_alignStart="@+id/departmentLabelTextView"/>
+            android:layout_alignRight="@+id/departmentLabelTextView"
+            android:paddingRight="?android:attr/listPreferredItemPaddingRight"/>
 
         <TextView
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Mail:"
             android:id="@+id/mailLabelTextView"
             android:layout_below="@+id/hireDateLabelTextView"
-            android:layout_alignLeft="@+id/hireDateLabelTextView"
-            android:layout_alignStart="@+id/hireDateLabelTextView"/>
+            android:layout_alignRight="@+id/departmentLabelTextView"
+            android:paddingRight="?android:attr/listPreferredItemPaddingRight"/>
 
         <TextView
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Phone:"
             android:id="@+id/telephoneNumberLabelTextView"
             android:layout_below="@+id/mailLabelTextView"
-            android:layout_alignLeft="@+id/mailLabelTextView"
-            android:layout_alignStart="@+id/mailLabelTextView"/>
+            android:layout_alignRight="@+id/departmentLabelTextView"
+            android:paddingRight="?android:attr/listPreferredItemPaddingRight"/>
 
         <TextView
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="State:"
             android:id="@+id/stateLabelTextView"
             android:layout_below="@+id/telephoneNumberLabelTextView"
-            android:layout_alignLeft="@+id/telephoneNumberLabelTextView"
-            android:layout_alignStart="@+id/telephoneNumberLabelTextView"/>
+            android:layout_alignRight="@+id/departmentLabelTextView"
+            android:paddingRight="?android:attr/listPreferredItemPaddingRight"/>
 
         <TextView
+            android:textSize="16sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Country:"
             android:id="@+id/countryLabelTextView"
             android:layout_below="@+id/stateLabelTextView"
-            android:layout_alignLeft="@+id/stateLabelTextView"
-            android:layout_alignStart="@+id/stateLabelTextView"/>
+            android:layout_alignRight="@+id/departmentLabelTextView"
+            android:paddingRight="?android:attr/listPreferredItemPaddingRight"/>
 
         <TextView
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Corporate Security Officer"
             android:id="@+id/jobTitleTextView"
             android:layout_alignTop="@+id/jobTitleLabelTextView"
             android:layout_toRightOf="@+id/departmentLabelTextView"
-            android:layout_toEndOf="@+id/departmentLabelTextView" />
+            android:layout_toEndOf="@+id/departmentLabelTextView"/>
 
         <TextView
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Operations"
             android:id="@+id/departmentTextView"
             android:layout_alignTop="@+id/departmentLabelTextView"
             android:layout_toRightOf="@+id/departmentLabelTextView"
-            android:layout_toEndOf="@+id/departmentLabelTextView" />
+            android:layout_toEndOf="@+id/departmentLabelTextView"/>
 
         <TextView
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="03/04/2012"
             android:id="@+id/hireDateTextView"
             android:layout_alignTop="@+id/hireDateLabelTextView"
             android:layout_toRightOf="@+id/departmentLabelTextView"
-            android:layout_toEndOf="@+id/departmentLabelTextView" />
+            android:layout_toEndOf="@+id/departmentLabelTextView"/>
 
         <TextView
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="davidl@patsoldemo4.com"
             android:id="@+id/mailTextView"
             android:layout_below="@+id/hireDateLabelTextView"
             android:layout_alignLeft="@+id/hireDateTextView"
-            android:layout_alignStart="@+id/hireDateTextView" />
+            android:layout_alignStart="@+id/hireDateTextView"/>
 
         <TextView
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="+1 262 555 0106"
             android:id="@+id/telephoneNumberTextView"
             android:layout_alignTop="@+id/telephoneNumberLabelTextView"
             android:layout_alignLeft="@+id/mailTextView"
             android:layout_alignStart="@+id/mailTextView"
-            android:phoneNumber="false" />
+            android:phoneNumber="false"/>
 
         <TextView
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="WA"
             android:id="@+id/stateTextView"
             android:layout_below="@+id/telephoneNumberLabelTextView"
             android:layout_alignLeft="@+id/telephoneNumberTextView"
-            android:layout_alignStart="@+id/telephoneNumberTextView" />
+            android:layout_alignStart="@+id/telephoneNumberTextView"/>
 
         <TextView
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="United States"
             android:id="@+id/countryTextView"
             android:layout_alignTop="@+id/countryLabelTextView"
             android:layout_alignLeft="@+id/stateTextView"
-            android:layout_alignStart="@+id/stateTextView" />
+            android:layout_alignStart="@+id/stateTextView"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -175,8 +180,7 @@
             android:id="@+id/managerSectionTitle"
             android:text="@string/fragment_manager_title"
             xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_below="@+id/countryLabelTextView"
-            android:layout_alignLeft="@+id/countryLabelTextView"/>
+            android:layout_below="@+id/countryLabelTextView"/>
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                       android:layout_width="match_parent"
@@ -191,23 +195,21 @@
                   android:textSize="16sp"
                   android:textStyle="bold"
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content"/>
+                  android:layout_height="wrap_content"
+                  android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"/>
 
             <TextView android:id="@+id/managerJobTitle"
                   android:textSize="16sp"
                   android:layout_width="match_parent"
-                  android:layout_height="wrap_content"/>
+                  android:layout_height="wrap_content"
+                  android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"/>
 
             <TextView xmlns:android="http://schemas.android.com/apk/res/android"
                   android:id="@+id/noManager"
+                  android:textSize="16sp"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
-                  android:textAppearance="?android:attr/textAppearanceListItemSmall"
-                  android:gravity="center_vertical"
-                  android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
                   android:paddingLeft="?android:attr/listPreferredItemPaddingLeft"
-                  android:paddingRight="?android:attr/listPreferredItemPaddingRight"
-                  android:minHeight="?android:attr/listPreferredItemHeightSmall"
                   android:visibility="gone"/>
 
         </LinearLayout>
