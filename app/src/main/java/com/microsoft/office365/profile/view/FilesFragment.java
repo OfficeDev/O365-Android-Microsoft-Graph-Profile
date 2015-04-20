@@ -108,7 +108,7 @@ public class FilesFragment extends BaseListFragment {
             this.mContext = context;
             this.mData = data;
 
-            mLayoutInflater = (LayoutInflater)mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
+            mLayoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override
