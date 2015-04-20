@@ -9,8 +9,14 @@
     <string name="my_profile_settings">My Profile</string>
     <string name="title_activity_user_list">User List</string>
 
-    <string name="action_settings">Settings</string>
     <string name="fragment_main_user_list_title">User list</string>
+
+    <string name="fragment_general_job_title_label">Job Title:</string>
+    <string name="fragment_general_department_label">Hire Date:</string>
+    <string name="fragment_general_hire_date_label">Mail:</string>
+    <string name="fragment_general_mail_label">Phone:</string>
+    <string name="fragment_general_state_label">State:</string>
+    <string name="fragment_general_country_label">Country:</string>
 
     <string name="file_not_found_exception_default_message">Not available</string>
     <string name="empty_array_default_message">Not available</string>
