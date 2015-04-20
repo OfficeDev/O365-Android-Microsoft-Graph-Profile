@@ -149,18 +149,18 @@ public class BasicInfoFragment extends Fragment implements
                     mTelephoneNumberTextView.setText(user.telephoneNumber);
                     mStateTextView.setText(user.state);
                     mCountryTextView.setText(user.country);
+
+                    mProgressContainer.startAnimation(AnimationUtils.loadAnimation(
+                            getActivity(), android.R.anim.fade_out));
+                    mContainerLayout.startAnimation(AnimationUtils.loadAnimation(
+                            getActivity(), android.R.anim.fade_in));
+                    mProgressContainer.setVisibility(View.GONE);
+                    mContainerLayout.setVisibility(View.VISIBLE);
                 } else {
                     mManager = new Gson().fromJson(data, User.class);
                     mManagerDisplayName.setText(mManager.displayName);
                     mManagerJobTitle.setText(mManager.jobTitle);
                 }
-
-                mProgressContainer.startAnimation(AnimationUtils.loadAnimation(
-                        getActivity(), android.R.anim.fade_out));
-                mContainerLayout.startAnimation(AnimationUtils.loadAnimation(
-                        getActivity(), android.R.anim.fade_in));
-                mProgressContainer.setVisibility(View.GONE);
-                mContainerLayout.setVisibility(View.VISIBLE);
             }
         });
     }
