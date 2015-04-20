@@ -19,6 +19,8 @@
     <string name="fragment_general_country_label">Country:</string>
     <string name="fragment_general_image_description_label">Thumbnail photo</string>
 
+    <string name="loading">Loading...</string>
+
     <string name="file_not_found_exception_default_message">Not available</string>
     <string name="empty_array_default_message">Not available</string>
     <string name="file_not_found_exception_manager_fragment_message">He doesn\'t report to anybody</string>

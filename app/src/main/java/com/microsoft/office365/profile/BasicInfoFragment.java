@@ -8,8 +8,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -46,6 +49,9 @@ public class BasicInfoFragment extends Fragment implements
     protected URL mManagerEndpoint;
     protected URL mThumbnailPhotoEndpoint;
     protected User mManager;
+    protected LinearLayout mProgressContainer;
+    protected RelativeLayout mContainerLayout;
+    protected boolean dataLoaded = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,6 +77,8 @@ public class BasicInfoFragment extends Fragment implements
         mManagerJobTitle = (TextView)fragmentView.findViewById(R.id.managerJobTitle);
         mNoManager = (TextView)fragmentView.findViewById(R.id.noManager);
         mManagerSection = (LinearLayout)fragmentView.findViewById(R.id.managerSection);
+        mProgressContainer = (LinearLayout)fragmentView.findViewById(R.id.progressContainer);
+        mContainerLayout = (RelativeLayout)fragmentView.findViewById(R.id.dataContainer);
 
         mManagerSection.setOnClickListener(this);
 
@@ -126,7 +134,7 @@ public class BasicInfoFragment extends Fragment implements
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(requestedEndpoint.sameFile(mUserEndpoint)) {
+                if (requestedEndpoint.sameFile(mUserEndpoint)) {
                     User user = new Gson().fromJson(data, User.class);
                     mDisplayNameTextView.setText(user.displayName);
                     mJobTitleTextView.setText(user.jobTitle);
@@ -141,6 +149,13 @@ public class BasicInfoFragment extends Fragment implements
                     mManagerDisplayName.setText(mManager.displayName);
                     mManagerJobTitle.setText(mManager.jobTitle);
                 }
+
+                mProgressContainer.startAnimation(AnimationUtils.loadAnimation(
+                        getActivity(), android.R.anim.fade_out));
+                mContainerLayout.startAnimation(AnimationUtils.loadAnimation(
+                        getActivity(), android.R.anim.fade_in));
+                mProgressContainer.setVisibility(View.GONE);
+                mContainerLayout.setVisibility(View.VISIBLE);
             }
         });
     }
