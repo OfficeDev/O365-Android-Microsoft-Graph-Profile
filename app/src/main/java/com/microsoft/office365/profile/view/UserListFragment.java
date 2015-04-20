@@ -1,4 +1,7 @@
-package com.microsoft.office365.profile;
+/*
+ * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
+ */
+package com.microsoft.office365.profile.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,14 +27,14 @@ import java.util.ArrayList;
  */
 public abstract class UserListFragment extends BaseListFragment {
     private static final String TAG = "UserListFragment";
-    ArrayList<User> mUserList;
+    private ArrayList<User> mUserList;
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
         // Send the user's given name and displayable id to the SendMail activity
-        profileActivityIntent.putExtra("userId", mUserList.get((int)id).objectId);
+        profileActivityIntent.putExtra("userId", mUserList.get((int) id).objectId);
         startActivity(profileActivityIntent);
     }
 
@@ -63,7 +66,6 @@ public abstract class UserListFragment extends BaseListFragment {
                 } else {
                     setListAdapter(new UserAdapter(
                             getActivity(),
-                            android.R.layout.two_line_list_item,
                             mUserList));
                 }
                 setListShown(true);
@@ -72,26 +74,24 @@ public abstract class UserListFragment extends BaseListFragment {
     }
 
     private class UserAdapter extends ArrayAdapter<User>{
-        protected Context mContext;
-        protected ArrayList<User> mData;
-        protected int mLayoutResourceId;
-        protected LayoutInflater mLayoutInflater;
+        final Context mContext;
+        final ArrayList<User> mData;
+        final LayoutInflater mLayoutInflater;
 
-        public UserAdapter(Context context, int layoutResourceId, ArrayList<User> data) {
-            super(context, layoutResourceId, data);
+        public UserAdapter(Context context, ArrayList<User> data) {
+            super(context, android.R.layout.two_line_list_item, data);
 
-            this.mLayoutResourceId = layoutResourceId;
             this.mContext = context;
             this.mData = data;
 
-            mLayoutInflater = (LayoutInflater)mContext.getSystemService(mContext.LAYOUT_INFLATER_SERVICE);
+            mLayoutInflater = (LayoutInflater)mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             View row;
             if(convertView == null) {
-                row = mLayoutInflater.inflate(mLayoutResourceId, null);
+                row = mLayoutInflater.inflate(android.R.layout.two_line_list_item, null);
             } else {
                 row = convertView;
             }
@@ -103,3 +103,32 @@ public abstract class UserListFragment extends BaseListFragment {
         }
     }
 }
+
+// *********************************************************
+//
+// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+//
+// Copyright (c) Microsoft Corporation
+// All rights reserved.
+//
+// MIT License:
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+// *********************************************************

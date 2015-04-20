@@ -1,32 +1,23 @@
-package com.microsoft.office365.profile;
+/*
+ * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
+ */
+package com.microsoft.office365.profile.view;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.app.ListFragment;
+import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
-
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 import com.microsoft.aad.adal.AuthenticationResult;
+import com.microsoft.office365.profile.Constants;
+import com.microsoft.office365.profile.ProfileApplication;
+import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.auth.AuthenticationListener;
+import com.microsoft.office365.profile.auth.AuthenticationManager;
+import com.microsoft.office365.profile.http.JsonRequestListener;
+import com.microsoft.office365.profile.http.RequestManager;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileNotFoundException;
-import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * A fragment representing a list of Items.
@@ -35,9 +26,9 @@ import java.util.ArrayList;
   */
 public abstract class BaseListFragment extends ListFragment implements JsonRequestListener, AuthenticationListener {
     private static final String TAG = "BaseListFragment";
-    protected static final String ACCEPT_HEADER = "application/json;odata.metadata=minimal;odata.streaming=true";
+    private static final String ACCEPT_HEADER = "application/json;odata.metadata=minimal;odata.streaming=true";
 
-    protected ProfileApplication mApplication;
+    private ProfileApplication mApplication;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -45,24 +36,14 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
      */
     public BaseListFragment() { }
 
-    public abstract String getEndpoint();
-    public abstract int getTitleResourceId();
+    protected abstract String getEndpoint();
 
-    /**
-     * Returns the message to display when a FileNotFoundException is thrown by a request.
-     * In some cases, this might not be an error per-se. For example, if the request looks for the manager
-     * property and it doesn't find it, it may be possible that the user just doesn't have a manager.
-     * @return The message to display when a FileNotFoundException is thrown.
-     */
-    public CharSequence getFileNotFoundExceptionMessage(){
-        return getResources().getText(R.string.file_not_found_exception_default_message);
-    }
     /**
      * Returns the message to display when an empty array returned by a request.
      * For example, if the request looks for the direct reports and there's none.
      * @return The message to display when a an empty array is returned.
      */
-    public CharSequence getEmptyArrayMessage(){
+    CharSequence getEmptyArrayMessage(){
         return getResources().getText(R.string.empty_array_default_message);
     }
 
@@ -86,7 +67,7 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
         }
     }
 
-    protected void sendRequest(String endpoint){
+    private void sendRequest(String endpoint){
         try {
             RequestManager
                     .getInstance()
@@ -118,3 +99,32 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
         Log.e(TAG, e.getMessage());
     }
 }
+
+// *********************************************************
+//
+// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+//
+// Copyright (c) Microsoft Corporation
+// All rights reserved.
+//
+// MIT License:
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+// *********************************************************

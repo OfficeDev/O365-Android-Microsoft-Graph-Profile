@@ -1,3 +1,4 @@
+<!-- Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file. -->
 <resources>
     <string name="app_name">Office 365 Profile</string>
     <string name="fragment_manager_title">Manager</string>
@@ -9,8 +10,6 @@
     <string name="my_profile_settings">My Profile</string>
     <string name="title_activity_user_list">User List</string>
 
-    <string name="fragment_main_user_list_title">User list</string>
-
     <string name="fragment_general_job_title_label">Job Title:</string>
     <string name="fragment_general_department_label">Hire Date:</string>
     <string name="fragment_general_hire_date_label">Mail:</string>
@@ -19,9 +18,8 @@
     <string name="fragment_general_country_label">Country:</string>
     <string name="fragment_general_image_description_label">Thumbnail photo</string>
 
-    <string name="loading">Loading...</string>
+    <string name="loading">Loading…</string>
 
-    <string name="file_not_found_exception_default_message">Not available</string>
     <string name="empty_array_default_message">Not available</string>
     <string name="file_not_found_exception_manager_fragment_message">He doesn\'t report to anybody</string>
     <string name="empty_array_direct_reports_fragment_message">Nobody reports to him</string>
@@ -30,3 +28,32 @@
 
     <string name="adal_title">Sign in to Office 365</string>
 </resources>
+
+<!-- *********************************************************
+
+ O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+
+ Copyright (c) Microsoft Corporation
+ All rights reserved.
+
+ MIT License:
+ Permission is hereby granted, free of charge, to any person obtaining
+ a copy of this software and associated documentation files (the
+ "Software"), to deal in the Software without restriction, including
+ without limitation the rights to use, copy, modify, merge, publish,
+ distribute, sublicense, and/or sell copies of the Software, and to
+ permit persons to whom the Software is furnished to do so, subject to
+ the following conditions:
+
+ The above copyright notice and this permission notice shall be
+ included in all copies or substantial portions of the Software.
+
+ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+ EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+ MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+ LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+ ********************************************************* -->

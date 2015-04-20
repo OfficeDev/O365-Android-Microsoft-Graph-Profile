@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
+ */
 package com.microsoft.office365.profile;
 
 import android.app.Application;
@@ -8,6 +11,7 @@ import android.util.Log;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.AuthenticationSettings;
 import com.microsoft.aad.adal.UserInfo;
+import com.microsoft.office365.profile.auth.AuthenticationListener;
 
 import java.security.SecureRandom;
 
@@ -15,12 +19,11 @@ import java.security.SecureRandom;
  * Created by ricardol on 4/13/2015.
  */
 public class ProfileApplication extends Application implements AuthenticationListener {
-    protected static final String TAG = "ProfileApplication";
-    protected SharedPreferences mSharedPreferences;
-    protected static final String DISPLAYNAME_FIELD = "displayName";
-    protected static final String DISPLAYABLE_ID_FIELD = "displayableId";
-    protected static final String USER_ID_FIELD = "userId";
-    protected static final String TENANT_FIELD = "tenant";
+    private static final String TAG = "ProfileApplication";
+
+    private SharedPreferences mSharedPreferences;
+    private static final String USER_ID_FIELD = "userId";
+    private static final String TENANT_FIELD = "tenant";
 
     public ProfileApplication(){
         super();
@@ -52,9 +55,7 @@ public class ProfileApplication extends Application implements AuthenticationLis
     @Override
     public void onAuthenticationSuccess(AuthenticationResult authenticationResult) {
         UserInfo userInfo = authenticationResult.getUserInfo();
-        if(getUserId() != userInfo.getUserId()) {
-            setDisplayableId(userInfo.getDisplayableId());
-            setDisplayName(userInfo.getGivenName() + " " + userInfo.getGivenName());
+        if(!getUserId().equals(userInfo.getUserId())) {
             // AuthenticationResult returns the TenantId as null
             // we can extract the value from the displayableId
             setTenant(userInfo.getDisplayableId().split("@")[1]);
@@ -68,28 +69,8 @@ public class ProfileApplication extends Application implements AuthenticationLis
         //TODO: Implement error handler
     }
 
-    public String getDisplayName() {
-        return mSharedPreferences.getString(DISPLAYNAME_FIELD, "");
-    }
-
-    public void setDisplayName(String displayName) {
-        mSharedPreferences.edit().putString(DISPLAYNAME_FIELD, displayName).apply();
-    }
-
-    public void resetDisplayName() {
-        mSharedPreferences.edit().remove(DISPLAYNAME_FIELD).apply();
-    }
-
-    public String getDisplayableId() {
-        return mSharedPreferences.getString(DISPLAYABLE_ID_FIELD, "");
-    }
-
-    public void setDisplayableId(String displayableId) {
-        mSharedPreferences.edit().putString(DISPLAYABLE_ID_FIELD, displayableId).apply();
-    }
-
-    public void resetDisplayableId(){
-        mSharedPreferences.edit().remove(DISPLAYABLE_ID_FIELD).apply();
+    public void setSharedPreferences(SharedPreferences sharedPreferences) {
+        mSharedPreferences = sharedPreferences;
     }
 
     public String getTenant() {
@@ -120,3 +101,32 @@ public class ProfileApplication extends Application implements AuthenticationLis
         return mSharedPreferences.contains(USER_ID_FIELD);
     }
 }
+
+// *********************************************************
+//
+// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+//
+// Copyright (c) Microsoft Corporation
+// All rights reserved.
+//
+// MIT License:
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+// *********************************************************

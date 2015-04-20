@@ -1,40 +1,25 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.model;
-
-import android.support.annotation.NonNull;
+package com.microsoft.office365.profile.view;
 
 /**
- * Created by ricardol on 4/16/2015.
+ * A fragment representing a list of Items.
+ * <p/>
+ * <p/>
  */
-public class File implements CharSequence {
-    public String name;
-    public Node lastModifiedBy;
+public class MainListFragment extends UserListFragment {
+    private static final String LAST_SECTION_ENDPOINT = "/users?$filter=userType%20eq%20'Member'";
 
-    @Override
-    public int length() {
-        return name.length();
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public MainListFragment() {
     }
 
-    @Override
-    public char charAt(int index) {
-        return name.charAt(index);
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        return name.subSequence(start, end);
-    }
-
-    public static class Node{
-        public User user;
+    public String getEndpoint(){
+        return LAST_SECTION_ENDPOINT;
     }
 }
 

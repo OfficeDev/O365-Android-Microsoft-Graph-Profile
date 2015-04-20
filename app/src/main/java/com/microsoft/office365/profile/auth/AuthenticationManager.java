@@ -1,9 +1,9 @@
 /*
-* Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
-* Portions of this class are adapted from the AuthenticationController.java file from Microsoft Open Technologies, Inc.
-* located at https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/outlook/app/src/main/java/com/microsoft/services/controllers/AuthenticationController.java
-*/
-package com.microsoft.office365.profile;
+ * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
+ * Portions of this class are adapted from the AuthenticationController.java file from Microsoft Open Technologies, Inc.
+ * located at https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/outlook/app/src/main/java/com/microsoft/services/controllers/AuthenticationController.java
+ */
+package com.microsoft.office365.profile.auth;
 
 import android.app.Activity;
 import android.util.Log;
@@ -14,9 +14,7 @@ import com.microsoft.aad.adal.AuthenticationContext;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.AuthenticationResult.AuthenticationStatus;
 import com.microsoft.aad.adal.PromptBehavior;
-import com.microsoft.services.odata.impl.ADALDependencyResolver;
-import com.microsoft.services.odata.interfaces.DependencyResolver;
-import com.microsoft.services.odata.interfaces.LogLevel;
+import com.microsoft.office365.profile.Constants;
 
 /**
  * Handles setup of ADAL Dependency Resolver for use in API clients.
@@ -26,9 +24,8 @@ public class AuthenticationManager {
     private static final String TAG = "AuthenticationManager";
 
     private AuthenticationContext authContext;
-    private ADALDependencyResolver dependencyResolver;
     private Activity contextActivity;
-    private String resourceId;
+    private final String resourceId;
 
     public static synchronized AuthenticationManager getInstance() {
         if (INSTANCE == null) {
@@ -82,10 +79,6 @@ public class AuthenticationManager {
                         public void onSuccess(final AuthenticationResult authenticationResult) {
 
                             if (authenticationResult != null && authenticationResult.getStatus() == AuthenticationStatus.Succeeded) {
-                                dependencyResolver = new ADALDependencyResolver(
-                                        getAuthenticationContext(),
-                                        resourceId,
-                                        Constants.CLIENT_ID);
                                 if(authenticationListener != null) {
                                     authenticationListener.onAuthenticationSuccess(authenticationResult);
                                 }
@@ -122,10 +115,6 @@ public class AuthenticationManager {
             }
         }
         return authContext;
-    }
-
-    public DependencyResolver getDependencyResolver() {
-        return getInstance().dependencyResolver;
     }
 
     private boolean verifyAuthenticationContext() {

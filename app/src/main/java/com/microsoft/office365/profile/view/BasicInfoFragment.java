@@ -1,4 +1,7 @@
-package com.microsoft.office365.profile;
+/*
+ * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
+ */
+package com.microsoft.office365.profile.view;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -11,12 +14,17 @@ import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.microsoft.office365.profile.Constants;
+import com.microsoft.office365.profile.ProfileApplication;
+import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.http.InputStreamRequestListener;
+import com.microsoft.office365.profile.http.JsonRequestListener;
+import com.microsoft.office365.profile.http.RequestManager;
 import com.microsoft.office365.profile.model.User;
 
 import java.io.IOException;
@@ -30,33 +38,26 @@ import java.net.URL;
 public class BasicInfoFragment extends Fragment implements
         JsonRequestListener, InputStreamRequestListener, View.OnClickListener {
     private static final String TAG = "BasicInfoFragment";
-    protected static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
+    private static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
 
-    protected TextView mDisplayNameTextView;
-    protected TextView mJobTitleTextView;
-    protected TextView mDepartmentTextView;
-    protected TextView mHireDateTextView;
-    protected TextView mMailTextView;
-    protected TextView mTelephoneNumberTextView;
-    protected TextView mStateTextView;
-    protected TextView mCountryTextView;
-    protected ImageView mThumbnailPhotoImageView;
-    protected TextView mManagerDisplayName;
-    protected TextView mManagerJobTitle;
-    protected TextView mNoManager;
-    protected LinearLayout mManagerSection;
-    protected URL mUserEndpoint;
-    protected URL mManagerEndpoint;
-    protected URL mThumbnailPhotoEndpoint;
-    protected User mManager;
-    protected LinearLayout mProgressContainer;
-    protected RelativeLayout mContainerLayout;
-    protected boolean dataLoaded = false;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private TextView mDisplayNameTextView;
+    private TextView mJobTitleTextView;
+    private TextView mDepartmentTextView;
+    private TextView mHireDateTextView;
+    private TextView mMailTextView;
+    private TextView mTelephoneNumberTextView;
+    private TextView mStateTextView;
+    private TextView mCountryTextView;
+    private ImageView mThumbnailPhotoImageView;
+    private TextView mManagerDisplayName;
+    private TextView mManagerJobTitle;
+    private TextView mNoManager;
+    private LinearLayout mManagerSection;
+    private URL mUserEndpoint;
+    private URL mManagerEndpoint;
+    private User mManager;
+    private LinearLayout mProgressContainer;
+    private RelativeLayout mContainerLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,10 +89,10 @@ public class BasicInfoFragment extends Fragment implements
                     Constants.GRAPH_RESOURCE_URL +
                     application.getTenant() +
                     "/users/" + ((ProfileActivity)getActivity()).getUserId());
-            mThumbnailPhotoEndpoint = new URL(
+            URL thumbnailPhotoEndpoint = new URL(
                     Constants.GRAPH_RESOURCE_URL +
-                    application.getTenant() +
-                    "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/thumbnailphoto");
+                            application.getTenant() +
+                            "/users/" + ((ProfileActivity) getActivity()).getUserId() + "/thumbnailphoto");
             mManagerEndpoint = new URL(
                     Constants.GRAPH_RESOURCE_URL +
                     application.getTenant() +
@@ -104,7 +105,7 @@ public class BasicInfoFragment extends Fragment implements
                             this);
             RequestManager
                     .getInstance()
-                    .executeRequest(mThumbnailPhotoEndpoint,
+                    .executeRequest(thumbnailPhotoEndpoint,
                             this);
             RequestManager
                     .getInstance()
@@ -144,18 +145,18 @@ public class BasicInfoFragment extends Fragment implements
                     mTelephoneNumberTextView.setText(user.telephoneNumber);
                     mStateTextView.setText(user.state);
                     mCountryTextView.setText(user.country);
+
+                    mProgressContainer.startAnimation(AnimationUtils.loadAnimation(
+                            getActivity(), android.R.anim.fade_out));
+                    mContainerLayout.startAnimation(AnimationUtils.loadAnimation(
+                            getActivity(), android.R.anim.fade_in));
+                    mProgressContainer.setVisibility(View.GONE);
+                    mContainerLayout.setVisibility(View.VISIBLE);
                 } else {
                     mManager = new Gson().fromJson(data, User.class);
                     mManagerDisplayName.setText(mManager.displayName);
                     mManagerJobTitle.setText(mManager.jobTitle);
                 }
-
-                mProgressContainer.startAnimation(AnimationUtils.loadAnimation(
-                        getActivity(), android.R.anim.fade_out));
-                mContainerLayout.startAnimation(AnimationUtils.loadAnimation(
-                        getActivity(), android.R.anim.fade_in));
-                mProgressContainer.setVisibility(View.GONE);
-                mContainerLayout.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -194,3 +195,32 @@ public class BasicInfoFragment extends Fragment implements
         }
     }
 }
+
+// *********************************************************
+//
+// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+//
+// Copyright (c) Microsoft Corporation
+// All rights reserved.
+//
+// MIT License:
+// Permission is hereby granted, free of charge, to any person obtaining
+// a copy of this software and associated documentation files (the
+// "Software"), to deal in the Software without restriction, including
+// without limitation the rights to use, copy, modify, merge, publish,
+// distribute, sublicense, and/or sell copies of the Software, and to
+// permit persons to whom the Software is furnished to do so, subject to
+// the following conditions:
+//
+// The above copyright notice and this permission notice shall be
+// included in all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+// NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+// LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+// OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+//
+// *********************************************************

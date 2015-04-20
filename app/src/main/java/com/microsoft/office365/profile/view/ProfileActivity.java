@@ -1,40 +1,47 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.model;
+package com.microsoft.office365.profile.view;
 
-import android.support.annotation.NonNull;
+import android.os.Bundle;
+import android.widget.TabHost;
 
-/**
- * Created by ricardol on 4/16/2015.
- */
-public class File implements CharSequence {
-    public String name;
-    public Node lastModifiedBy;
+import com.microsoft.office365.profile.R;
 
-    @Override
-    public int length() {
-        return name.length();
-    }
+
+public class ProfileActivity extends BaseActivity {
+    private String mUserId;
 
     @Override
-    public char charAt(int index) {
-        return name.charAt(index);
+    protected void onCreate(Bundle savedInstanceState) {
+        mUserId = getIntent().hasExtra("userId") ? getIntent().getStringExtra("userId") : mApplication.getUserId();
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_profile);
+
+        TabHost tabs=(TabHost)findViewById(R.id.tabHost);
+        tabs.setup();
+        TabHost.TabSpec spec=tabs.newTabSpec("tag1");
+        spec.setContent(R.id.basicInfoFragment);
+        spec.setIndicator(getResources().getString(R.string.fragment_general_title));
+        tabs.addTab(spec);
+        spec=tabs.newTabSpec("tag2");
+        spec.setContent(R.id.directReportsFragment);
+        spec.setIndicator(getResources().getString(R.string.fragment_direct_reports_title));
+        tabs.addTab(spec);
+        spec=tabs.newTabSpec("tag3");
+        spec.setContent(R.id.groupsFragment);
+        spec.setIndicator(getResources().getString(R.string.fragment_groups_title));
+        tabs.addTab(spec);
+        spec=tabs.newTabSpec("tag4");
+        spec.setContent(R.id.filesFragment);
+        spec.setIndicator(getResources().getString(R.string.fragment_files_title));
+        tabs.addTab(spec);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        return name.subSequence(start, end);
-    }
-
-    public static class Node{
-        public User user;
+    public String getUserId() {
+        return mUserId;
     }
 }
 

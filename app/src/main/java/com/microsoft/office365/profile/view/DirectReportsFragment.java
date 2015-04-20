@@ -1,40 +1,34 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.model;
+package com.microsoft.office365.profile.view;
 
-import android.support.annotation.NonNull;
+import com.microsoft.office365.profile.R;
 
 /**
- * Created by ricardol on 4/16/2015.
+ * A fragment representing a list of Items.
+ * <p/>
+ * <p/>
  */
-public class File implements CharSequence {
-    public String name;
-    public Node lastModifiedBy;
-
-    @Override
-    public int length() {
-        return name.length();
+public class DirectReportsFragment extends UserListFragment {
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+    public DirectReportsFragment() {
     }
 
-    @Override
-    public char charAt(int index) {
-        return name.charAt(index);
+    public String getEndpoint(){
+        return "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/directReports";
     }
 
-    @NonNull
+    /**
+     * Returns the message to display when there are no direct reports returned by a request.
+     * @return The message to display if there are no direct reports.
+     */
     @Override
-    public String toString() {
-        return name;
-    }
-
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        return name.subSequence(start, end);
-    }
-
-    public static class Node{
-        public User user;
+    public CharSequence getEmptyArrayMessage() {
+        return getResources().getText(R.string.empty_array_direct_reports_fragment_message);
     }
 }
 

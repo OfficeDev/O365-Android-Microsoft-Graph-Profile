@@ -1,41 +1,17 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.model;
+package com.microsoft.office365.profile.http;
 
-import android.support.annotation.NonNull;
+import java.io.InputStream;
+import java.net.URL;
 
 /**
  * Created by ricardol on 4/16/2015.
  */
-public class File implements CharSequence {
-    public String name;
-    public Node lastModifiedBy;
-
-    @Override
-    public int length() {
-        return name.length();
-    }
-
-    @Override
-    public char charAt(int index) {
-        return name.charAt(index);
-    }
-
-    @NonNull
-    @Override
-    public String toString() {
-        return name;
-    }
-
-    @Override
-    public CharSequence subSequence(int start, int end) {
-        return name.subSequence(start, end);
-    }
-
-    public static class Node{
-        public User user;
-    }
+public interface InputStreamRequestListener {
+    void onRequestSuccess(URL requestedEndpoint, InputStream data);
+    void onRequestFailure(URL requestedEndpoint, Exception e);
 }
 
 // *********************************************************
