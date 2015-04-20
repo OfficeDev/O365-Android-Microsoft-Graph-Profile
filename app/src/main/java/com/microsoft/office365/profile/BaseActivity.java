@@ -91,6 +91,11 @@ public class BaseActivity extends ActionBarActivity {
             startActivity(userListIntent);
 
             return true;
+        } else if(id == R.id.my_profile) {
+            final Intent profileActivityIntent = new Intent(this, ProfileActivity.class);
+            // Send the user's id to the Profile activity
+            profileActivityIntent.putExtra("userId", mApplication.getUserId());
+            startActivity(profileActivityIntent);
         }
 
         return super.onOptionsItemSelected(item);
