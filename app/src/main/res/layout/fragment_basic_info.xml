@@ -81,8 +81,8 @@
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_general_mail_label"
-                android:id="@+id/mailLabelTextView"
+                android:text="@string/fragment_general_alias_label"
+                android:id="@+id/aliasLabelTextView"
                 android:layout_below="@+id/hireDateLabelTextView"
                 android:layout_alignRight="@+id/departmentLabelTextView"
                 android:paddingRight="?android:attr/listPreferredItemPaddingRight"/>
@@ -91,9 +91,9 @@
                 android:textSize="16sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/fragment_general_mail_label"
+                android:text="@string/fragment_general_phone_label"
                 android:id="@+id/telephoneNumberLabelTextView"
-                android:layout_below="@+id/mailLabelTextView"
+                android:layout_below="@+id/aliasLabelTextView"
                 android:layout_alignRight="@+id/departmentLabelTextView"
                 android:paddingRight="?android:attr/listPreferredItemPaddingRight"/>
 
@@ -152,7 +152,7 @@
                 android:textStyle="bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/mailTextView"
+                android:id="@+id/aliasTextView"
                 android:layout_below="@+id/hireDateLabelTextView"
                 android:layout_alignLeft="@+id/hireDateTextView"
                 android:layout_alignStart="@+id/hireDateTextView"/>
@@ -164,8 +164,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/telephoneNumberTextView"
                 android:layout_alignTop="@+id/telephoneNumberLabelTextView"
-                android:layout_alignLeft="@+id/mailTextView"
-                android:layout_alignStart="@+id/mailTextView"/>
+                android:layout_alignLeft="@+id/aliasTextView"
+                android:layout_alignStart="@+id/aliasTextView"/>
 
             <TextView
                 android:textSize="16sp"

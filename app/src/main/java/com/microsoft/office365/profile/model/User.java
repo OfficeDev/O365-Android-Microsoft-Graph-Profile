@@ -19,7 +19,7 @@ public class User implements CharSequence {
     public String displayName;
     public String hireDate;
     public String jobTitle;
-    public String mail;
+    public String mailNickname;
     public String state;
     public String telephoneNumber;
 

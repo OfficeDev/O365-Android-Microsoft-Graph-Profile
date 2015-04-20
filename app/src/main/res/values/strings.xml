@@ -11,9 +11,10 @@
     <string name="title_activity_user_list">User List</string>
 
     <string name="fragment_general_job_title_label">Job Title:</string>
-    <string name="fragment_general_department_label">Hire Date:</string>
-    <string name="fragment_general_hire_date_label">Mail:</string>
-    <string name="fragment_general_mail_label">Phone:</string>
+    <string name="fragment_general_department_label">Department:</string>
+    <string name="fragment_general_hire_date_label">Hire Date:</string>
+    <string name="fragment_general_phone_label">Phone:</string>
+    <string name="fragment_general_alias_label">Alias:</string>
     <string name="fragment_general_state_label">State:</string>
     <string name="fragment_general_country_label">Country:</string>
     <string name="fragment_general_image_description_label">Thumbnail photo</string>

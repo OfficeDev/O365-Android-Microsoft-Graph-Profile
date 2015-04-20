@@ -43,7 +43,7 @@ public class BasicInfoFragment extends Fragment implements
     private TextView mJobTitleTextView;
     private TextView mDepartmentTextView;
     private TextView mHireDateTextView;
-    private TextView mMailTextView;
+    private TextView mAliasTextView;
     private TextView mTelephoneNumberTextView;
     private TextView mStateTextView;
     private TextView mCountryTextView;
@@ -67,7 +67,7 @@ public class BasicInfoFragment extends Fragment implements
         mJobTitleTextView = (TextView)fragmentView.findViewById(R.id.jobTitleTextView);
         mDepartmentTextView = (TextView)fragmentView.findViewById(R.id.departmentTextView);
         mHireDateTextView = (TextView)fragmentView.findViewById(R.id.hireDateTextView);
-        mMailTextView = (TextView)fragmentView.findViewById(R.id.mailTextView);
+        mAliasTextView = (TextView)fragmentView.findViewById(R.id.aliasTextView);
         mTelephoneNumberTextView = (TextView)fragmentView.findViewById(R.id.telephoneNumberTextView);
         mStateTextView = (TextView)fragmentView.findViewById(R.id.stateTextView);
         mCountryTextView = (TextView)fragmentView.findViewById(R.id.countryTextView);
@@ -123,7 +123,7 @@ public class BasicInfoFragment extends Fragment implements
     @Override
     public void onClick(View v){
         final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
-        // Send the user's given name and displayable id to the SendMail activity
+        // Send the user's id to the Profile activity
         profileActivityIntent.putExtra("userId", mManager.objectId);
         startActivity(profileActivityIntent);
     }
@@ -138,7 +138,7 @@ public class BasicInfoFragment extends Fragment implements
                     mJobTitleTextView.setText(user.jobTitle);
                     mDepartmentTextView.setText(user.department);
                     mHireDateTextView.setText(user.hireDate);
-                    mMailTextView.setText(user.mail);
+                    mAliasTextView.setText(user.mailNickname);
                     mTelephoneNumberTextView.setText(user.telephoneNumber);
                     mStateTextView.setText(user.state);
                     mCountryTextView.setText(user.country);

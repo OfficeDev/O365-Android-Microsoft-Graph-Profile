@@ -56,7 +56,7 @@ public class FilesFragment extends BaseListFragment {
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
-        // Send the user's given name and displayable id to the SendMail activity
+        // Send the user's id to the Profile activity
         profileActivityIntent.putExtra("userId", mFileList.get((int)id).lastModifiedBy.user.id);
         startActivity(profileActivityIntent);
     }
