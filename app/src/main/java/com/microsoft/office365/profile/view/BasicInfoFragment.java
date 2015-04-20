@@ -40,7 +40,6 @@ public class BasicInfoFragment extends Fragment implements
     private static final String TAG = "BasicInfoFragment";
     private static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
 
-    private TextView mDisplayNameTextView;
     private TextView mJobTitleTextView;
     private TextView mDepartmentTextView;
     private TextView mHireDateTextView;
@@ -65,7 +64,6 @@ public class BasicInfoFragment extends Fragment implements
         // Inflate the layout for this fragment
         View fragmentView = inflater.inflate(R.layout.fragment_basic_info, container, false);
 
-        mDisplayNameTextView = (TextView)fragmentView.findViewById(R.id.displayNameTextView);
         mJobTitleTextView = (TextView)fragmentView.findViewById(R.id.jobTitleTextView);
         mDepartmentTextView = (TextView)fragmentView.findViewById(R.id.departmentTextView);
         mHireDateTextView = (TextView)fragmentView.findViewById(R.id.hireDateTextView);
@@ -137,7 +135,6 @@ public class BasicInfoFragment extends Fragment implements
             public void run() {
                 if (requestedEndpoint.sameFile(mUserEndpoint)) {
                     User user = new Gson().fromJson(data, User.class);
-                    mDisplayNameTextView.setText(user.displayName);
                     mJobTitleTextView.setText(user.jobTitle);
                     mDepartmentTextView.setText(user.department);
                     mHireDateTextView.setText(user.hireDate);
