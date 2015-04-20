@@ -4,7 +4,7 @@
 
     <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     tools:context="com.microsoft.office365.profile.BasicInfoFragment">
 
         <TextView
@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/thumbnailPhotoImageView"
+            android:contentDescription="@string/fragment_general_image_description_label"
             android:minHeight="240dp"
             android:minWidth="240dp"
             android:src="@mipmap/thumbnail_photo_not_available"

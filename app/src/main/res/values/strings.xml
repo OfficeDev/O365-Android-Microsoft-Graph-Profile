@@ -17,6 +17,7 @@
     <string name="fragment_general_mail_label">Phone:</string>
     <string name="fragment_general_state_label">State:</string>
     <string name="fragment_general_country_label">Country:</string>
+    <string name="fragment_general_image_description_label">Thumbnail photo</string>
 
     <string name="file_not_found_exception_default_message">Not available</string>
     <string name="empty_array_default_message">Not available</string>
