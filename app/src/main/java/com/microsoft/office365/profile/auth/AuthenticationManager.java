@@ -1,8 +1,8 @@
 /*
-* Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
-* Portions of this class are adapted from the AuthenticationController.java file from Microsoft Open Technologies, Inc.
-* located at https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/outlook/app/src/main/java/com/microsoft/services/controllers/AuthenticationController.java
-*/
+ * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
+ * Portions of this class are adapted from the AuthenticationController.java file from Microsoft Open Technologies, Inc.
+ * located at https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/outlook/app/src/main/java/com/microsoft/services/controllers/AuthenticationController.java
+ */
 package com.microsoft.office365.profile.auth;
 
 import android.app.Activity;
