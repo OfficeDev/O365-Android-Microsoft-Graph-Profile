@@ -4,7 +4,7 @@
       tools:context=".BaseActivity">
       <item android:id="@+id/my_profile"
             android:title="@string/my_profile_settings"
-            app:showAsAction="always"/>
+            app:showAsAction="ifRoom"/>
       <item android:id="@+id/sign_out"
           android:title="@string/sign_out_settings"
           android:orderInCategory="100"

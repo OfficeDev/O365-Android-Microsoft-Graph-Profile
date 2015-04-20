@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class GroupsFragment extends BaseListFragment {
     protected static final String TAG = "GroupsFragment";
-    ArrayList<Group> mGroupList;
+    private ArrayList<Group> mGroupList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -34,17 +34,12 @@ public class GroupsFragment extends BaseListFragment {
         return "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/memberof";
     }
 
-    @Override
-    public int getTitleResourceId() {
-        return R.string.fragment_groups_title;
-    }
-
     /**
      * Returns the message to display when there are no direct reports returned by a request.
      * @return The message to display if there are no direct reports.
      */
     @Override
-    public CharSequence getEmptyArrayMessage() {
+    CharSequence getEmptyArrayMessage() {
         return getResources().getText(R.string.empty_array_groups_fragment_message);
     }
 

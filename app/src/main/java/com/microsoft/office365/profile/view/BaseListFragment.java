@@ -5,12 +5,12 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.microsoft.aad.adal.AuthenticationResult;
-import com.microsoft.office365.profile.auth.AuthenticationListener;
-import com.microsoft.office365.profile.auth.AuthenticationManager;
 import com.microsoft.office365.profile.Constants;
-import com.microsoft.office365.profile.http.JsonRequestListener;
 import com.microsoft.office365.profile.ProfileApplication;
 import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.auth.AuthenticationListener;
+import com.microsoft.office365.profile.auth.AuthenticationManager;
+import com.microsoft.office365.profile.http.JsonRequestListener;
 import com.microsoft.office365.profile.http.RequestManager;
 
 import java.net.MalformedURLException;
@@ -23,9 +23,9 @@ import java.net.URL;
   */
 public abstract class BaseListFragment extends ListFragment implements JsonRequestListener, AuthenticationListener {
     private static final String TAG = "BaseListFragment";
-    protected static final String ACCEPT_HEADER = "application/json;odata.metadata=minimal;odata.streaming=true";
+    private static final String ACCEPT_HEADER = "application/json;odata.metadata=minimal;odata.streaming=true";
 
-    protected ProfileApplication mApplication;
+    private ProfileApplication mApplication;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -33,24 +33,14 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
      */
     public BaseListFragment() { }
 
-    public abstract String getEndpoint();
-    public abstract int getTitleResourceId();
+    protected abstract String getEndpoint();
 
-    /**
-     * Returns the message to display when a FileNotFoundException is thrown by a request.
-     * In some cases, this might not be an error per-se. For example, if the request looks for the manager
-     * property and it doesn't find it, it may be possible that the user just doesn't have a manager.
-     * @return The message to display when a FileNotFoundException is thrown.
-     */
-    public CharSequence getFileNotFoundExceptionMessage(){
-        return getResources().getText(R.string.file_not_found_exception_default_message);
-    }
     /**
      * Returns the message to display when an empty array returned by a request.
      * For example, if the request looks for the direct reports and there's none.
      * @return The message to display when a an empty array is returned.
      */
-    public CharSequence getEmptyArrayMessage(){
+    CharSequence getEmptyArrayMessage(){
         return getResources().getText(R.string.empty_array_default_message);
     }
 
@@ -74,7 +64,7 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
         }
     }
 
-    protected void sendRequest(String endpoint){
+    private void sendRequest(String endpoint){
         try {
             RequestManager
                     .getInstance()

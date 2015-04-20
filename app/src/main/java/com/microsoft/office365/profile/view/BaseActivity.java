@@ -10,19 +10,19 @@ import android.view.MenuItem;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 
-import com.microsoft.office365.profile.auth.AuthenticationManager;
 import com.microsoft.office365.profile.ProfileApplication;
 import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.auth.AuthenticationManager;
 import com.microsoft.office365.profile.http.RequestManager;
 
 /**
  * Created by ricardol on 4/13/2015.
  */
 public class BaseActivity extends ActionBarActivity {
-    protected static final String TAG = "BaseActivity";
-    protected static final String PREFERENCES_NAME = "ProfilePreferences";
+    private static final String TAG = "BaseActivity";
+    private static final String PREFERENCES_NAME = "ProfilePreferences";
 
-    protected ProfileApplication mApplication;
+    ProfileApplication mApplication;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

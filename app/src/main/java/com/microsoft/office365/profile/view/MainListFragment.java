@@ -1,15 +1,12 @@
 package com.microsoft.office365.profile.view;
 
-import com.microsoft.office365.profile.R;
-
 /**
  * A fragment representing a list of Items.
  * <p/>
  * <p/>
  */
 public class MainListFragment extends UserListFragment {
-    protected static final String TAG = "MainUserListFragment";
-    protected static final String LAST_SECTION_ENDPOINT = "/users?$filter=userType%20eq%20'Member'";
+    private static final String LAST_SECTION_ENDPOINT = "/users?$filter=userType%20eq%20'Member'";
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -20,10 +17,5 @@ public class MainListFragment extends UserListFragment {
 
     public String getEndpoint(){
         return LAST_SECTION_ENDPOINT;
-    }
-
-    @Override
-    public int getTitleResourceId() {
-        return R.string.fragment_main_user_list_title;
     }
 }

@@ -8,6 +8,7 @@ import android.util.Log;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.AuthenticationSettings;
 import com.microsoft.aad.adal.UserInfo;
+import com.microsoft.office365.profile.auth.AuthenticationListener;
 
 import java.security.SecureRandom;
 
@@ -15,12 +16,11 @@ import java.security.SecureRandom;
  * Created by ricardol on 4/13/2015.
  */
 public class ProfileApplication extends Application implements AuthenticationListener {
-    protected static final String TAG = "ProfileApplication";
-    protected SharedPreferences mSharedPreferences;
-    protected static final String DISPLAYNAME_FIELD = "displayName";
-    protected static final String DISPLAYABLE_ID_FIELD = "displayableId";
-    protected static final String USER_ID_FIELD = "userId";
-    protected static final String TENANT_FIELD = "tenant";
+    private static final String TAG = "ProfileApplication";
+
+    private SharedPreferences mSharedPreferences;
+    private static final String USER_ID_FIELD = "userId";
+    private static final String TENANT_FIELD = "tenant";
 
     public ProfileApplication(){
         super();
@@ -52,9 +52,7 @@ public class ProfileApplication extends Application implements AuthenticationLis
     @Override
     public void onAuthenticationSuccess(AuthenticationResult authenticationResult) {
         UserInfo userInfo = authenticationResult.getUserInfo();
-        if(getUserId() != userInfo.getUserId()) {
-            setDisplayableId(userInfo.getDisplayableId());
-            setDisplayName(userInfo.getGivenName() + " " + userInfo.getGivenName());
+        if(!getUserId().equals(userInfo.getUserId())) {
             // AuthenticationResult returns the TenantId as null
             // we can extract the value from the displayableId
             setTenant(userInfo.getDisplayableId().split("@")[1]);
@@ -68,28 +66,8 @@ public class ProfileApplication extends Application implements AuthenticationLis
         //TODO: Implement error handler
     }
 
-    public String getDisplayName() {
-        return mSharedPreferences.getString(DISPLAYNAME_FIELD, "");
-    }
-
-    public void setDisplayName(String displayName) {
-        mSharedPreferences.edit().putString(DISPLAYNAME_FIELD, displayName).apply();
-    }
-
-    public void resetDisplayName() {
-        mSharedPreferences.edit().remove(DISPLAYNAME_FIELD).apply();
-    }
-
-    public String getDisplayableId() {
-        return mSharedPreferences.getString(DISPLAYABLE_ID_FIELD, "");
-    }
-
-    public void setDisplayableId(String displayableId) {
-        mSharedPreferences.edit().putString(DISPLAYABLE_ID_FIELD, displayableId).apply();
-    }
-
-    public void resetDisplayableId(){
-        mSharedPreferences.edit().remove(DISPLAYABLE_ID_FIELD).apply();
+    public void setSharedPreferences(SharedPreferences sharedPreferences) {
+        mSharedPreferences = sharedPreferences;
     }
 
     public String getTenant() {

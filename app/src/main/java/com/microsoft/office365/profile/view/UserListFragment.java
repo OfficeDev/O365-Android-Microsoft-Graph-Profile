@@ -24,7 +24,7 @@ import java.util.ArrayList;
  */
 public abstract class UserListFragment extends BaseListFragment {
     private static final String TAG = "UserListFragment";
-    ArrayList<User> mUserList;
+    private ArrayList<User> mUserList;
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
@@ -63,7 +63,6 @@ public abstract class UserListFragment extends BaseListFragment {
                 } else {
                     setListAdapter(new UserAdapter(
                             getActivity(),
-                            android.R.layout.two_line_list_item,
                             mUserList));
                 }
                 setListShown(true);
@@ -72,15 +71,13 @@ public abstract class UserListFragment extends BaseListFragment {
     }
 
     private class UserAdapter extends ArrayAdapter<User>{
-        protected Context mContext;
-        protected ArrayList<User> mData;
-        protected int mLayoutResourceId;
-        protected LayoutInflater mLayoutInflater;
+        final Context mContext;
+        final ArrayList<User> mData;
+        final LayoutInflater mLayoutInflater;
 
-        public UserAdapter(Context context, int layoutResourceId, ArrayList<User> data) {
-            super(context, layoutResourceId, data);
+        public UserAdapter(Context context, ArrayList<User> data) {
+            super(context, android.R.layout.two_line_list_item, data);
 
-            this.mLayoutResourceId = layoutResourceId;
             this.mContext = context;
             this.mData = data;
 
@@ -91,7 +88,7 @@ public abstract class UserListFragment extends BaseListFragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             View row;
             if(convertView == null) {
-                row = mLayoutInflater.inflate(mLayoutResourceId, null);
+                row = mLayoutInflater.inflate(android.R.layout.two_line_list_item, null);
             } else {
                 row = convertView;
             }

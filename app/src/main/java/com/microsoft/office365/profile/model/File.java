@@ -1,10 +1,11 @@
 package com.microsoft.office365.profile.model;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by ricardol on 4/16/2015.
  */
 public class File implements CharSequence {
-    public String id;
     public String name;
     public Node lastModifiedBy;
 
@@ -18,6 +19,7 @@ public class File implements CharSequence {
         return name.charAt(index);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return name;

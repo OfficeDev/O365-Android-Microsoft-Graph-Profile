@@ -8,8 +8,6 @@ import com.microsoft.office365.profile.R;
  * <p/>
  */
 public class DirectReportsFragment extends UserListFragment {
-    protected static final String TAG = "ManagerFragment";
-
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -19,11 +17,6 @@ public class DirectReportsFragment extends UserListFragment {
 
     public String getEndpoint(){
         return "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/directReports";
-    }
-
-    @Override
-    public int getTitleResourceId() {
-        return R.string.fragment_direct_reports_title;
     }
 
     /**

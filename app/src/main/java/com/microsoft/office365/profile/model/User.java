@@ -1,5 +1,7 @@
 package com.microsoft.office365.profile.model;
 
+import android.support.annotation.NonNull;
+
 /**
  * Created by Administrator on 4/6/2015.
  */
@@ -28,6 +30,7 @@ public class User implements CharSequence {
         return displayName.charAt(index);
     }
 
+    @NonNull
     @Override
     public String toString() {
         return displayName;

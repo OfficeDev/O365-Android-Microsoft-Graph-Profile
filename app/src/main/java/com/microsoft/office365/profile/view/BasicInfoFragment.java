@@ -17,10 +17,10 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.microsoft.office365.profile.Constants;
-import com.microsoft.office365.profile.http.InputStreamRequestListener;
-import com.microsoft.office365.profile.http.JsonRequestListener;
 import com.microsoft.office365.profile.ProfileApplication;
 import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.http.InputStreamRequestListener;
+import com.microsoft.office365.profile.http.JsonRequestListener;
 import com.microsoft.office365.profile.http.RequestManager;
 import com.microsoft.office365.profile.model.User;
 
@@ -35,33 +35,26 @@ import java.net.URL;
 public class BasicInfoFragment extends Fragment implements
         JsonRequestListener, InputStreamRequestListener, View.OnClickListener {
     private static final String TAG = "BasicInfoFragment";
-    protected static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
+    private static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
 
-    protected TextView mDisplayNameTextView;
-    protected TextView mJobTitleTextView;
-    protected TextView mDepartmentTextView;
-    protected TextView mHireDateTextView;
-    protected TextView mMailTextView;
-    protected TextView mTelephoneNumberTextView;
-    protected TextView mStateTextView;
-    protected TextView mCountryTextView;
-    protected ImageView mThumbnailPhotoImageView;
-    protected TextView mManagerDisplayName;
-    protected TextView mManagerJobTitle;
-    protected TextView mNoManager;
-    protected LinearLayout mManagerSection;
-    protected URL mUserEndpoint;
-    protected URL mManagerEndpoint;
-    protected URL mThumbnailPhotoEndpoint;
-    protected User mManager;
-    protected LinearLayout mProgressContainer;
-    protected RelativeLayout mContainerLayout;
-    protected boolean dataLoaded = false;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private TextView mDisplayNameTextView;
+    private TextView mJobTitleTextView;
+    private TextView mDepartmentTextView;
+    private TextView mHireDateTextView;
+    private TextView mMailTextView;
+    private TextView mTelephoneNumberTextView;
+    private TextView mStateTextView;
+    private TextView mCountryTextView;
+    private ImageView mThumbnailPhotoImageView;
+    private TextView mManagerDisplayName;
+    private TextView mManagerJobTitle;
+    private TextView mNoManager;
+    private LinearLayout mManagerSection;
+    private URL mUserEndpoint;
+    private URL mManagerEndpoint;
+    private User mManager;
+    private LinearLayout mProgressContainer;
+    private RelativeLayout mContainerLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -93,10 +86,10 @@ public class BasicInfoFragment extends Fragment implements
                     Constants.GRAPH_RESOURCE_URL +
                     application.getTenant() +
                     "/users/" + ((ProfileActivity)getActivity()).getUserId());
-            mThumbnailPhotoEndpoint = new URL(
+            URL thumbnailPhotoEndpoint = new URL(
                     Constants.GRAPH_RESOURCE_URL +
-                    application.getTenant() +
-                    "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/thumbnailphoto");
+                            application.getTenant() +
+                            "/users/" + ((ProfileActivity) getActivity()).getUserId() + "/thumbnailphoto");
             mManagerEndpoint = new URL(
                     Constants.GRAPH_RESOURCE_URL +
                     application.getTenant() +
@@ -109,7 +102,7 @@ public class BasicInfoFragment extends Fragment implements
                             this);
             RequestManager
                     .getInstance()
-                    .executeRequest(mThumbnailPhotoEndpoint,
+                    .executeRequest(thumbnailPhotoEndpoint,
                             this);
             RequestManager
                     .getInstance()

@@ -27,7 +27,7 @@ import java.util.ArrayList;
  */
 public class FilesFragment extends BaseListFragment {
     protected static final String TAG = "FilesFragment";
-    ArrayList<File> mFileList;
+    private ArrayList<File> mFileList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -40,17 +40,12 @@ public class FilesFragment extends BaseListFragment {
         return "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/files";
     }
 
-    @Override
-    public int getTitleResourceId() {
-        return R.string.fragment_files_title;
-    }
-
     /**
      * Returns the message to display when there are no direct reports returned by a request.
      * @return The message to display if there are no direct reports.
      */
     @Override
-    public CharSequence getEmptyArrayMessage() {
+    CharSequence getEmptyArrayMessage() {
         return getResources().getText(R.string.empty_array_files_fragment_message);
     }
 
@@ -88,7 +83,6 @@ public class FilesFragment extends BaseListFragment {
                 }
                 setListAdapter(new FileAdapter(
                         getActivity(),
-                        android.R.layout.two_line_list_item,
                         mFileList));
                 setListShown(true);
             }
@@ -96,15 +90,13 @@ public class FilesFragment extends BaseListFragment {
     }
 
     private class FileAdapter extends ArrayAdapter<File>{
-        protected Context mContext;
-        protected ArrayList<File> mData;
-        protected int mLayoutResourceId;
-        protected LayoutInflater mLayoutInflater;
+        final Context mContext;
+        final ArrayList<File> mData;
+        final LayoutInflater mLayoutInflater;
 
-        public FileAdapter(Context context, int layoutResourceId, ArrayList<File> data) {
-            super(context, layoutResourceId, data);
+        public FileAdapter(Context context, ArrayList<File> data) {
+            super(context, android.R.layout.two_line_list_item, data);
 
-            this.mLayoutResourceId = layoutResourceId;
             this.mContext = context;
             this.mData = data;
 
@@ -115,7 +107,7 @@ public class FilesFragment extends BaseListFragment {
         public View getView(int position, View convertView, ViewGroup parent) {
             View row;
             if(convertView == null) {
-                row = mLayoutInflater.inflate(mLayoutResourceId, null);
+                row = mLayoutInflater.inflate(android.R.layout.two_line_list_item, null);
             } else {
                 row = convertView;
             }
