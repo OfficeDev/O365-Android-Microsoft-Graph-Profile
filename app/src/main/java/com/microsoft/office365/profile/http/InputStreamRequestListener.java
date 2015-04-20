@@ -1,4 +1,4 @@
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.http;
 
 import java.io.InputStream;
 import java.net.URL;

@@ -1,10 +1,17 @@
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.view;
 
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.microsoft.aad.adal.AuthenticationResult;
+import com.microsoft.office365.profile.auth.AuthenticationListener;
+import com.microsoft.office365.profile.auth.AuthenticationManager;
+import com.microsoft.office365.profile.Constants;
+import com.microsoft.office365.profile.http.JsonRequestListener;
+import com.microsoft.office365.profile.ProfileApplication;
+import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.http.RequestManager;
 
 import java.net.MalformedURLException;
 import java.net.URL;

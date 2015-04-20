@@ -15,7 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".UserListActivity"
+            android:name=".view.UserListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_user_list"
             android:screenOrientation="portrait" >
@@ -25,12 +25,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ProfileActivity"
+            android:name=".view.ProfileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:noHistory="true"
-            android:parentActivityName=".UserListActivity" >
+            android:parentActivityName=".view.UserListActivity" >
         </activity>
         <activity
             android:name="com.microsoft.aad.adal.AuthenticationActivity"

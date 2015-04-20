@@ -1,6 +1,8 @@
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.view;
 
 import android.os.Bundle;
+
+import com.microsoft.office365.profile.R;
 
 
 public class UserListActivity extends BaseActivity {

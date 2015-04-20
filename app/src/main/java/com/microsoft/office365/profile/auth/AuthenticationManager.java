@@ -3,7 +3,7 @@
 * Portions of this class are adapted from the AuthenticationController.java file from Microsoft Open Technologies, Inc.
 * located at https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/outlook/app/src/main/java/com/microsoft/services/controllers/AuthenticationController.java
 */
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.auth;
 
 import android.app.Activity;
 import android.util.Log;
@@ -14,6 +14,7 @@ import com.microsoft.aad.adal.AuthenticationContext;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.AuthenticationResult.AuthenticationStatus;
 import com.microsoft.aad.adal.PromptBehavior;
+import com.microsoft.office365.profile.Constants;
 import com.microsoft.services.odata.impl.ADALDependencyResolver;
 import com.microsoft.services.odata.interfaces.DependencyResolver;
 

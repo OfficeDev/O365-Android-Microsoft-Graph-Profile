@@ -1,4 +1,4 @@
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.auth;
 
 import com.microsoft.aad.adal.AuthenticationResult;
 

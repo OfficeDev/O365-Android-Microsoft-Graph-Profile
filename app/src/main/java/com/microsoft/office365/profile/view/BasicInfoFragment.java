@@ -1,4 +1,4 @@
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.view;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -16,6 +16,12 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.microsoft.office365.profile.Constants;
+import com.microsoft.office365.profile.http.InputStreamRequestListener;
+import com.microsoft.office365.profile.http.JsonRequestListener;
+import com.microsoft.office365.profile.ProfileApplication;
+import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.http.RequestManager;
 import com.microsoft.office365.profile.model.User;
 
 import java.io.IOException;

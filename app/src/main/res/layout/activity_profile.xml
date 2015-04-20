@@ -13,7 +13,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context="com.microsoft.office365.profile.ProfileActivity">
+        tools:context="com.microsoft.office365.profile.view.ProfileActivity">
 
         <TabWidget
             android:id="@android:id/tabs"
@@ -27,23 +27,23 @@
             android:layout_height="match_parent">
 
             <fragment android:id="@+id/basicInfoFragment"
-                      android:name="com.microsoft.office365.profile.BasicInfoFragment"
+                      android:name="com.microsoft.office365.profile.view.BasicInfoFragment"
                       tools:layout="@layout/fragment_basic_info"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"/>
 
             <fragment android:id="@+id/directReportsFragment"
-                      android:name="com.microsoft.office365.profile.DirectReportsFragment"
+                      android:name="com.microsoft.office365.profile.view.DirectReportsFragment"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"/>
 
             <fragment android:id="@+id/groupsFragment"
-                      android:name="com.microsoft.office365.profile.GroupsFragment"
+                      android:name="com.microsoft.office365.profile.view.GroupsFragment"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"/>
 
             <fragment android:id="@+id/filesFragment"
-                      android:name="com.microsoft.office365.profile.FilesFragment"
+                      android:name="com.microsoft.office365.profile.view.FilesFragment"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"/>
         </FrameLayout>

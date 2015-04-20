@@ -1,4 +1,4 @@
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.microsoft.office365.profile.R;
 import com.microsoft.office365.profile.model.File;
 
 import java.lang.reflect.Type;

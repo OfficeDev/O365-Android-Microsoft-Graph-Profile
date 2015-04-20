@@ -1,4 +1,6 @@
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.view;
+
+import com.microsoft.office365.profile.R;
 
 /**
  * A fragment representing a list of Items.

@@ -1,7 +1,10 @@
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.view;
 
 import android.os.Bundle;
 import android.widget.TabHost;
+
+import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.view.BaseActivity;
 
 
 public class ProfileActivity extends BaseActivity {

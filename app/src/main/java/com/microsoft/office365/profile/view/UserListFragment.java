@@ -1,4 +1,4 @@
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.view;
 
 import android.content.Context;
 import android.content.Intent;
@@ -31,7 +31,7 @@ public abstract class UserListFragment extends BaseListFragment {
         super.onListItemClick(l, v, position, id);
         final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
         // Send the user's given name and displayable id to the SendMail activity
-        profileActivityIntent.putExtra("userId", mUserList.get((int)id).objectId);
+        profileActivityIntent.putExtra("userId", mUserList.get((int) id).objectId);
         startActivity(profileActivityIntent);
     }
 

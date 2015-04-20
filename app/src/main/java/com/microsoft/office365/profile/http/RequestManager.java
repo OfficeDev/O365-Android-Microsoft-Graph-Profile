@@ -1,10 +1,11 @@
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.http;
 
 import android.util.Log;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
+import com.microsoft.office365.profile.auth.AuthenticationManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -43,12 +44,12 @@ public class RequestManager {
         INSTANCE = null;
     }
 
-    protected void executeRequest(URL endpoint, String acceptHeader, JsonRequestListener requestListener){
+    public void executeRequest(URL endpoint, String acceptHeader, JsonRequestListener requestListener){
         JsonRequestRunnable jsonRequestRunnable = new JsonRequestRunnable(endpoint, acceptHeader, requestListener);
         mExecutor.submit(jsonRequestRunnable);
     }
 
-    protected void executeRequest(URL endpoint, InputStreamRequestListener requestListener){
+    public void executeRequest(URL endpoint, InputStreamRequestListener requestListener){
         InputStreamRequestRunnable requestRunnable = new InputStreamRequestRunnable(endpoint, requestListener);
         mExecutor.submit(requestRunnable);
     }

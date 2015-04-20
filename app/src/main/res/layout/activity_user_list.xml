@@ -6,10 +6,10 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="com.microsoft.office365.profile.UserListActivity">
+                tools:context="com.microsoft.office365.profile.view.UserListActivity">
 
     <fragment android:id="@+id/userListFragment"
-              android:name="com.microsoft.office365.profile.MainListFragment"
+              android:name="com.microsoft.office365.profile.view.MainListFragment"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"/>
 

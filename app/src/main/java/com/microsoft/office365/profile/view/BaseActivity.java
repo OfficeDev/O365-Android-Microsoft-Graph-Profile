@@ -1,4 +1,4 @@
-package com.microsoft.office365.profile;
+package com.microsoft.office365.profile.view;
 
 import android.content.Intent;
 import android.os.Build;
@@ -9,6 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+
+import com.microsoft.office365.profile.auth.AuthenticationManager;
+import com.microsoft.office365.profile.ProfileApplication;
+import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.http.RequestManager;
 
 /**
  * Created by ricardol on 4/13/2015.
@@ -25,7 +30,7 @@ public class BaseActivity extends ActionBarActivity {
 
         mApplication = (ProfileApplication)getApplication();
 
-        mApplication.mSharedPreferences = getSharedPreferences(PREFERENCES_NAME, MODE_APPEND);
+        mApplication.setSharedPreferences(getSharedPreferences(PREFERENCES_NAME, MODE_APPEND));
     }
 
     /**
@@ -72,8 +77,6 @@ public class BaseActivity extends ActionBarActivity {
 
             AuthenticationManager.resetInstance();
             RequestManager.resetInstance();
-            mApplication.resetDisplayName();
-            mApplication.resetDisplayableId();
             mApplication.resetTenant();
             mApplication.resetUserId();
 

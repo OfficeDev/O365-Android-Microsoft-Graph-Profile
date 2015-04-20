@@ -3,7 +3,7 @@
  */
 package com.microsoft.office365.profile;
 
-interface Constants {
+public interface Constants {
     static final String AUTHORITY_URL = "https://login.microsoftonline.com/common";
     static final String GRAPH_RESOURCE_URL = "https://graph.microsoft.com/beta/";
     static final String GRAPH_RESOURCE_ID = "https://graph.microsoft.com/";
