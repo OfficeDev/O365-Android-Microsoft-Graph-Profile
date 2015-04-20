@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Profile</string>
+    <string name="app_name">Office 365 Profile</string>
     <string name="fragment_manager_title">Manager</string>
     <string name="fragment_direct_reports_title">Direct Reports</string>
     <string name="fragment_groups_title">Groups</string>
