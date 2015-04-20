@@ -2,7 +2,6 @@ package com.microsoft.office365.profile;
 
 import com.google.gson.JsonElement;
 
-import java.io.InputStream;
 import java.net.URL;
 
 /**

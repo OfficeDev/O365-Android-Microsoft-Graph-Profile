@@ -5,7 +5,6 @@ import android.util.Log;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import com.microsoft.aad.adal.AuthenticationResult;
 
 import java.io.IOException;
 import java.io.InputStream;
