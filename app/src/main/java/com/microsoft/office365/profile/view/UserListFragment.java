@@ -35,6 +35,7 @@ public abstract class UserListFragment extends BaseListFragment {
         final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
         // Send the user's given name and displayable id to the SendMail activity
         profileActivityIntent.putExtra("userId", mUserList.get((int) id).objectId);
+        profileActivityIntent.putExtra("displayName", mUserList.get((int) id).displayName);
         startActivity(profileActivityIntent);
     }
 

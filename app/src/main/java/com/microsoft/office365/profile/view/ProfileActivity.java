@@ -14,8 +14,12 @@ public class ProfileActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mUserId = getIntent().hasExtra("userId") ? getIntent().getStringExtra("userId") : mApplication.getUserId();
         super.onCreate(savedInstanceState);
+
+        mUserId = getIntent().hasExtra("userId") ? getIntent().getStringExtra("userId") : mApplication.getUserId();
+        String displayName = getIntent().hasExtra("displayName") ? getIntent().getStringExtra("displayName") : mApplication.getDisplayName();
+        setTitle(displayName);
+
         setContentView(R.layout.activity_profile);
 
         TabHost tabs=(TabHost)findViewById(R.id.tabHost);

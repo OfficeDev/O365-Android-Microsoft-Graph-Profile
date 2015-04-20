@@ -82,6 +82,7 @@ public class BaseActivity extends ActionBarActivity {
             RequestManager.resetInstance();
             mApplication.resetTenant();
             mApplication.resetUserId();
+            mApplication.resetDisplayName();
 
             //Clear cookies.
             if(Build.VERSION.SDK_INT >= 21){
@@ -99,8 +100,6 @@ public class BaseActivity extends ActionBarActivity {
             return true;
         } else if(id == R.id.my_profile) {
             final Intent profileActivityIntent = new Intent(this, ProfileActivity.class);
-            // Send the user's id to the Profile activity
-            profileActivityIntent.putExtra("userId", mApplication.getUserId());
             startActivity(profileActivityIntent);
         }
 

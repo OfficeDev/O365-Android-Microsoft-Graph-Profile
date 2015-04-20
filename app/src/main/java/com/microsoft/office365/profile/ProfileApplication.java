@@ -23,6 +23,7 @@ public class ProfileApplication extends Application implements AuthenticationLis
 
     private SharedPreferences mSharedPreferences;
     private static final String USER_ID_FIELD = "userId";
+    private static final String DISPLAYNAME_FIELD = "displayName";
     private static final String TENANT_FIELD = "tenant";
 
     public ProfileApplication(){
@@ -60,6 +61,7 @@ public class ProfileApplication extends Application implements AuthenticationLis
             // we can extract the value from the displayableId
             setTenant(userInfo.getDisplayableId().split("@")[1]);
             setUserId(userInfo.getUserId());
+            setDisplayName(userInfo.getGivenName() + " " + userInfo.getFamilyName());
         }
     }
 
@@ -95,6 +97,18 @@ public class ProfileApplication extends Application implements AuthenticationLis
 
     public void resetUserId(){
         mSharedPreferences.edit().remove(USER_ID_FIELD).apply();
+    }
+
+    public String getDisplayName() {
+        return mSharedPreferences.getString(DISPLAYNAME_FIELD, "");
+    }
+
+    public void setDisplayName(String displayName) {
+        mSharedPreferences.edit().putString(DISPLAYNAME_FIELD, displayName).apply();
+    }
+
+    public void resetDisplayName(){
+        mSharedPreferences.edit().remove(DISPLAYNAME_FIELD).apply();
     }
 
     public boolean isUserSignedIn(){
