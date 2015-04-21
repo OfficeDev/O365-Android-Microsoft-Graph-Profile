@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -53,6 +54,7 @@ public class BasicInfoFragment extends Fragment implements
     private TextView mNoManager;
     private LinearLayout mManagerSection;
     private URL mUserEndpoint;
+    private URL mThumbnailPhotoEndpoint;
     private URL mManagerEndpoint;
     private User mManager;
     private LinearLayout mProgressContainer;
@@ -87,7 +89,7 @@ public class BasicInfoFragment extends Fragment implements
                     Constants.GRAPH_RESOURCE_URL +
                     application.getTenant() +
                     "/users/" + ((ProfileActivity)getActivity()).getUserId());
-            URL thumbnailPhotoEndpoint = new URL(
+            mThumbnailPhotoEndpoint = new URL(
                     Constants.GRAPH_RESOURCE_URL +
                             application.getTenant() +
                             "/users/" + ((ProfileActivity) getActivity()).getUserId() + "/thumbnailphoto");
@@ -103,7 +105,7 @@ public class BasicInfoFragment extends Fragment implements
                             this);
             RequestManager
                     .getInstance()
-                    .executeRequest(thumbnailPhotoEndpoint,
+                    .executeRequest(mThumbnailPhotoEndpoint,
                             this);
             RequestManager
                     .getInstance()
@@ -113,8 +115,10 @@ public class BasicInfoFragment extends Fragment implements
 
         } catch (MalformedURLException e) {
             Log.e(TAG, e.getMessage());
-            e.printStackTrace();
-            // TODO: handle the case where the URL is malformed
+            Toast.makeText(
+                    getActivity(),
+                    R.string.malformed_url_toast_text,
+                    Toast.LENGTH_LONG).show();
         }
 
         return fragmentView;
@@ -187,6 +191,19 @@ public class BasicInfoFragment extends Fragment implements
                     mManagerDisplayName.setVisibility(View.GONE);
                     mManagerJobTitle.setVisibility(View.GONE);
                     mManagerSection.setClickable(false);
+                }
+            });
+        } else if(requestedEndpoint.sameFile(mThumbnailPhotoEndpoint)){
+            //Do nothing, we have a default image for the cases
+            // where the user doesn't have a thumbnail
+        } else {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(
+                            getActivity(),
+                            R.string.http_failure_toast_text,
+                            Toast.LENGTH_LONG).show();
                 }
             });
         }

@@ -6,6 +6,7 @@ package com.microsoft.office365.profile.view;
 import android.app.ListFragment;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.office365.profile.Constants;
@@ -76,8 +77,10 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
                             this);
         } catch (MalformedURLException e) {
             Log.e(TAG, e.getMessage());
-            e.printStackTrace();
-            // TODO: handle the case where the URL is malformed
+            Toast.makeText(
+                    getActivity(),
+                    R.string.malformed_url_toast_text,
+                    Toast.LENGTH_LONG).show();
         }
     }
 
@@ -90,13 +93,23 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
 
     @Override
     public void onAuthenticationFailure(Exception e) {
-        //TODO: implement this
+        Log.e(TAG, e.getMessage());
+        Toast.makeText(
+                getActivity(),
+                R.string.auth_failure_toast_text,
+                Toast.LENGTH_LONG).show();
+        AuthenticationManager
+                .getInstance()
+                .initialize(this);
     }
 
     @Override
     public void onRequestFailure(URL requestedEndpoint, Exception e) {
-        // TODO: implement failure...
         Log.e(TAG, e.getMessage());
+        Toast.makeText(
+                getActivity(),
+                R.string.http_failure_toast_text,
+                Toast.LENGTH_LONG).show();
     }
 }
 

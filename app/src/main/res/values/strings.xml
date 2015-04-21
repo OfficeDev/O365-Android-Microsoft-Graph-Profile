@@ -21,6 +21,10 @@
 
     <string name="loading">Loading…</string>
 
+    <string name="auth_failure_toast_text">Error signing in\nCheck logcat for details</string>
+    <string name="http_failure_toast_text">Error sending HTTP request\nCheck logcat for details</string>
+    <string name="malformed_url_toast_text">The URL is malformed\nCheck logcat for details</string>
+
     <string name="empty_array_default_message">Not available</string>
     <string name="file_not_found_exception_manager_fragment_message">He doesn\'t report to anybody</string>
     <string name="empty_array_direct_reports_fragment_message">Nobody reports to him</string>

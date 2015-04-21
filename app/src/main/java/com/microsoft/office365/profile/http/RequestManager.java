@@ -67,8 +67,6 @@ public class RequestManager {
             HttpsURLConnection httpsConnection = null;
 
             try {
-                //TODO: In Production, we don't need to disable SSL verification
-                //disableSSLVerification();
                 httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
 
                 httpsConnection.setRequestMethod("GET");
@@ -91,7 +89,6 @@ public class RequestManager {
                 Log.e(TAG, e.getMessage());
                 mJsonRequestListener.onRequestFailure(mEndpoint, e);
             } finally {
-                //TODO: Figure out if we need to close these objects or not.
                 if(httpsConnection != null){
                     httpsConnection.disconnect();
                 }
@@ -120,8 +117,6 @@ public class RequestManager {
             HttpsURLConnection httpsConnection = null;
 
             try {
-                //TODO: In Production, we don't need to disable SSL verification
-                //disableSSLVerification();
                 httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
 
                 httpsConnection.setRequestMethod("GET");
@@ -138,7 +133,6 @@ public class RequestManager {
                 Log.e(TAG, e.getMessage());
                 mInputStreamRequestListener.onRequestFailure(mEndpoint, e);
             } finally {
-                //TODO: Figure out if we need to close these objects or not.
                 if(httpsConnection != null){
                     httpsConnection.disconnect();
                 }
