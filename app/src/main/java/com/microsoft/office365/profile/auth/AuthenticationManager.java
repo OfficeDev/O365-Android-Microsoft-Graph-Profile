@@ -43,7 +43,7 @@ public class AuthenticationManager {
     private static AuthenticationManager INSTANCE;
 
     private AuthenticationManager() {
-        resourceId = Constants.GRAPH_RESOURCE_ID;
+        resourceId = Constants.UNIFIED_ENDPOINT_RESOURCE_ID;
     }
 
     /**

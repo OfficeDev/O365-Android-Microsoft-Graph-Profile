@@ -62,7 +62,7 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
                     .getInstance()
                     .initialize(this);
         } else {
-            String endpoint = Constants.GRAPH_RESOURCE_URL + mApplication.getTenant() + getEndpoint();
+            String endpoint = Constants.UNIFIED_ENDPOINT_RESOURCE_URL + mApplication.getTenant() + getEndpoint();
             sendRequest(endpoint);
         }
     }
@@ -86,7 +86,7 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
     @Override
     public void onSuccess(Object authenticationResult) {
         mApplication.onSuccess(authenticationResult);
-        String endpoint = Constants.GRAPH_RESOURCE_URL + mApplication.getTenant() + getEndpoint();
+        String endpoint = Constants.UNIFIED_ENDPOINT_RESOURCE_URL + mApplication.getTenant() + getEndpoint();
         sendRequest(endpoint);
     }
 

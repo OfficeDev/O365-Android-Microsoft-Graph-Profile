@@ -86,15 +86,15 @@ public class BasicInfoFragment extends Fragment implements
         try {
             ProfileApplication application = (ProfileApplication)getActivity().getApplication();
             mUserEndpoint = new URL(
-                    Constants.GRAPH_RESOURCE_URL +
+                    Constants.UNIFIED_ENDPOINT_RESOURCE_URL +
                     application.getTenant() +
                     "/users/" + ((ProfileActivity)getActivity()).getUserId());
             mThumbnailPhotoEndpoint = new URL(
-                    Constants.GRAPH_RESOURCE_URL +
+                    Constants.UNIFIED_ENDPOINT_RESOURCE_URL +
                             application.getTenant() +
                             "/users/" + ((ProfileActivity) getActivity()).getUserId() + "/thumbnailphoto");
             mManagerEndpoint = new URL(
-                    Constants.GRAPH_RESOURCE_URL +
+                    Constants.UNIFIED_ENDPOINT_RESOURCE_URL +
                     application.getTenant() +
                     "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/manager");
 
