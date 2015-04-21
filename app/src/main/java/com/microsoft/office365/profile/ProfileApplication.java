@@ -8,17 +8,17 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
+import com.microsoft.aad.adal.AuthenticationCallback;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.AuthenticationSettings;
 import com.microsoft.aad.adal.UserInfo;
-import com.microsoft.office365.profile.auth.AuthenticationListener;
 
 import java.security.SecureRandom;
 
 /**
  * Created by ricardol on 4/13/2015.
  */
-public class ProfileApplication extends Application implements AuthenticationListener {
+public class ProfileApplication extends Application implements AuthenticationCallback {
     private static final String TAG = "ProfileApplication";
 
     private SharedPreferences mSharedPreferences;
@@ -54,8 +54,8 @@ public class ProfileApplication extends Application implements AuthenticationLis
     }
 
     @Override
-    public void onAuthenticationSuccess(AuthenticationResult authenticationResult) {
-        UserInfo userInfo = authenticationResult.getUserInfo();
+    public void onSuccess(Object authenticationResult) {
+        UserInfo userInfo = ((AuthenticationResult)authenticationResult).getUserInfo();
         if(!getUserId().equals(userInfo.getUserId())) {
             // AuthenticationResult returns the TenantId as null
             // we can extract the value from the displayableId
@@ -66,7 +66,7 @@ public class ProfileApplication extends Application implements AuthenticationLis
     }
 
     @Override
-    public void onAuthenticationFailure(Exception e) {
+    public void onError(Exception e) {
         Log.e(TAG, e.getMessage());
     }
 

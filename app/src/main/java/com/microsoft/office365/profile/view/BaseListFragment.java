@@ -8,11 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.microsoft.aad.adal.AuthenticationResult;
+import com.microsoft.aad.adal.AuthenticationCallback;
 import com.microsoft.office365.profile.Constants;
 import com.microsoft.office365.profile.ProfileApplication;
 import com.microsoft.office365.profile.R;
-import com.microsoft.office365.profile.auth.AuthenticationListener;
 import com.microsoft.office365.profile.auth.AuthenticationManager;
 import com.microsoft.office365.profile.http.JsonRequestListener;
 import com.microsoft.office365.profile.http.RequestManager;
@@ -25,7 +24,7 @@ import java.net.URL;
  * <p/>
  * <p/>
   */
-public abstract class BaseListFragment extends ListFragment implements JsonRequestListener, AuthenticationListener {
+public abstract class BaseListFragment extends ListFragment implements JsonRequestListener, AuthenticationCallback {
     private static final String TAG = "BaseListFragment";
     private static final String ACCEPT_HEADER = "application/json;odata.metadata=minimal;odata.streaming=true";
 
@@ -85,14 +84,14 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
     }
 
     @Override
-    public void onAuthenticationSuccess(AuthenticationResult authenticationResult) {
-        mApplication.onAuthenticationSuccess(authenticationResult);
+    public void onSuccess(Object authenticationResult) {
+        mApplication.onSuccess(authenticationResult);
         String endpoint = Constants.GRAPH_RESOURCE_URL + mApplication.getTenant() + getEndpoint();
         sendRequest(endpoint);
     }
 
     @Override
-    public void onAuthenticationFailure(Exception e) {
+    public void onError(Exception e) {
         Log.e(TAG, e.getMessage());
         Toast.makeText(
                 getActivity(),

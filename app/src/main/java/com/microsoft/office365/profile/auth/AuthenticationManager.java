@@ -9,8 +9,10 @@ import android.app.Activity;
 import android.util.Log;
 
 import com.google.common.util.concurrent.SettableFuture;
+import com.microsoft.aad.adal.ADALError;
 import com.microsoft.aad.adal.AuthenticationCallback;
 import com.microsoft.aad.adal.AuthenticationContext;
+import com.microsoft.aad.adal.AuthenticationException;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.AuthenticationResult.AuthenticationStatus;
 import com.microsoft.aad.adal.PromptBehavior;
@@ -62,7 +64,7 @@ public class AuthenticationManager {
      *
      * @return A signal to wait on before continuing execution.
      */
-    public synchronized SettableFuture<AuthenticationResult> initialize(final AuthenticationListener authenticationListener) {
+    public synchronized SettableFuture<AuthenticationResult> initialize(final AuthenticationCallback authenticationCallback) {
 
         final SettableFuture<AuthenticationResult> result = SettableFuture.create();
 
@@ -77,9 +79,13 @@ public class AuthenticationManager {
 
                         @Override
                         public void onSuccess(final AuthenticationResult authenticationResult) {
-                            if (authenticationResult != null && authenticationResult.getStatus() == AuthenticationStatus.Succeeded) {
-                                if(authenticationListener != null) {
-                                    authenticationListener.onAuthenticationSuccess(authenticationResult);
+                            if (authenticationResult != null) {
+                                if(authenticationCallback != null) {
+                                    if(authenticationResult.getStatus() == AuthenticationStatus.Succeeded) {
+                                        authenticationCallback.onSuccess(authenticationResult);
+                                    } else {
+                                        authenticationCallback.onError(new AuthenticationException(ADALError.AUTH_FAILED, "Authentication failed"));
+                                    }
                                 }
                                 result.set(authenticationResult);
                             }
@@ -87,15 +93,15 @@ public class AuthenticationManager {
 
                         @Override
                         public void onError(Exception e) {
-                            if(authenticationListener != null) {
-                                authenticationListener.onAuthenticationFailure(e);
+                            if(authenticationCallback != null) {
+                                authenticationCallback.onError(e);
                             }
                             result.setException(e);
                         }
                     }
             );
         } else {
-            result.setException(new Throwable("Auth context verification failed. Did you set a context activity?"));
+            result.setException(new Throwable("Auth context verification failed. Use setContextActivity(Activity) before initialize"));
         }
         return result;
     }
