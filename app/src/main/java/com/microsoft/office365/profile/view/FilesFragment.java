@@ -58,6 +58,7 @@ public class FilesFragment extends BaseListFragment {
         final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
         // Send the user's id to the Profile activity
         profileActivityIntent.putExtra("userId", mFileList.get((int)id).lastModifiedBy.user.id);
+        profileActivityIntent.putExtra("displayName", mFileList.get((int)id).lastModifiedBy.user.displayName);
         startActivity(profileActivityIntent);
     }
 

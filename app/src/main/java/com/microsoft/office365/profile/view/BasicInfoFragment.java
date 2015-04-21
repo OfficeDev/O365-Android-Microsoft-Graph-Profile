@@ -129,6 +129,7 @@ public class BasicInfoFragment extends Fragment implements
         final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
         // Send the user's id to the Profile activity
         profileActivityIntent.putExtra("userId", mManager.objectId);
+        profileActivityIntent.putExtra("displayName", mManager.displayName);
         startActivity(profileActivityIntent);
     }
 
