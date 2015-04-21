@@ -4,7 +4,7 @@
     <string name="fragment_manager_title">Manager</string>
     <string name="fragment_direct_reports_title">Direct Reports</string>
     <string name="fragment_groups_title">Groups</string>
-    <string name="fragment_general_title">General</string>
+    <string name="fragment_general_title">User Details</string>
     <string name="fragment_files_title">Files</string>
     <string name="sign_out_settings">Sign out</string>
     <string name="my_profile_settings">My Profile</string>
