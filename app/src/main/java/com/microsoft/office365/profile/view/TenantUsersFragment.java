@@ -8,14 +8,14 @@ package com.microsoft.office365.profile.view;
  * <p/>
  * <p/>
  */
-public class MainListFragment extends UserListFragment {
+public class TenantUsersFragment extends UserListFragment {
     private static final String LAST_SECTION_ENDPOINT = "/users?$filter=userType%20eq%20'Member'";
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public MainListFragment() {
+    public TenantUsersFragment() {
     }
 
     public String getEndpoint(){

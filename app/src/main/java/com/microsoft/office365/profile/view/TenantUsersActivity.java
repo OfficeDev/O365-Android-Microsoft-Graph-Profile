@@ -8,7 +8,7 @@ import android.os.Bundle;
 import com.microsoft.office365.profile.R;
 
 
-public class UserListActivity extends BaseActivity {
+public class TenantUsersActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
