@@ -35,9 +35,6 @@ public class RequestManager {
         }
         return INSTANCE;
     }
-    public static synchronized void resetInstance() {
-        INSTANCE = null;
-    }
 
     public void executeRequest(URL endpoint, String acceptHeader, JsonRequestListener requestListener){
         JsonRequestRunnable jsonRequestRunnable = new JsonRequestRunnable(endpoint, acceptHeader, requestListener);

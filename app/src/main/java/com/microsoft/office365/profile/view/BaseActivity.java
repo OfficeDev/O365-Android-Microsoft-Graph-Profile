@@ -79,7 +79,6 @@ public class BaseActivity extends ActionBarActivity {
                     .removeAll();
 
             AuthenticationManager.resetInstance();
-            RequestManager.resetInstance();
             mApplication.resetTenant();
             mApplication.resetUserId();
             mApplication.resetDisplayName();
