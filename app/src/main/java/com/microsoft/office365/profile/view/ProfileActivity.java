@@ -25,7 +25,7 @@ public class ProfileActivity extends BaseActivity {
         TabHost tabs=(TabHost)findViewById(R.id.tabHost);
         tabs.setup();
         TabHost.TabSpec spec=tabs.newTabSpec("tag1");
-        spec.setContent(R.id.basicInfoFragment);
+        spec.setContent(R.id.userDetailsFragment);
         spec.setIndicator(getResources().getString(R.string.fragment_general_title));
         tabs.addTab(spec);
         spec=tabs.newTabSpec("tag2");

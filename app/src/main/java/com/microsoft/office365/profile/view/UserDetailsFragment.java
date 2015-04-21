@@ -36,9 +36,9 @@ import java.net.URL;
 /**
  * Created by Administrator on 4/9/2015.
  */
-public class BasicInfoFragment extends Fragment implements
+public class UserDetailsFragment extends Fragment implements
         JsonRequestListener, InputStreamRequestListener, View.OnClickListener {
-    private static final String TAG = "BasicInfoFragment";
+    private static final String TAG = "UserDetailsFragment";
     private static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
 
     private TextView mJobTitleTextView;
@@ -64,7 +64,7 @@ public class BasicInfoFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentView = inflater.inflate(R.layout.fragment_basic_info, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_user_details, container, false);
 
         mJobTitleTextView = (TextView)fragmentView.findViewById(R.id.jobTitleTextView);
         mDepartmentTextView = (TextView)fragmentView.findViewById(R.id.departmentTextView);
