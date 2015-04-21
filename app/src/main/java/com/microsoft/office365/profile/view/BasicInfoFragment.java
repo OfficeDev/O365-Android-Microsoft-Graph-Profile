@@ -193,10 +193,7 @@ public class BasicInfoFragment extends Fragment implements
                     mManagerSection.setClickable(false);
                 }
             });
-        } else if(requestedEndpoint.sameFile(mThumbnailPhotoEndpoint)){
-            //Do nothing, we have a default image for the cases
-            // where the user doesn't have a thumbnail
-        } else {
+        } else if(!requestedEndpoint.sameFile(mThumbnailPhotoEndpoint)){
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

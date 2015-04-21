@@ -77,7 +77,6 @@ public class AuthenticationManager {
 
                         @Override
                         public void onSuccess(final AuthenticationResult authenticationResult) {
-
                             if (authenticationResult != null && authenticationResult.getStatus() == AuthenticationStatus.Succeeded) {
                                 if(authenticationListener != null) {
                                     authenticationListener.onAuthenticationSuccess(authenticationResult);
