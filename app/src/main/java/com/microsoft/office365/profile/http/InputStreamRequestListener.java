@@ -7,10 +7,25 @@ import java.io.InputStream;
 import java.net.URL;
 
 /**
- * Created by ricardol on 4/16/2015.
+ * Interface used to provide event callbacks for http requests that return an input stream.
  */
 public interface InputStreamRequestListener {
+    /**
+     * Success event handler
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param data The data from the endpoint.
+     */
     void onRequestSuccess(URL requestedEndpoint, InputStream data);
+
+    /**
+     * Error event handler
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param e Exception object with details about the error.
+     */
     void onRequestFailure(URL requestedEndpoint, Exception e);
 }
 

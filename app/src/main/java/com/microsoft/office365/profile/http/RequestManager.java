@@ -21,13 +21,18 @@ import java.util.concurrent.Executors;
 import javax.net.ssl.HttpsURLConnection;
 
 /**
- * Created by Administrator on 4/6/2015.
+ * Class that provides a singleton object to manage an http connection pool to send REST requests
+ * to Office 365.
  */
 public class RequestManager {
     private ExecutorService mExecutor;
     private static RequestManager INSTANCE;
     private static final int MAX_NUMBER_OF_THREADS = 6;
 
+    /**
+     * Returns the singleton object that the app can use to send http requests.
+     * @return The singleton RequestManager object.
+     */
     public static synchronized RequestManager getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new RequestManager();
@@ -36,11 +41,23 @@ public class RequestManager {
         return INSTANCE;
     }
 
+    /**
+     * Method to execute a request that returns a JsonElement object.
+     * @param endpoint The endpoint the request is sent to
+     * @param acceptHeader The accept header string to attach to the request
+     * @param requestListener The callback object where the result is delivered
+     */
     public void executeRequest(URL endpoint, String acceptHeader, JsonRequestListener requestListener){
         JsonRequestRunnable jsonRequestRunnable = new JsonRequestRunnable(endpoint, acceptHeader, requestListener);
         mExecutor.submit(jsonRequestRunnable);
     }
 
+    /**
+     * Method to execute a request that returns an InputStream object. The requestListener object
+     * is responsible of closing the InputStream.
+     * @param endpoint The endpoint the request is sent to
+     * @param requestListener The callback object where the result is delivered
+     */
     public void executeRequest(URL endpoint, InputStreamRequestListener requestListener){
         InputStreamRequestRunnable requestRunnable = new InputStreamRequestRunnable(endpoint, requestListener);
         mExecutor.submit(requestRunnable);
@@ -67,16 +84,21 @@ public class RequestManager {
                 httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
 
                 httpsConnection.setRequestMethod("GET");
+
+                // Synchronously get a valid access token. This is okay since we're already in a
+                // worker thread
                 String accessToken = AuthenticationManager
                         .getInstance()
                         .getTokens(null)
                         .get().getAccessToken();
+                // Attach the access token in the authorization header
                 httpsConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
+
                 httpsConnection.setRequestProperty("accept", mAcceptHeader);
 
                 httpsConnection.connect();
 
-                // Get the contents
+                // Get the contents and populate the JsonElement object to return
                 responseStream = httpsConnection.getInputStream();
                 JsonReader jsonReader = new JsonReader(new InputStreamReader(responseStream));
                 JsonParser jsonParser = new JsonParser();
@@ -117,14 +139,19 @@ public class RequestManager {
                 httpsConnection = (HttpsURLConnection) mEndpoint.openConnection();
 
                 httpsConnection.setRequestMethod("GET");
+
+                // Synchronously get a valid access token. This is okay since we're already in a
+                // worker thread
                 String accessToken = AuthenticationManager
                         .getInstance()
                         .getTokens(null)
                         .get().getAccessToken();
+                // Attach the access token in the authorization header
                 httpsConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
 
                 httpsConnection.connect();
 
+                //Return the InputStream object. The listener must close the input stream.
                 mInputStreamRequestListener.onRequestSuccess(mEndpoint, httpsConnection.getInputStream());
             } catch (IOException | InterruptedException | ExecutionException e) {
                 Log.e(TAG, e.getMessage());
