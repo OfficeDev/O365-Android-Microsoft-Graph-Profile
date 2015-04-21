@@ -72,7 +72,7 @@ public class RequestManager {
                 httpsConnection.setRequestMethod("GET");
                 String accessToken = AuthenticationManager
                         .getInstance()
-                        .initialize(null)
+                        .getTokens(null)
                         .get().getAccessToken();
                 httpsConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
                 httpsConnection.setRequestProperty("accept", mAcceptHeader);
@@ -122,7 +122,7 @@ public class RequestManager {
                 httpsConnection.setRequestMethod("GET");
                 String accessToken = AuthenticationManager
                         .getInstance()
-                        .initialize(null)
+                        .getTokens(null)
                         .get().getAccessToken();
                 httpsConnection.setRequestProperty("Authorization", "Bearer " + accessToken);
 

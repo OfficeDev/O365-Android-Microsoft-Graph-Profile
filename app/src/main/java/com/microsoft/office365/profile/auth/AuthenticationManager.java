@@ -57,14 +57,14 @@ public class AuthenticationManager {
     }
 
     /**
-     * Description: Calls AuthenticationContext.acquireToken(...) once to initialize with
+     * Description: Calls AuthenticationContext.acquireToken(...) once to getTokens with
      * user's credentials and avoid interactive prompt on later calls.
-     * If all tokens expire, app must call initialize() again to prompt user interactively and
+     * If all tokens expire, app must call getTokens() again to prompt user interactively and
      * set up authentication context.
      *
      * @return A signal to wait on before continuing execution.
      */
-    public synchronized SettableFuture<AuthenticationResult> initialize(final AuthenticationCallback authenticationCallback) {
+    public synchronized SettableFuture<AuthenticationResult> getTokens(final AuthenticationCallback authenticationCallback) {
 
         final SettableFuture<AuthenticationResult> result = SettableFuture.create();
 
@@ -101,7 +101,7 @@ public class AuthenticationManager {
                     }
             );
         } else {
-            result.setException(new Throwable("Auth context verification failed. Use setContextActivity(Activity) before initialize"));
+            result.setException(new Throwable("Auth context verification failed. Use setContextActivity(Activity) before getTokens"));
         }
         return result;
     }

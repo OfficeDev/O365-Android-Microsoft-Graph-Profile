@@ -60,7 +60,7 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
         if(!mApplication.isUserSignedIn()) {
             AuthenticationManager
                     .getInstance()
-                    .initialize(this);
+                    .getTokens(this);
         } else {
             String endpoint = Constants.UNIFIED_ENDPOINT_RESOURCE_URL + mApplication.getTenant() + getEndpoint();
             sendRequest(endpoint);
@@ -99,7 +99,7 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
                 Toast.LENGTH_LONG).show();
         AuthenticationManager
                 .getInstance()
-                .initialize(this);
+                .getTokens(this);
     }
 
     @Override
