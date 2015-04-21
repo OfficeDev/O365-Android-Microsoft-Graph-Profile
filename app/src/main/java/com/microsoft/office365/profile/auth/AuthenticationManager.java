@@ -19,16 +19,20 @@ import com.microsoft.aad.adal.PromptBehavior;
 import com.microsoft.office365.profile.Constants;
 
 /**
- * Handles setup of ADAL Dependency Resolver for use in API clients.
+ * Class that provides a singleton object to manage interaction with Azure Active Directory to
+ * get tokens that the app needs to send requests to Office 365.
  */
-
 public class AuthenticationManager {
     private static final String TAG = "AuthenticationManager";
 
-    private AuthenticationContext authContext;
-    private Activity contextActivity;
-    private final String resourceId;
+    private AuthenticationContext mAuthenticationContext;
+    private Activity mContextActivity;
+    private final String mResourceId;
 
+    /**
+     * Returns the singleton object that the app can use to get tokens.
+     * @return The singleton AuthenticationManager object.
+     */
     public static synchronized AuthenticationManager getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new AuthenticationManager();
@@ -36,6 +40,9 @@ public class AuthenticationManager {
         return INSTANCE;
     }
 
+    /**
+     * Sets the singleton object to null. Use it when signing users out of your app.
+     */
     public static synchronized void resetInstance() {
         INSTANCE = null;
     }
@@ -43,26 +50,29 @@ public class AuthenticationManager {
     private static AuthenticationManager INSTANCE;
 
     private AuthenticationManager() {
-        resourceId = Constants.UNIFIED_ENDPOINT_RESOURCE_ID;
+        mResourceId = Constants.UNIFIED_ENDPOINT_RESOURCE_ID;
     }
 
     /**
-     * Set the context activity before initializing to the currently active activity.
+     * Set the context activity to the current activity before getting tokens.
      *
-     * @param contextActivity Currently active activity which can be utilized for interactive
-     *                        prompt.
+     * @param contextActivity Current activity which can be utilized for interactive prompt.
      */
     public void setContextActivity(final Activity contextActivity) {
-        this.contextActivity = contextActivity;
+        this.mContextActivity = contextActivity;
     }
 
     /**
-     * Description: Calls AuthenticationContext.acquireToken(...) once to getTokens with
-     * user's credentials and avoid interactive prompt on later calls.
-     * If all tokens expire, app must call getTokens() again to prompt user interactively and
-     * set up authentication context.
-     *
-     * @return A signal to wait on before continuing execution.
+     * Calls AuthenticationContext.acquireToken once to get tokens. User must provide credentials
+     * the first time. Subsequent calls retrieve tokens from the local cache or use the refresh
+     * token to get a valid access token.
+     * If all tokens expire, then the next call to getTokens will prompt for user credentials.
+     * By default, you would use this in an asynchronous mode, but you can also call getTokens in
+     * synchronously by appending get() to getTokens. For example, getTokens(null).get() which
+     * will return an AuthenticationResult object.
+     * @param authenticationCallback
+     * @return A signal to wait on before continuing execution that contains an AuthenticationResult
+     * object with information about the user, and the tokens.
      */
     public synchronized SettableFuture<AuthenticationResult> getTokens(final AuthenticationCallback authenticationCallback) {
 
@@ -70,13 +80,12 @@ public class AuthenticationManager {
 
         if (verifyAuthenticationContext()) {
             getAuthenticationContext().acquireToken(
-                    this.contextActivity,
-                    this.resourceId,
+                    this.mContextActivity,
+                    this.mResourceId,
                     Constants.CLIENT_ID,
                     Constants.REDIRECT_URI,
                     PromptBehavior.Auto,
                     new AuthenticationCallback<AuthenticationResult>() {
-
                         @Override
                         public void onSuccess(final AuthenticationResult authenticationResult) {
                             if (authenticationResult != null) {
@@ -84,10 +93,18 @@ public class AuthenticationManager {
                                     if(authenticationResult.getStatus() == AuthenticationStatus.Succeeded) {
                                         authenticationCallback.onSuccess(authenticationResult);
                                     } else {
-                                        authenticationCallback.onError(new AuthenticationException(ADALError.AUTH_FAILED, "Authentication failed"));
+                                        // Unknown error. Errors, like when the user cancels the
+                                        // operation usually go through the onError method
+                                        authenticationCallback.onError(
+                                                new AuthenticationException(ADALError.AUTH_FAILED,
+                                                        "Authentication failed")
+                                        );
                                     }
                                 }
                                 result.set(authenticationResult);
+                            } else {
+                                result.setException(new AuthenticationException(ADALError.AUTH_FAILED,
+                                        "Authentication failed"));
                             }
                         }
 
@@ -101,29 +118,30 @@ public class AuthenticationManager {
                     }
             );
         } else {
-            result.setException(new Throwable("Auth context verification failed. Use setContextActivity(Activity) before getTokens"));
+            result.setException(new Throwable("Auth context verification failed. " +
+                    "Use setContextActivity(Activity) before getTokens()"));
         }
         return result;
     }
 
     /**
-     * Gets AuthenticationContext for AAD.
+     * Gets AuthenticationContext for Azure Active Directory.
      *
      * @return authenticationContext, if successful
      */
     public AuthenticationContext getAuthenticationContext() {
-        if (authContext == null) {
+        if (mAuthenticationContext == null) {
             try {
-                authContext = new AuthenticationContext(this.contextActivity, Constants.AUTHORITY_URL, false);
+                mAuthenticationContext = new AuthenticationContext(this.mContextActivity, Constants.AUTHORITY_URL, false);
             } catch (Throwable t) {
                 Log.e(TAG, t.toString());
             }
         }
-        return authContext;
+        return mAuthenticationContext;
     }
 
     private boolean verifyAuthenticationContext() {
-        if (this.contextActivity == null) {
+        if (this.mContextActivity == null) {
             Log.e(TAG,"Must set context activity");
             return false;
         }
