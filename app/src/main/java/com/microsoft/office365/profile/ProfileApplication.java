@@ -68,7 +68,6 @@ public class ProfileApplication extends Application implements AuthenticationLis
     @Override
     public void onAuthenticationFailure(Exception e) {
         Log.e(TAG, e.getMessage());
-        //TODO: Implement error handler
     }
 
     public void setSharedPreferences(SharedPreferences sharedPreferences) {
