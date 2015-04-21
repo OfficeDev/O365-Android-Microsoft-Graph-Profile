@@ -6,7 +6,7 @@ package com.microsoft.office365.profile.model;
 import android.support.annotation.NonNull;
 
 /**
- * Created by Administrator on 4/6/2015.
+ * Model class to store group data.
  */
 public class Group implements CharSequence {
     public String displayName;
@@ -21,6 +21,10 @@ public class Group implements CharSequence {
         return displayName.charAt(index);
     }
 
+    /**
+     * Implemented this method to be able to use this object with the default ArrayAdapter<> class.
+     * @return
+     */
     @NonNull
     @Override
     public String toString() {

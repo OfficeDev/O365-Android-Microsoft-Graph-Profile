@@ -6,7 +6,7 @@ package com.microsoft.office365.profile.model;
 import android.support.annotation.NonNull;
 
 /**
- * Created by ricardol on 4/16/2015.
+ * Model class to store OneDrive for Business data.
  */
 public class File implements CharSequence {
     public String name;
@@ -22,6 +22,10 @@ public class File implements CharSequence {
         return name.charAt(index);
     }
 
+    /**
+     * Implemented this method to be able to use this object with the default ArrayAdapter<> class.
+     * @return
+     */
     @NonNull
     @Override
     public String toString() {
