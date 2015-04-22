@@ -1,6 +1,6 @@
 # Office 365 Profile Sample for Android
 
-![Office 365 Profile sample](/readme-images/O365-Android-Profile_thumbnail.png)
+![Office 365 Profile sample](/readme-images/O365-Android-Profile-Thumbnail.png)
 
 The first page presents you with a list of users. The second page displays information about any user you choose to view. All of this information, including files shared with the user, the user's email address, hire date, manager, and direct reports, comes from unified endpoint.
 
