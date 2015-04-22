@@ -6,7 +6,7 @@ package com.microsoft.office365.profile.model;
 import android.support.annotation.NonNull;
 
 /**
- * Created by Administrator on 4/6/2015.
+ * Model class to store user information.
  */
 public class User implements CharSequence {
     // The files fragment returns a lastModifiedBy field that contains and id property. In contrast,
@@ -33,6 +33,10 @@ public class User implements CharSequence {
         return displayName.charAt(index);
     }
 
+    /**
+     * Implemented this method to be able to use this object with the default ArrayAdapter<> class.
+     * @return
+     */
     @NonNull
     @Override
     public String toString() {

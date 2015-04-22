@@ -34,11 +34,12 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Created by Administrator on 4/9/2015.
+ * The fragment for the user details in {@link ProfileActivity}
+ * Displays thumbnailPhoto (if available), manager, and user properties.
  */
-public class BasicInfoFragment extends Fragment implements
+public class UserDetailsFragment extends Fragment implements
         JsonRequestListener, InputStreamRequestListener, View.OnClickListener {
-    private static final String TAG = "BasicInfoFragment";
+    private static final String TAG = "UserDetailsFragment";
     private static final String ACCEPT_HEADER = "application/json;odata.metadata=full;odata.streaming=true";
 
     private TextView mJobTitleTextView;
@@ -60,11 +61,19 @@ public class BasicInfoFragment extends Fragment implements
     private LinearLayout mProgressContainer;
     private RelativeLayout mContainerLayout;
 
+    /**
+     * Initializes all the views and uses the {@link RequestManager} object to send the
+     * requests to get thumbnailPhoto, manager and user properties.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View fragmentView = inflater.inflate(R.layout.fragment_basic_info, container, false);
+        View fragmentView = inflater.inflate(R.layout.fragment_user_details, container, false);
 
         mJobTitleTextView = (TextView)fragmentView.findViewById(R.id.jobTitleTextView);
         mDepartmentTextView = (TextView)fragmentView.findViewById(R.id.departmentTextView);
@@ -86,15 +95,15 @@ public class BasicInfoFragment extends Fragment implements
         try {
             ProfileApplication application = (ProfileApplication)getActivity().getApplication();
             mUserEndpoint = new URL(
-                    Constants.GRAPH_RESOURCE_URL +
+                    Constants.UNIFIED_ENDPOINT_RESOURCE_URL +
                     application.getTenant() +
                     "/users/" + ((ProfileActivity)getActivity()).getUserId());
             mThumbnailPhotoEndpoint = new URL(
-                    Constants.GRAPH_RESOURCE_URL +
+                    Constants.UNIFIED_ENDPOINT_RESOURCE_URL +
                             application.getTenant() +
                             "/users/" + ((ProfileActivity) getActivity()).getUserId() + "/thumbnailphoto");
             mManagerEndpoint = new URL(
-                    Constants.GRAPH_RESOURCE_URL +
+                    Constants.UNIFIED_ENDPOINT_RESOURCE_URL +
                     application.getTenant() +
                     "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/manager");
 
@@ -124,14 +133,26 @@ public class BasicInfoFragment extends Fragment implements
         return fragmentView;
     }
 
+    /**
+     * Event handler for the onClick event on the manager views.
+     * @param v
+     */
     @Override
     public void onClick(View v){
         final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
         // Send the user's id to the Profile activity
         profileActivityIntent.putExtra("userId", mManager.objectId);
+        profileActivityIntent.putExtra("displayName", mManager.displayName);
         startActivity(profileActivityIntent);
     }
 
+    /**
+     * Handles the onSucess events for the manager and user properties requests
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param data The data from the endpoint.
+     */
     @Override
     public void onRequestSuccess(final URL requestedEndpoint, final JsonElement data) {
         getActivity().runOnUiThread(new Runnable() {
@@ -162,6 +183,13 @@ public class BasicInfoFragment extends Fragment implements
         });
     }
 
+    /**
+     * Handles onSucess events for the thumbnailPhoto request
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param data The data from the endpoint.
+     */
     @Override
     public void onRequestSuccess(URL requestedEndpoint, InputStream data) {
         final Drawable thumbnailPhotoDrawable = Drawable.createFromStream(data, null);
@@ -178,6 +206,13 @@ public class BasicInfoFragment extends Fragment implements
         });
     }
 
+    /**
+     * Handles onFailure events for all requests
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param e Exception object with details about the error.
+     */
     @Override
     public void onRequestFailure(URL requestedEndpoint, Exception e) {
         Log.e(TAG, e.getMessage());

@@ -34,7 +34,7 @@
                         android:layout_height="wrap_content"
                         android:id="@+id/dataContainer"
                         android:visibility="gone"
-                        tools:context="com.microsoft.office365.profile.view.BasicInfoFragment">
+                        tools:context="com.microsoft.office365.profile.view.UserDetailsFragment">
 
             <ImageView
                 android:layout_width="wrap_content"

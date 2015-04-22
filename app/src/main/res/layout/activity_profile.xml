@@ -27,9 +27,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <fragment android:id="@+id/basicInfoFragment"
-                      android:name="com.microsoft.office365.profile.view.BasicInfoFragment"
-                      tools:layout="@layout/fragment_basic_info"
+            <fragment android:id="@+id/userDetailsFragment"
+                      android:name="com.microsoft.office365.profile.view.UserDetailsFragment"
+                      tools:layout="@layout/fragment_user_details"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"/>
 

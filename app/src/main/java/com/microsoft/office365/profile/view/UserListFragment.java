@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
+import com.microsoft.office365.profile.http.JsonRequestListener;
 import com.microsoft.office365.profile.model.User;
 
 import java.lang.reflect.Type;
@@ -23,12 +24,20 @@ import java.net.URL;
 import java.util.ArrayList;
 
 /**
- * Created by ricardol on 4/16/2015.
+ * Abstract fragment for any user-based list.
  */
 public abstract class UserListFragment extends BaseListFragment {
     private static final String TAG = "UserListFragment";
     private ArrayList<User> mUserList;
 
+    /**
+     * Event handler for the listItemClick event. This handler opens a new {@link ProfileActivity}
+     * with the details of the selected user.
+     * @param l The list view
+     * @param v The view
+     * @param position The position of the selected item in the list
+     * @param id The id of the selected item in the list
+     */
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -39,6 +48,14 @@ public abstract class UserListFragment extends BaseListFragment {
         startActivity(profileActivityIntent);
     }
 
+    /**
+     * Event handler for the {@link com.microsoft.office365.profile.http.RequestManager#executeRequest(URL, String, JsonRequestListener)}
+     * method
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param data The data from the endpoint.
+     */
     @Override
     public void onRequestSuccess(URL requestedEndpoint, final JsonElement data) {
         Gson gson = new Gson();

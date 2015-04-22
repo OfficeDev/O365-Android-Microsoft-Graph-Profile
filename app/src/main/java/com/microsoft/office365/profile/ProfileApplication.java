@@ -8,17 +8,17 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.util.Log;
 
+import com.microsoft.aad.adal.AuthenticationCallback;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.AuthenticationSettings;
 import com.microsoft.aad.adal.UserInfo;
-import com.microsoft.office365.profile.auth.AuthenticationListener;
 
 import java.security.SecureRandom;
 
 /**
- * Created by ricardol on 4/13/2015.
+ * Application object that stores relevant user information.
  */
-public class ProfileApplication extends Application implements AuthenticationListener {
+public class ProfileApplication extends Application implements AuthenticationCallback {
     private static final String TAG = "ProfileApplication";
 
     private SharedPreferences mSharedPreferences;
@@ -26,6 +26,10 @@ public class ProfileApplication extends Application implements AuthenticationLis
     private static final String DISPLAYNAME_FIELD = "displayName";
     private static final String TENANT_FIELD = "tenant";
 
+    /**
+     * The constructor of the application object makes sure that the app has an encryption key
+     * (if needed) and skips a Microsoft Intune broker check.
+     */
     public ProfileApplication(){
         super();
 
@@ -53,9 +57,14 @@ public class ProfileApplication extends Application implements AuthenticationLis
         return key;
     }
 
+    /**
+     * Handles the onSuccess event of the {@link com.microsoft.office365.profile.auth.AuthenticationManager#getTokens(AuthenticationCallback)}
+     * method. Checks if the user has changed, in which case, stores the new information.
+     * @param authenticationResult
+     */
     @Override
-    public void onAuthenticationSuccess(AuthenticationResult authenticationResult) {
-        UserInfo userInfo = authenticationResult.getUserInfo();
+    public void onSuccess(Object authenticationResult) {
+        UserInfo userInfo = ((AuthenticationResult)authenticationResult).getUserInfo();
         if(!getUserId().equals(userInfo.getUserId())) {
             // AuthenticationResult returns the TenantId as null
             // we can extract the value from the displayableId
@@ -65,51 +74,97 @@ public class ProfileApplication extends Application implements AuthenticationLis
         }
     }
 
+    /**
+     * Handles the onError event of the {@link com.microsoft.office365.profile.auth.AuthenticationManager#getTokens(AuthenticationCallback)}
+     * method. Just logs the information to logcat.
+     * @param e Exception object with details about the error.
+     */
     @Override
-    public void onAuthenticationFailure(Exception e) {
+    public void onError(Exception e) {
         Log.e(TAG, e.getMessage());
     }
 
+    /**
+     * Set the {@link SharedPreferences} member field.
+     * @param sharedPreferences
+     */
     public void setSharedPreferences(SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
     }
 
+    /**
+     * Returns the user's tenant from the {@link SharedPreferences} member field.
+     * @return
+     */
     public String getTenant() {
         return mSharedPreferences.getString(TENANT_FIELD, "");
     }
 
+    /**
+     * Sets the user's tenant on the {@link SharedPreferences} member field.
+     * @param tenant
+     */
     public void setTenant(String tenant) {
         mSharedPreferences.edit().putString(TENANT_FIELD, tenant).apply();
     }
 
+    /**
+     * Reset the user's tenant on the {@link SharedPreferences} member field.
+     */
     public void resetTenant(){
         mSharedPreferences.edit().remove(TENANT_FIELD).apply();
     }
 
+    /**
+     * Gets the user's id from the {@link SharedPreferences} member field.
+     * @return
+     */
     public String getUserId() {
         return mSharedPreferences.getString(USER_ID_FIELD, "");
     }
 
+    /**
+     * Sets the user's id on the {@link SharedPreferences} member field.
+     * @param userId
+     */
     public void setUserId(String userId) {
         mSharedPreferences.edit().putString(USER_ID_FIELD, userId).apply();
     }
 
+    /**
+     * Resets the user's id from the {@link SharedPreferences} member field.
+     */
     public void resetUserId(){
         mSharedPreferences.edit().remove(USER_ID_FIELD).apply();
     }
 
+    /**
+     * Gets the displayName from the {@link SharedPreferences} member field.
+     * @return
+     */
     public String getDisplayName() {
         return mSharedPreferences.getString(DISPLAYNAME_FIELD, "");
     }
 
+    /**
+     * Sets the displayName on the {@link SharedPreferences} member field.
+     * @param displayName
+     */
     public void setDisplayName(String displayName) {
         mSharedPreferences.edit().putString(DISPLAYNAME_FIELD, displayName).apply();
     }
 
+    /**
+     * Resets the displayName on the {@link SharedPreferences} member field.
+     */
     public void resetDisplayName(){
         mSharedPreferences.edit().remove(DISPLAYNAME_FIELD).apply();
     }
 
+    /**
+     * Returns true if a user is signed in to the app, false otherwise.
+     * @return True if a user is signed in, false otherwise.
+     */
     public boolean isUserSignedIn(){
         return mSharedPreferences.contains(USER_ID_FIELD);
     }

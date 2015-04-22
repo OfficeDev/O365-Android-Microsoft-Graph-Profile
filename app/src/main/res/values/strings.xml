@@ -8,7 +8,7 @@
     <string name="fragment_files_title">Files</string>
     <string name="sign_out_settings">Sign out</string>
     <string name="my_profile_settings">My Profile</string>
-    <string name="title_activity_user_list">User List</string>
+    <string name="title_activity_user_list">Users in tenant</string>
 
     <string name="fragment_general_job_title_label">Job Title:</string>
     <string name="fragment_general_department_label">Department:</string>
