@@ -8,14 +8,28 @@ import android.widget.TabHost;
 
 import com.microsoft.office365.profile.R;
 
-
+/**
+ * Activity that displays the following information about an user:
+ * {@link UserDetailsFragment}
+ * {@link DirectReportsFragment}
+ * {@link GroupsFragment}
+ * {@link FilesFragment}
+ */
 public class ProfileActivity extends BaseActivity {
     private String mUserId;
 
+    /**
+     * Gets the fragments organized in a TabHost. It also sets the title of the activity to
+     * the displayName of the user.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // If the activity was started with userId and displayName parameters, then use them.
+        // Otherwise, retrieve the signed in user's userId and displayName
+        // from the application object.
         mUserId = getIntent().hasExtra("userId") ? getIntent().getStringExtra("userId") : mApplication.getUserId();
         String displayName = getIntent().hasExtra("displayName") ? getIntent().getStringExtra("displayName") : mApplication.getDisplayName();
         setTitle(displayName);
@@ -44,6 +58,10 @@ public class ProfileActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
+    /**
+     * Return the user id
+     * @return
+     */
     public String getUserId() {
         return mUserId;
     }

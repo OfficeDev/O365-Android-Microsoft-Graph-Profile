@@ -7,7 +7,9 @@ import android.os.Bundle;
 
 import com.microsoft.office365.profile.R;
 
-
+/**
+ * Activity that shows the users in the tenant.
+ */
 public class TenantUsersActivity extends BaseActivity {
 
     @Override

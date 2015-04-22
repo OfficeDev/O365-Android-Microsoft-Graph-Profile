@@ -34,7 +34,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Created by Administrator on 4/9/2015.
+ * The fragment for the user details in {@link ProfileActivity}
+ * Displays thumbnailPhoto (if available), manager, and user properties.
  */
 public class UserDetailsFragment extends Fragment implements
         JsonRequestListener, InputStreamRequestListener, View.OnClickListener {
@@ -60,6 +61,14 @@ public class UserDetailsFragment extends Fragment implements
     private LinearLayout mProgressContainer;
     private RelativeLayout mContainerLayout;
 
+    /**
+     * Initializes all the views and uses the {@link RequestManager} object to send the
+     * requests to get thumbnailPhoto, manager and user properties.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -124,6 +133,10 @@ public class UserDetailsFragment extends Fragment implements
         return fragmentView;
     }
 
+    /**
+     * Event handler for the onClick event on the manager views.
+     * @param v
+     */
     @Override
     public void onClick(View v){
         final Intent profileActivityIntent = new Intent(getActivity(), ProfileActivity.class);
@@ -133,6 +146,13 @@ public class UserDetailsFragment extends Fragment implements
         startActivity(profileActivityIntent);
     }
 
+    /**
+     * Handles the onSucess events for the manager and user properties requests
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param data The data from the endpoint.
+     */
     @Override
     public void onRequestSuccess(final URL requestedEndpoint, final JsonElement data) {
         getActivity().runOnUiThread(new Runnable() {
@@ -163,6 +183,13 @@ public class UserDetailsFragment extends Fragment implements
         });
     }
 
+    /**
+     * Handles onSucess events for the thumbnailPhoto request
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param data The data from the endpoint.
+     */
     @Override
     public void onRequestSuccess(URL requestedEndpoint, InputStream data) {
         final Drawable thumbnailPhotoDrawable = Drawable.createFromStream(data, null);
@@ -179,6 +206,13 @@ public class UserDetailsFragment extends Fragment implements
         });
     }
 
+    /**
+     * Handles onFailure events for all requests
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param e Exception object with details about the error.
+     */
     @Override
     public void onRequestFailure(URL requestedEndpoint, Exception e) {
         Log.e(TAG, e.getMessage());

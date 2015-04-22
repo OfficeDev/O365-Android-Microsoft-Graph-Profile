@@ -18,7 +18,7 @@ import com.microsoft.office365.profile.R;
 import com.microsoft.office365.profile.auth.AuthenticationManager;
 
 /**
- * Created by ricardol on 4/13/2015.
+ * Base activity that implements methods and fields required across all activities in the app.
  */
 public class BaseActivity extends ActionBarActivity {
     private static final String TAG = "BaseActivity";
@@ -54,13 +54,26 @@ public class BaseActivity extends ActionBarActivity {
                 .onActivityResult(requestCode, resultCode, data);
     }
 
+    /**
+     * Method that adds items to the action bar if it is present.
+     * The added items are:
+     *  - Sign out action
+     *  - My Profile action
+     * @param menu The menu object to inflate
+     * @return True if successful.
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_base, menu);
         return true;
     }
 
+    /**
+     * Event handler for the items in the action bar.
+     * Users can sign out or see their profile from the action bar
+     * @param item The selected item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -68,21 +81,21 @@ public class BaseActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.sign_out) {
-            //Clear tokens.
+            // Clear tokens
             AuthenticationManager
                     .getInstance()
                     .getAuthenticationContext()
                     .getCache()
                     .removeAll();
 
+            // Clear objects that store user data
             AuthenticationManager.resetInstance();
             mApplication.resetTenant();
             mApplication.resetUserId();
             mApplication.resetDisplayName();
 
-            //Clear cookies.
+            // Clear cookies
             if(Build.VERSION.SDK_INT >= 21){
                 CookieManager.getInstance().removeSessionCookies(null);
                 CookieManager.getInstance().flush();
@@ -92,13 +105,18 @@ public class BaseActivity extends ActionBarActivity {
                 CookieSyncManager.getInstance().sync();
             }
 
+            // Send the user to the initial activity, which will ask for credentials again
             final Intent userListIntent = new Intent(this, TenantUsersActivity.class);
             startActivity(userListIntent);
 
             return true;
         } else if(id == R.id.my_profile) {
+            // Start the profile activity without sending any parameters. By default, the profile
+            // activity will use the current user id and displayName.
             final Intent profileActivityIntent = new Intent(this, ProfileActivity.class);
             startActivity(profileActivityIntent);
+
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

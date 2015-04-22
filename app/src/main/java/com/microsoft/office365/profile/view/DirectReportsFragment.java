@@ -3,21 +3,19 @@
  */
 package com.microsoft.office365.profile.view;
 
+import android.os.Bundle;
+
 import com.microsoft.office365.profile.R;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * <p/>
+ * Fragment for the direct reports in {@link ProfileActivity}.
  */
 public class DirectReportsFragment extends UserListFragment {
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public DirectReportsFragment() {
-    }
 
+    /**
+     * The endpoint that is getting requested by the parent fragment {@link BaseListFragment#onCreate(Bundle)}
+     * @return The string that represents the endpoint
+     */
     public String getEndpoint(){
         return "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/directReports";
     }

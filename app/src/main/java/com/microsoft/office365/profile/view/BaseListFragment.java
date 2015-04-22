@@ -20,10 +20,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * <p/>
-  */
+ * Base fragment for entities that are displayed in a list.
+ */
 public abstract class BaseListFragment extends ListFragment implements JsonRequestListener, AuthenticationCallback {
     private static final String TAG = "BaseListFragment";
     private static final String ACCEPT_HEADER = "application/json;odata.metadata=minimal;odata.streaming=true";
@@ -31,11 +29,9 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
     private ProfileApplication mApplication;
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * Child classes can specify the endpoint that they're using with this method
+     * @return A string with the endpoint that receives the request.
      */
-    public BaseListFragment() { }
-
     protected abstract String getEndpoint();
 
     /**
@@ -47,6 +43,11 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
         return getResources().getText(R.string.empty_array_default_message);
     }
 
+    /**
+     * Verifies that the app has signed in. If not, asks for credentials.
+     * Then issues a request to the endpoint returned by getEndpoint();
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +68,10 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
         }
     }
 
+    /**
+     * Uses the RequestManager object to send a request.
+     * @param endpoint The endpoint to request.
+     */
     private void sendRequest(String endpoint){
         try {
             RequestManager
@@ -83,6 +88,11 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
         }
     }
 
+    /**
+     * Callback for the onSuccess event of the AuthenticationManager.getTokens method
+     * @param authenticationResult The AuthenticationResult object with information about the user
+     *                             and tokens.
+     */
     @Override
     public void onSuccess(Object authenticationResult) {
         mApplication.onSuccess(authenticationResult);
@@ -90,6 +100,10 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
         sendRequest(endpoint);
     }
 
+    /**
+     * Callback for the onError event of the AuthenticationManager.getTokens method.
+     * @param e The exception object with information about the error.
+     */
     @Override
     public void onError(Exception e) {
         Log.e(TAG, e.getMessage());
@@ -102,6 +116,13 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
                 .getTokens(this);
     }
 
+    /**
+     * Callback for the onRequestFailure event of the RequestManager.executeRequest method.
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param e Exception object with details about the error.
+     */
     @Override
     public void onRequestFailure(URL requestedEndpoint, Exception e) {
         Log.e(TAG, e.getMessage());

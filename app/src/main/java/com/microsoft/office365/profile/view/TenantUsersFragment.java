@@ -3,21 +3,18 @@
  */
 package com.microsoft.office365.profile.view;
 
+import android.os.Bundle;
+
 /**
- * A fragment representing a list of Items.
- * <p/>
- * <p/>
+ * A fragment representing the list of users in the tenant.
  */
 public class TenantUsersFragment extends UserListFragment {
     private static final String LAST_SECTION_ENDPOINT = "/users?$filter=userType%20eq%20'Member'";
 
     /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
+     * The endpoint that is getting requested by the parent fragment {@link BaseListFragment#onCreate(Bundle)}
+     * @return The string that represents the endpoint
      */
-    public TenantUsersFragment() {
-    }
-
     public String getEndpoint(){
         return LAST_SECTION_ENDPOINT;
     }
