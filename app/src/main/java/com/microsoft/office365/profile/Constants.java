@@ -3,6 +3,9 @@
  */
 package com.microsoft.office365.profile;
 
+/**
+ * Convenience interface to store configuration values.
+ */
 public interface Constants {
     String AUTHORITY_URL = "https://login.microsoftonline.com/common";
     String UNIFIED_ENDPOINT_RESOURCE_URL = "https://graph.microsoft.com/beta/";
@@ -11,14 +14,6 @@ public interface Constants {
     // Update these two constants with the values for your application:
     String CLIENT_ID = "766540c9-a6f1-4eb0-9469-316903c18d5c";
     String REDIRECT_URI = "https://graphconnect.office365.microsoft.com";
-
-//    static final String AUTHORITY_URL = "https://login.windows-ppe.net/common";
-//    static final String UNIFIED_ENDPOINT_RESOURCE_URL = "https://graph.microsoft-ppe.com/beta/";
-//    static final String UNIFIED_ENDPOINT_RESOURCE_ID = "https://graph.microsoft-ppe.com/";
-//
-//    // Update these two constants with the values for your application:
-//    static final String CLIENT_ID = "7bcbf0c4-0be6-4176-9326-7aab20376a44";
-//    static final String REDIRECT_URI = "https://graphsample.dkershawtest10.ccsctp.net";
 }
 
 // *********************************************************
