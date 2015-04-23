@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.view;
+package com.microsoft.office365.profile.viewcontroller;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -23,9 +23,9 @@ import com.google.gson.JsonElement;
 import com.microsoft.office365.profile.Constants;
 import com.microsoft.office365.profile.ProfileApplication;
 import com.microsoft.office365.profile.R;
-import com.microsoft.office365.profile.http.InputStreamRequestListener;
-import com.microsoft.office365.profile.http.JsonRequestListener;
-import com.microsoft.office365.profile.http.RequestManager;
+import com.microsoft.office365.profile.util.InputStreamRequestListener;
+import com.microsoft.office365.profile.util.JsonRequestListener;
+import com.microsoft.office365.profile.util.RequestManager;
 import com.microsoft.office365.profile.model.User;
 
 import java.io.IOException;
@@ -244,7 +244,7 @@ public class UserDetailsFragment extends Fragment implements
 
 // *********************************************************
 //
-// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+// O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 //
 // Copyright (c) Microsoft Corporation
 // All rights reserved.

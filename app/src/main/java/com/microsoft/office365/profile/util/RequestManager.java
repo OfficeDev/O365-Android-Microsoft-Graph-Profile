@@ -1,14 +1,13 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.http;
+package com.microsoft.office365.profile.util;
 
 import android.util.Log;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import com.microsoft.office365.profile.auth.AuthenticationManager;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +29,7 @@ public class RequestManager {
     private static final int MAX_NUMBER_OF_THREADS = 6;
 
     /**
-     * Returns the singleton object that the app can use to send http requests.
+     * Returns the singleton object that the app can use to send util requests.
      * @return The singleton RequestManager object.
      */
     public static synchronized RequestManager getInstance() {
@@ -167,7 +166,7 @@ public class RequestManager {
 
 // *********************************************************
 //
-// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+// O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 //
 // Copyright (c) Microsoft Corporation
 // All rights reserved.

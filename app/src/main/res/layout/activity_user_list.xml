@@ -7,10 +7,10 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="com.microsoft.office365.profile.view.TenantUsersActivity">
+                tools:context="com.microsoft.office365.profile.viewcontroller.UserDirectoryActivity">
 
     <fragment android:id="@+id/userListFragment"
-              android:name="com.microsoft.office365.profile.view.TenantUsersFragment"
+              android:name="com.microsoft.office365.profile.viewcontroller.UserDirectoryFragment"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"/>
 
@@ -18,7 +18,7 @@
 
 <!-- *********************************************************
 
- O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+ O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 
  Copyright (c) Microsoft Corporation
  All rights reserved.

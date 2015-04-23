@@ -3,7 +3,7 @@
  * Portions of this class are adapted from the AuthenticationController.java file from Microsoft Open Technologies, Inc.
  * located at https://github.com/OfficeDev/Office-365-SDK-for-Android/blob/master/samples/outlook/app/src/main/java/com/microsoft/services/controllers/AuthenticationController.java
  */
-package com.microsoft.office365.profile.auth;
+package com.microsoft.office365.profile.util;
 
 import android.app.Activity;
 import android.util.Log;
@@ -151,7 +151,7 @@ public class AuthenticationManager {
 
 // *********************************************************
 //
-// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+// O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 //
 // Copyright (c) Microsoft Corporation
 // All rights reserved.
