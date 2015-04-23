@@ -1,8 +1,10 @@
 # Office 365 Profile Sample for Android
 
-![Office 365 Profile sample](/readme-images/O365-Android-Profile-Thumbnail.png)
+The first page presents you with a list of users. The second page displays information about any user you choose to view. All of this information, including files shared with the user, the user's alias, hire date, manager, direct reports, and groups comes from unified endpoint.
 
-The first page presents you with a list of users. The second page displays information about any user you choose to view. All of this information, including files shared with the user, the user's email address, hire date, manager, and direct reports, comes from unified endpoint.
+The following image shows the user's page that displays the information mentioned above:
+
+![Office 365 Profile sample](/readme-images/O365-Android-Profile-Thumbnail.png)
 
 ## Device requirements
 
@@ -16,7 +18,7 @@ To use the Office 365 Profile sample for Android you need the following:
 
 * [Android Studio](http://developer.android.com/sdk/index.html) version 1.0 or later.
 * An Office 365 account. You can sign up for [an Office 365 Developer subscription](http://aka.ms/o365-android-connect-signup) that includes the resources that you need to start building Office 365 apps.
-* A client id and redirect uri values of an application registered in Azure. The application must run the **	NEED TO UPDATE** permission:
+* A client id and redirect uri values of an application registered in Azure. The application must run the **Office 365 unified API (preview) -> Read all user's basic profiles** permission:
 
 You can also [add a native client application in Azure](http://aka.ms/o365-android-connect-addapp) and [grant proper permissions](https://github.com/OfficeDev/O365-Android-Profile/wiki/Grant-permissions-to-the-Profile-application-in-Azure) to it.
 
