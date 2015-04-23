@@ -14,7 +14,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context="com.microsoft.office365.profile.view.ProfileActivity">
+        tools:context="com.microsoft.office365.profile.viewcontroller.ProfileActivity">
 
         <TabWidget
             android:id="@android:id/tabs"
@@ -28,23 +28,23 @@
             android:layout_height="match_parent">
 
             <fragment android:id="@+id/userDetailsFragment"
-                      android:name="com.microsoft.office365.profile.view.UserDetailsFragment"
+                      android:name="com.microsoft.office365.profile.viewcontroller.UserDetailsFragment"
                       tools:layout="@layout/fragment_user_details"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"/>
 
             <fragment android:id="@+id/directReportsFragment"
-                      android:name="com.microsoft.office365.profile.view.DirectReportsFragment"
+                      android:name="com.microsoft.office365.profile.viewcontroller.DirectReportsFragment"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"/>
 
             <fragment android:id="@+id/groupsFragment"
-                      android:name="com.microsoft.office365.profile.view.GroupsFragment"
+                      android:name="com.microsoft.office365.profile.viewcontroller.GroupsFragment"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"/>
 
             <fragment android:id="@+id/filesFragment"
-                      android:name="com.microsoft.office365.profile.view.FilesFragment"
+                      android:name="com.microsoft.office365.profile.viewcontroller.FilesFragment"
                       android:layout_width="match_parent"
                       android:layout_height="wrap_content"/>
         </FrameLayout>
@@ -53,7 +53,7 @@
 
 <!-- *********************************************************
 
- O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+ O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 
  Copyright (c) Microsoft Corporation
  All rights reserved.

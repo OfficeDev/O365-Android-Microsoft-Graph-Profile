@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.view;
+package com.microsoft.office365.profile.viewcontroller;
 
 import android.content.Intent;
 import android.os.Build;
@@ -15,7 +15,7 @@ import android.webkit.CookieSyncManager;
 
 import com.microsoft.office365.profile.ProfileApplication;
 import com.microsoft.office365.profile.R;
-import com.microsoft.office365.profile.auth.AuthenticationManager;
+import com.microsoft.office365.profile.util.AuthenticationManager;
 
 /**
  * Base activity that implements methods and fields required across all activities in the app.
@@ -106,7 +106,7 @@ public class BaseActivity extends ActionBarActivity {
             }
 
             // Send the user to the initial activity, which will ask for credentials again
-            final Intent userListIntent = new Intent(this, TenantUsersActivity.class);
+            final Intent userListIntent = new Intent(this, UserDirectoryActivity.class);
             startActivity(userListIntent);
 
             return true;
@@ -125,7 +125,7 @@ public class BaseActivity extends ActionBarActivity {
 
 // *********************************************************
 //
-// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+// O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 //
 // Copyright (c) Microsoft Corporation
 // All rights reserved.

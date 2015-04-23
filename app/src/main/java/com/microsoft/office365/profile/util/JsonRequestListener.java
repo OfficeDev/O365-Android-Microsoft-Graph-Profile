@@ -1,38 +1,38 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.view;
+package com.microsoft.office365.profile.util;
 
-import android.os.Bundle;
+import com.google.gson.JsonElement;
 
-import com.microsoft.office365.profile.R;
+import java.net.URL;
 
 /**
- * Fragment for the direct reports in {@link ProfileActivity}.
+ * Interface used to provide event callbacks for http requests that return a JsonElement.
  */
-public class DirectReportsFragment extends UserListFragment {
+public interface JsonRequestListener {
+    /**
+     * Success event handler
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param data The data from the endpoint.
+     */
+    void onRequestSuccess(URL requestedEndpoint, JsonElement data);
 
     /**
-     * The endpoint that is getting requested by the parent fragment {@link BaseListFragment#onCreate(Bundle)}
-     * @return The string that represents the endpoint
+     * Error event handler
+     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
+     *                          use this parameter to differentiate from what endpoint the request
+     *                          comes from.
+     * @param e Exception object with details about the error.
      */
-    public String getEndpoint(){
-        return "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/directReports";
-    }
-
-    /**
-     * Returns the message to display when there are no direct reports returned by a request.
-     * @return The message to display if there are no direct reports.
-     */
-    @Override
-    public CharSequence getEmptyArrayMessage() {
-        return getResources().getText(R.string.empty_array_direct_reports_fragment_message);
-    }
+    void onRequestFailure(URL requestedEndpoint, Exception e);
 }
 
 // *********************************************************
 //
-// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+// O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 //
 // Copyright (c) Microsoft Corporation
 // All rights reserved.

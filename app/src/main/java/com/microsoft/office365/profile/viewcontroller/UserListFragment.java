@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.view;
+package com.microsoft.office365.profile.viewcontroller;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
-import com.microsoft.office365.profile.http.JsonRequestListener;
+import com.microsoft.office365.profile.util.JsonRequestListener;
 import com.microsoft.office365.profile.model.User;
 
 import java.lang.reflect.Type;
@@ -49,7 +49,7 @@ public abstract class UserListFragment extends BaseListFragment {
     }
 
     /**
-     * Event handler for the {@link com.microsoft.office365.profile.http.RequestManager#executeRequest(URL, String, JsonRequestListener)}
+     * Event handler for the {@link com.microsoft.office365.profile.util.RequestManager#executeRequest(URL, String, JsonRequestListener)}
      * method
      * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
      *                          use this parameter to differentiate from what endpoint the request
@@ -74,7 +74,7 @@ public abstract class UserListFragment extends BaseListFragment {
                     listView.setEnabled(false);
 
                     User noData = new User();
-                    noData.displayName = (String) getEmptyArrayMessage();
+                    noData.displayName = getEmptyArrayMessage();
                     mUserList.add(noData);
 
                     setListAdapter(new ArrayAdapter<>(
@@ -124,7 +124,7 @@ public abstract class UserListFragment extends BaseListFragment {
 
 // *********************************************************
 //
-// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+// O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 //
 // Copyright (c) Microsoft Corporation
 // All rights reserved.

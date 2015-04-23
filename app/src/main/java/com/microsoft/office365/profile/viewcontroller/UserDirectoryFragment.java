@@ -1,37 +1,28 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.http;
+package com.microsoft.office365.profile.viewcontroller;
 
-import java.io.InputStream;
-import java.net.URL;
+import android.os.Bundle;
 
 /**
- * Interface used to provide event callbacks for http requests that return an input stream.
+ * A fragment representing the list of users in the tenant.
  */
-public interface InputStreamRequestListener {
-    /**
-     * Success event handler
-     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
-     *                          use this parameter to differentiate from what endpoint the request
-     *                          comes from.
-     * @param data The data from the endpoint.
-     */
-    void onRequestSuccess(URL requestedEndpoint, InputStream data);
+public class UserDirectoryFragment extends UserListFragment {
+    private static final String LAST_SECTION_ENDPOINT = "/users?$filter=userType%20eq%20'Member'";
 
     /**
-     * Error event handler
-     * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
-     *                          use this parameter to differentiate from what endpoint the request
-     *                          comes from.
-     * @param e Exception object with details about the error.
+     * The endpoint that is getting requested by the parent fragment {@link BaseListFragment#onCreate(Bundle)}
+     * @return The string that represents the endpoint
      */
-    void onRequestFailure(URL requestedEndpoint, Exception e);
+    public String getEndpoint(){
+        return LAST_SECTION_ENDPOINT;
+    }
 }
 
 // *********************************************************
 //
-// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+// O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 //
 // Copyright (c) Microsoft Corporation
 // All rights reserved.

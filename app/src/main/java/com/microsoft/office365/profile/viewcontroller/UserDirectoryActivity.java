@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.view;
+package com.microsoft.office365.profile.viewcontroller;
 
 import android.os.Bundle;
 
@@ -10,7 +10,7 @@ import com.microsoft.office365.profile.R;
 /**
  * Activity that shows the users in the tenant.
  */
-public class TenantUsersActivity extends BaseActivity {
+public class UserDirectoryActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +21,7 @@ public class TenantUsersActivity extends BaseActivity {
 
 // *********************************************************
 //
-// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+// O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 //
 // Copyright (c) Microsoft Corporation
 // All rights reserved.

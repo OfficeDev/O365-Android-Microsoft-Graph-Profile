@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.view;
+package com.microsoft.office365.profile.viewcontroller;
 
 import android.app.ListFragment;
 import android.os.Bundle;
@@ -12,9 +12,9 @@ import com.microsoft.aad.adal.AuthenticationCallback;
 import com.microsoft.office365.profile.Constants;
 import com.microsoft.office365.profile.ProfileApplication;
 import com.microsoft.office365.profile.R;
-import com.microsoft.office365.profile.auth.AuthenticationManager;
-import com.microsoft.office365.profile.http.JsonRequestListener;
-import com.microsoft.office365.profile.http.RequestManager;
+import com.microsoft.office365.profile.util.AuthenticationManager;
+import com.microsoft.office365.profile.util.JsonRequestListener;
+import com.microsoft.office365.profile.util.RequestManager;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -39,8 +39,8 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
      * For example, if the request looks for the direct reports and there's none.
      * @return The message to display when a an empty array is returned.
      */
-    CharSequence getEmptyArrayMessage(){
-        return getResources().getText(R.string.empty_array_default_message);
+    String getEmptyArrayMessage(){
+        return getResources().getString(R.string.empty_array_default_message);
     }
 
     /**
@@ -135,7 +135,7 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
 
 // *********************************************************
 //
-// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+// O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 //
 // Copyright (c) Microsoft Corporation
 // All rights reserved.

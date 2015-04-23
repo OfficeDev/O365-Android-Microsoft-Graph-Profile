@@ -1,7 +1,7 @@
 /*
  * Copyright (c) Microsoft. All rights reserved. Licensed under the MIT license. See full license at the bottom of this file.
  */
-package com.microsoft.office365.profile.view;
+package com.microsoft.office365.profile.viewcontroller;
 
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
@@ -12,7 +12,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.microsoft.office365.profile.R;
-import com.microsoft.office365.profile.http.JsonRequestListener;
+import com.microsoft.office365.profile.util.JsonRequestListener;
 import com.microsoft.office365.profile.model.Group;
 
 import java.lang.reflect.Type;
@@ -39,12 +39,12 @@ public class GroupsFragment extends BaseListFragment {
      * @return The message to display if there are no direct reports.
      */
     @Override
-    CharSequence getEmptyArrayMessage() {
-        return getResources().getText(R.string.empty_array_groups_fragment_message);
+    String getEmptyArrayMessage() {
+        return getResources().getString(R.string.empty_array_groups_fragment_message);
     }
 
     /**
-     * Event handler for the {@link com.microsoft.office365.profile.http.RequestManager#executeRequest(URL, String, JsonRequestListener)}
+     * Event handler for the {@link com.microsoft.office365.profile.util.RequestManager#executeRequest(URL, String, JsonRequestListener)}
      * method
      * @param requestedEndpoint The requested endpoint. Objects that send multiple requests can
      *                          use this parameter to differentiate from what endpoint the request
@@ -56,14 +56,7 @@ public class GroupsFragment extends BaseListFragment {
         Gson gson = new Gson();
 
         Type listType = new TypeToken<ArrayList<Group>>() { }.getType();
-
-        if(((JsonObject) data).has("value")) {
-            mGroupList = gson.fromJson(((JsonObject) data).getAsJsonArray("value"), listType);
-        } else {
-            mGroupList = new ArrayList<>();
-            Group justOneGroup = gson.fromJson(data, Group.class);
-            mGroupList.add(justOneGroup);
-        }
+        mGroupList = gson.fromJson(((JsonObject) data).getAsJsonArray("value"), listType);
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -75,7 +68,7 @@ public class GroupsFragment extends BaseListFragment {
                 // If there are no elements, display a custom message
                 if (mGroupList.size() == 0) {
                     Group noData = new Group();
-                    noData.displayName = (String)getEmptyArrayMessage();
+                    noData.displayName = getEmptyArrayMessage();
                     mGroupList.add(noData);
                 }
                 setListAdapter(new ArrayAdapter<>(
@@ -90,7 +83,7 @@ public class GroupsFragment extends BaseListFragment {
 
 // *********************************************************
 //
-// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+// O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 //
 // Copyright (c) Microsoft Corporation
 // All rights reserved.
