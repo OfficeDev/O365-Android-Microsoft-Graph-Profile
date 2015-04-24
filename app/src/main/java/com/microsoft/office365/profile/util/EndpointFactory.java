@@ -8,7 +8,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * Created by ricardol on 4/24/2015.
+ * Utility class that returns a URL object that represents the requested endpoint.
+ * Endpoints generally follow this pattern:
+ * https://graph.microsoft.com/beta/{tenant_id}/users/{user_id}/{resource}[?rest operator]
  */
 public class EndpointFactory {
     private static final String TAG = "EndpointFactory";
@@ -17,12 +19,17 @@ public class EndpointFactory {
     private static final String USERS_PATH_SECTION = "/users";
     private static final String PATH_SECTION_SEPARATOR = "/";
     private static final String USER_DIRECTORY_FILTER_QUERY_STRING = "?$filter=userType%20eq%20'Member'";
-    private static final String THUMBNAIL_PHOTO_LAST_PATH_SECTION = "/thumbnailPhoto";
-    private static final String MANAGER_LAST_PATH_SECTION = "/manager";
-    private static final String DIRECT_REPORTS_LAST_PATH_SECTION = "/directReports";
-    private static final String GROUPS_LAST_PATH_SECTION = "/memberOf";
-    private static final String FILES_LAST_PATH_SECTION = "/files";
+    private static final String THUMBNAIL_PHOTO_RESOURCE = "/thumbnailPhoto";
+    private static final String MANAGER_RESOURCE = "/manager";
+    private static final String DIRECT_REPORTS_RESOURCE = "/directReports";
+    private static final String GROUPS_RESOURCE = "/memberOf";
+    private static final String FILES_RESOURCE = "/files";
 
+    /**
+     * Method that builds a URL object that represents the requested endpoint.
+     * @param profileEndpoint The profile endpoint requested by the caller.
+     * @return The URL object that represents the requested endpoint.
+     */
     public static URL getEndpoint(ProfileEndpoint profileEndpoint){
         URL endpoint = null;
         String endpointString = "";
@@ -34,7 +41,7 @@ public class EndpointFactory {
                                 + USERS_PATH_SECTION
                                 + PATH_SECTION_SEPARATOR
                                 + ProfileApplication.getUserId()
-                                + DIRECT_REPORTS_LAST_PATH_SECTION;
+                                + DIRECT_REPORTS_RESOURCE;
                 break;
             case FILES:
                 endpointString =
@@ -43,7 +50,7 @@ public class EndpointFactory {
                                 + USERS_PATH_SECTION
                                 + PATH_SECTION_SEPARATOR
                                 + ProfileApplication.getUserId()
-                                + FILES_LAST_PATH_SECTION;
+                                + FILES_RESOURCE;
                 break;
             case GROUPS:
                 endpointString =
@@ -52,7 +59,7 @@ public class EndpointFactory {
                                 + USERS_PATH_SECTION
                                 + PATH_SECTION_SEPARATOR
                                 + ProfileApplication.getUserId()
-                                + GROUPS_LAST_PATH_SECTION;
+                                + GROUPS_RESOURCE;
                 break;
             case MANAGER:
                 endpointString =
@@ -61,7 +68,7 @@ public class EndpointFactory {
                                 + USERS_PATH_SECTION
                                 + PATH_SECTION_SEPARATOR
                                 + ProfileApplication.getUserId()
-                                + MANAGER_LAST_PATH_SECTION;
+                                + MANAGER_RESOURCE;
                 break;
             case THUMBNAIL_PHOTO:
                 endpointString =
@@ -70,7 +77,7 @@ public class EndpointFactory {
                                 + USERS_PATH_SECTION
                                 + PATH_SECTION_SEPARATOR
                                 + ProfileApplication.getUserId()
-                                + THUMBNAIL_PHOTO_LAST_PATH_SECTION;
+                                + THUMBNAIL_PHOTO_RESOURCE;
                 break;
             case USER_DETAILS:
                 endpointString =

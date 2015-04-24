@@ -1,7 +1,8 @@
 package com.microsoft.office365.profile.util;
 
 /**
- * Created by ricardol on 4/24/2015.
+ * Enumeration that lists the endpoints that the EndpointFactory supports
+ * in the {@link EndpointFactory#getEndpoint(ProfileEndpoint)} method.
  */
 public enum ProfileEndpoint {
     DIRECT_REPORTS,
