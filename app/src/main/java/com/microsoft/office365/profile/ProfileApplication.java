@@ -22,7 +22,7 @@ import java.security.SecureRandom;
 public class ProfileApplication extends Application implements AuthenticationCallback {
     private static final String TAG = "ProfileApplication";
 
-    private SharedPreferences mSharedPreferences;
+    private static SharedPreferences mSharedPreferences;
     private static final String USER_ID_FIELD = "userId";
     private static final String DISPLAYNAME_FIELD = "displayName";
     private static final String TENANT_FIELD = "tenant";
@@ -97,7 +97,7 @@ public class ProfileApplication extends Application implements AuthenticationCal
      * Returns the user's tenant from the {@link SharedPreferences} member field.
      * @return
      */
-    public String getTenant() {
+    public static String getTenant() {
         return mSharedPreferences.getString(TENANT_FIELD, "");
     }
 
@@ -105,14 +105,14 @@ public class ProfileApplication extends Application implements AuthenticationCal
      * Sets the user's tenant on the {@link SharedPreferences} member field.
      * @param tenant
      */
-    public void setTenant(String tenant) {
+    public static void setTenant(String tenant) {
         mSharedPreferences.edit().putString(TENANT_FIELD, tenant).apply();
     }
 
     /**
      * Reset the user's tenant on the {@link SharedPreferences} member field.
      */
-    public void resetTenant(){
+    public static void resetTenant(){
         mSharedPreferences.edit().remove(TENANT_FIELD).apply();
     }
 
@@ -120,7 +120,7 @@ public class ProfileApplication extends Application implements AuthenticationCal
      * Gets the user's id from the {@link SharedPreferences} member field.
      * @return
      */
-    public String getUserId() {
+    public static String getUserId() {
         return mSharedPreferences.getString(USER_ID_FIELD, "");
     }
 
@@ -128,14 +128,14 @@ public class ProfileApplication extends Application implements AuthenticationCal
      * Sets the user's id on the {@link SharedPreferences} member field.
      * @param userId
      */
-    public void setUserId(String userId) {
+    public static void setUserId(String userId) {
         mSharedPreferences.edit().putString(USER_ID_FIELD, userId).apply();
     }
 
     /**
      * Resets the user's id from the {@link SharedPreferences} member field.
      */
-    public void resetUserId(){
+    public static void resetUserId(){
         mSharedPreferences.edit().remove(USER_ID_FIELD).apply();
     }
 
@@ -143,7 +143,7 @@ public class ProfileApplication extends Application implements AuthenticationCal
      * Gets the displayName from the {@link SharedPreferences} member field.
      * @return
      */
-    public String getDisplayName() {
+    public static String getDisplayName() {
         return mSharedPreferences.getString(DISPLAYNAME_FIELD, "");
     }
 
@@ -151,14 +151,14 @@ public class ProfileApplication extends Application implements AuthenticationCal
      * Sets the displayName on the {@link SharedPreferences} member field.
      * @param displayName
      */
-    public void setDisplayName(String displayName) {
+    public static void setDisplayName(String displayName) {
         mSharedPreferences.edit().putString(DISPLAYNAME_FIELD, displayName).apply();
     }
 
     /**
      * Resets the displayName on the {@link SharedPreferences} member field.
      */
-    public void resetDisplayName(){
+    public static void resetDisplayName(){
         mSharedPreferences.edit().remove(DISPLAYNAME_FIELD).apply();
     }
 
@@ -166,7 +166,7 @@ public class ProfileApplication extends Application implements AuthenticationCal
      * Returns true if a user is signed in to the app, false otherwise.
      * @return True if a user is signed in, false otherwise.
      */
-    public boolean isUserSignedIn(){
+    public static boolean isUserSignedIn(){
         return mSharedPreferences.contains(USER_ID_FIELD);
     }
 }

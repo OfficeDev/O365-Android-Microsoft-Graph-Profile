@@ -8,7 +8,6 @@ package com.microsoft.office365.profile;
  */
 public interface Constants {
     String AUTHORITY_URL = "https://login.microsoftonline.com/common";
-    String UNIFIED_ENDPOINT_RESOURCE_URL = "https://graph.microsoft.com/beta/";
     String UNIFIED_ENDPOINT_RESOURCE_ID = "https://graph.microsoft.com/";
 
     // Update these two constants with the values for your application:
@@ -18,7 +17,7 @@ public interface Constants {
 
 // *********************************************************
 //
-// O365-Android-Connect, https://github.com/OfficeDev/O365-Android-Profile
+// O365-Android-Profile, https://github.com/OfficeDev/O365-Android-Profile
 //
 // Copyright (c) Microsoft Corporation
 // All rights reserved.

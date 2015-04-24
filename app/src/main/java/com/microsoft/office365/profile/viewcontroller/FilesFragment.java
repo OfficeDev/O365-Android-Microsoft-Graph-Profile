@@ -18,8 +18,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.util.EndpointFactory;
 import com.microsoft.office365.profile.util.JsonRequestListener;
 import com.microsoft.office365.profile.model.File;
+import com.microsoft.office365.profile.util.ProfileEndpoint;
 
 import java.lang.reflect.Type;
 import java.net.URL;
@@ -29,15 +31,14 @@ import java.util.ArrayList;
  * The fragment for the files in {@link ProfileActivity}.
  */
 public class FilesFragment extends BaseListFragment {
-    protected static final String TAG = "FilesFragment";
     private ArrayList<File> mFileList;
 
     /**
      * The endpoint that is getting requested by the parent fragment {@link BaseListFragment#onCreate(Bundle)}
-     * @return The string that represents the endpoint
+     * @return The URL object that represents the endpoint
      */
-    public String getEndpoint(){
-        return "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/files";
+    public URL getEndpoint(){
+        return EndpointFactory.getEndpoint(ProfileEndpoint.FILES);
     }
 
     /**

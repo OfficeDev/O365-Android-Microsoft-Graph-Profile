@@ -23,8 +23,10 @@ import com.google.gson.JsonElement;
 import com.microsoft.office365.profile.Constants;
 import com.microsoft.office365.profile.ProfileApplication;
 import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.util.EndpointFactory;
 import com.microsoft.office365.profile.util.InputStreamRequestListener;
 import com.microsoft.office365.profile.util.JsonRequestListener;
+import com.microsoft.office365.profile.util.ProfileEndpoint;
 import com.microsoft.office365.profile.util.RequestManager;
 import com.microsoft.office365.profile.model.User;
 
@@ -54,7 +56,7 @@ public class UserDetailsFragment extends Fragment implements
     private TextView mManagerJobTitle;
     private TextView mNoManager;
     private LinearLayout mManagerSection;
-    private URL mUserEndpoint;
+    private URL mUserDetailsEndpoint;
     private URL mThumbnailPhotoEndpoint;
     private URL mManagerEndpoint;
     private User mManager;
@@ -92,43 +94,24 @@ public class UserDetailsFragment extends Fragment implements
 
         mManagerSection.setOnClickListener(this);
 
-        try {
-            ProfileApplication application = (ProfileApplication)getActivity().getApplication();
-            mUserEndpoint = new URL(
-                    Constants.UNIFIED_ENDPOINT_RESOURCE_URL +
-                    application.getTenant() +
-                    "/users/" + ((ProfileActivity)getActivity()).getUserId());
-            mThumbnailPhotoEndpoint = new URL(
-                    Constants.UNIFIED_ENDPOINT_RESOURCE_URL +
-                            application.getTenant() +
-                            "/users/" + ((ProfileActivity) getActivity()).getUserId() + "/thumbnailphoto");
-            mManagerEndpoint = new URL(
-                    Constants.UNIFIED_ENDPOINT_RESOURCE_URL +
-                    application.getTenant() +
-                    "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/manager");
+        mUserDetailsEndpoint = EndpointFactory.getEndpoint(ProfileEndpoint.USER_DETAILS);
+        mThumbnailPhotoEndpoint = EndpointFactory.getEndpoint(ProfileEndpoint.THUMBNAIL_PHOTO);
+        mManagerEndpoint = EndpointFactory.getEndpoint(ProfileEndpoint.MANAGER);
 
-            RequestManager
-                    .getInstance()
-                    .executeRequest(mUserEndpoint,
-                            ACCEPT_HEADER,
-                            this);
-            RequestManager
-                    .getInstance()
-                    .executeRequest(mThumbnailPhotoEndpoint,
-                            this);
-            RequestManager
-                    .getInstance()
-                    .executeRequest(mManagerEndpoint,
-                            ACCEPT_HEADER,
-                            this);
-
-        } catch (MalformedURLException e) {
-            Log.e(TAG, e.getMessage());
-            Toast.makeText(
-                    getActivity(),
-                    R.string.malformed_url_toast_text,
-                    Toast.LENGTH_LONG).show();
-        }
+        RequestManager
+                .getInstance()
+                .executeRequest(mUserDetailsEndpoint,
+                        ACCEPT_HEADER,
+                        this);
+        RequestManager
+                .getInstance()
+                .executeRequest(mThumbnailPhotoEndpoint,
+                        this);
+        RequestManager
+                .getInstance()
+                .executeRequest(mManagerEndpoint,
+                        ACCEPT_HEADER,
+                        this);
 
         return fragmentView;
     }
@@ -158,7 +141,7 @@ public class UserDetailsFragment extends Fragment implements
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (requestedEndpoint.sameFile(mUserEndpoint)) {
+                if (requestedEndpoint.sameFile(mUserDetailsEndpoint)) {
                     User user = new Gson().fromJson(data, User.class);
                     mJobTitleTextView.setText(user.jobTitle);
                     mDepartmentTextView.setText(user.department);
