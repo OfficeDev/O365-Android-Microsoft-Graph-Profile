@@ -20,19 +20,16 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import com.microsoft.office365.profile.Constants;
-import com.microsoft.office365.profile.ProfileApplication;
 import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.model.User;
 import com.microsoft.office365.profile.util.EndpointFactory;
 import com.microsoft.office365.profile.util.InputStreamRequestListener;
 import com.microsoft.office365.profile.util.JsonRequestListener;
 import com.microsoft.office365.profile.util.ProfileEndpoint;
 import com.microsoft.office365.profile.util.RequestManager;
-import com.microsoft.office365.profile.model.User;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**

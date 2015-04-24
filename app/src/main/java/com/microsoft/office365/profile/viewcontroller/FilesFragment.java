@@ -18,9 +18,9 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.model.File;
 import com.microsoft.office365.profile.util.EndpointFactory;
 import com.microsoft.office365.profile.util.JsonRequestListener;
-import com.microsoft.office365.profile.model.File;
 import com.microsoft.office365.profile.util.ProfileEndpoint;
 
 import java.lang.reflect.Type;

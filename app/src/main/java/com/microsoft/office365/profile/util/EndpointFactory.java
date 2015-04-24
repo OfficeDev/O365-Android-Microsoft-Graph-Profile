@@ -2,7 +2,6 @@ package com.microsoft.office365.profile.util;
 
 import android.util.Log;
 
-import com.microsoft.office365.profile.Constants;
 import com.microsoft.office365.profile.ProfileApplication;
 
 import java.net.MalformedURLException;

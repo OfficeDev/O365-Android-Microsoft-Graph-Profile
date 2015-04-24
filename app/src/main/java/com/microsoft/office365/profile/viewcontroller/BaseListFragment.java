@@ -9,14 +9,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.microsoft.aad.adal.AuthenticationCallback;
-import com.microsoft.office365.profile.Constants;
 import com.microsoft.office365.profile.ProfileApplication;
 import com.microsoft.office365.profile.R;
 import com.microsoft.office365.profile.util.AuthenticationManager;
 import com.microsoft.office365.profile.util.JsonRequestListener;
 import com.microsoft.office365.profile.util.RequestManager;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
