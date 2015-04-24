@@ -28,7 +28,7 @@
     <string name="empty_array_default_message">Not available</string>
     <string name="file_not_found_exception_manager_fragment_message">No manager</string>
     <string name="empty_array_direct_reports_fragment_message">No direct reports</string>
-    <string name="empty_array_groups_fragment_message">User doesn't belong to any group</string>
+    <string name="empty_array_groups_fragment_message">User doesn\'t belong to any group</string>
     <string name="empty_array_files_fragment_message">There are no files</string>
 
     <string name="adal_title">Sign in to Office 365</string>
