@@ -16,8 +16,7 @@ public class EndpointFactory {
     private static final String TAG = "EndpointFactory";
 
     private static final String UNIFIED_ENDPOINT_RESOURCE_URL = "https://graph.microsoft.com/beta/";
-    private static final String USERS_PATH_SECTION = "/users";
-    private static final String PATH_SECTION_SEPARATOR = "/";
+    private static final String USERS_PATH_SECTION = "/users/";
     private static final String USER_DIRECTORY_FILTER_QUERY_STRING = "?$filter=userType%20eq%20'Member'";
     private static final String THUMBNAIL_PHOTO_RESOURCE = "/thumbnailPhoto";
     private static final String MANAGER_RESOURCE = "/manager";
@@ -39,7 +38,6 @@ public class EndpointFactory {
                         UNIFIED_ENDPOINT_RESOURCE_URL
                                 + ProfileApplication.getTenant()
                                 + USERS_PATH_SECTION
-                                + PATH_SECTION_SEPARATOR
                                 + ProfileApplication.getUserId()
                                 + DIRECT_REPORTS_RESOURCE;
                 break;
@@ -48,7 +46,6 @@ public class EndpointFactory {
                         UNIFIED_ENDPOINT_RESOURCE_URL
                                 + ProfileApplication.getTenant()
                                 + USERS_PATH_SECTION
-                                + PATH_SECTION_SEPARATOR
                                 + ProfileApplication.getUserId()
                                 + FILES_RESOURCE;
                 break;
@@ -57,7 +54,6 @@ public class EndpointFactory {
                         UNIFIED_ENDPOINT_RESOURCE_URL
                                 + ProfileApplication.getTenant()
                                 + USERS_PATH_SECTION
-                                + PATH_SECTION_SEPARATOR
                                 + ProfileApplication.getUserId()
                                 + GROUPS_RESOURCE;
                 break;
@@ -66,7 +62,6 @@ public class EndpointFactory {
                         UNIFIED_ENDPOINT_RESOURCE_URL
                                 + ProfileApplication.getTenant()
                                 + USERS_PATH_SECTION
-                                + PATH_SECTION_SEPARATOR
                                 + ProfileApplication.getUserId()
                                 + MANAGER_RESOURCE;
                 break;
@@ -75,7 +70,6 @@ public class EndpointFactory {
                         UNIFIED_ENDPOINT_RESOURCE_URL
                                 + ProfileApplication.getTenant()
                                 + USERS_PATH_SECTION
-                                + PATH_SECTION_SEPARATOR
                                 + ProfileApplication.getUserId()
                                 + THUMBNAIL_PHOTO_RESOURCE;
                 break;
@@ -84,7 +78,6 @@ public class EndpointFactory {
                         UNIFIED_ENDPOINT_RESOURCE_URL
                                 + ProfileApplication.getTenant()
                                 + USERS_PATH_SECTION
-                                + PATH_SECTION_SEPARATOR
                                 + ProfileApplication.getUserId();
                 break;
             case USER_DIRECTORY:
