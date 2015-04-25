@@ -5,18 +5,21 @@ package com.microsoft.office365.profile.viewcontroller;
 
 import android.os.Bundle;
 
+import com.microsoft.office365.profile.util.EndpointFactory;
+import com.microsoft.office365.profile.util.ProfileEndpoint;
+
+import java.net.URL;
+
 /**
  * A fragment representing the list of users in the tenant.
  */
 public class UserDirectoryFragment extends UserListFragment {
-    private static final String LAST_SECTION_ENDPOINT = "/users?$filter=userType%20eq%20'Member'";
-
     /**
      * The endpoint that is getting requested by the parent fragment {@link BaseListFragment#onCreate(Bundle)}
-     * @return The string that represents the endpoint
+     * @return The URL object that represents the endpoint
      */
-    public String getEndpoint(){
-        return LAST_SECTION_ENDPOINT;
+    public URL getEndpoint(){
+        return EndpointFactory.getEndpoint(ProfileEndpoint.USER_DIRECTORY);
     }
 }
 

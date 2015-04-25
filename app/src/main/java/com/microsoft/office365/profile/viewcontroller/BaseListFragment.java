@@ -9,14 +9,12 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.microsoft.aad.adal.AuthenticationCallback;
-import com.microsoft.office365.profile.Constants;
 import com.microsoft.office365.profile.ProfileApplication;
 import com.microsoft.office365.profile.R;
 import com.microsoft.office365.profile.util.AuthenticationManager;
 import com.microsoft.office365.profile.util.JsonRequestListener;
 import com.microsoft.office365.profile.util.RequestManager;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -30,9 +28,9 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
 
     /**
      * Child classes can specify the endpoint that they're using with this method
-     * @return A string with the endpoint that receives the request.
+     * @return A URL object with the endpoint that receives the request.
      */
-    protected abstract String getEndpoint();
+    protected abstract URL getEndpoint();
 
     /**
      * Returns the message to display when an empty array returned by a request.
@@ -63,29 +61,20 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
                     .getInstance()
                     .getTokens(this);
         } else {
-            String endpoint = Constants.UNIFIED_ENDPOINT_RESOURCE_URL + mApplication.getTenant() + getEndpoint();
-            sendRequest(endpoint);
+            sendRequest();
         }
     }
 
     /**
-     * Uses the RequestManager object to send a request.
-     * @param endpoint The endpoint to request.
+     * Uses the RequestManager object to send a request. It gets the endpoint from the abstract
+     * method {@link BaseListFragment#getEndpoint()} implemented by subclasses.
      */
-    private void sendRequest(String endpoint){
-        try {
-            RequestManager
-                    .getInstance()
-                    .executeRequest(new URL(endpoint),
-                            ACCEPT_HEADER,
-                            this);
-        } catch (MalformedURLException e) {
-            Log.e(TAG, e.getMessage());
-            Toast.makeText(
-                    getActivity(),
-                    R.string.malformed_url_toast_text,
-                    Toast.LENGTH_LONG).show();
-        }
+    private void sendRequest(){
+        RequestManager
+                .getInstance()
+                .executeRequest(getEndpoint(),
+                        ACCEPT_HEADER,
+                        this);
     }
 
     /**
@@ -96,8 +85,7 @@ public abstract class BaseListFragment extends ListFragment implements JsonReque
     @Override
     public void onSuccess(Object authenticationResult) {
         mApplication.onSuccess(authenticationResult);
-        String endpoint = Constants.UNIFIED_ENDPOINT_RESOURCE_URL + mApplication.getTenant() + getEndpoint();
-        sendRequest(endpoint);
+        sendRequest();
     }
 
     /**

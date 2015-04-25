@@ -6,6 +6,10 @@ package com.microsoft.office365.profile.viewcontroller;
 import android.os.Bundle;
 
 import com.microsoft.office365.profile.R;
+import com.microsoft.office365.profile.util.EndpointFactory;
+import com.microsoft.office365.profile.util.ProfileEndpoint;
+
+import java.net.URL;
 
 /**
  * Fragment for the direct reports in {@link ProfileActivity}.
@@ -14,10 +18,10 @@ public class DirectReportsFragment extends UserListFragment {
 
     /**
      * The endpoint that is getting requested by the parent fragment {@link BaseListFragment#onCreate(Bundle)}
-     * @return The string that represents the endpoint
+     * @return The URL object that represents the endpoint
      */
-    public String getEndpoint(){
-        return "/users/" + ((ProfileActivity)getActivity()).getUserId() + "/directReports";
+    public URL getEndpoint(){
+        return EndpointFactory.getEndpoint(ProfileEndpoint.DIRECT_REPORTS);
     }
 
     /**
