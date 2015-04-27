@@ -47,11 +47,11 @@ We'd love to hear your feedback on this Profile sample for Android. Here's how y
   
 ## Additional resources
 
-* [Office 365 APIs documentation](http://aka.ms/o365-android-connect-platformoverview)
+* [Overview of developing on the Office 365 platform](http://aka.ms/o365-android-connect-platformoverview)
 * [Office 365 SDK for Android](http://aka.ms/o365-android-connect-sdk)
-* [Office Dev Center for Android](http://aka.ms/o365-android-connect-getstarted)
-* [Office 365 APIs code samples and videos](http://aka.ms/o365-android-connect-codesamples)
-* [Other Office 365 unified endpoint samples](http://aka.ms/o365-unified-endpoint-codesamples) 
+* [Getting Started with Android](http://aka.ms/o365-android-connect-getstarted)
+* [Office 365 API code samples and videos](http://aka.ms/o365-android-connect-codesamples)
+* [Other Office 365 Profile samples](http://aka.ms/o365-unified-endpoint-codesamples) 
 
 ## Copyright
 Copyright (c) 2015 Microsoft. All rights reserved.
