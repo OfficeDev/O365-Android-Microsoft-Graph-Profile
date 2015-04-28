@@ -11,8 +11,8 @@ public interface Constants {
     String UNIFIED_ENDPOINT_RESOURCE_ID = "https://graph.microsoft.com/";
 
     // Update these two constants with the values for your application:
-    String CLIENT_ID = "766540c9-a6f1-4eb0-9469-316903c18d5c";
-    String REDIRECT_URI = "https://graphconnect.office365.microsoft.com";
+    String CLIENT_ID = "<Your client id here>";
+    String REDIRECT_URI = "<Your redirect uri here>";
 }
 
 // *********************************************************
