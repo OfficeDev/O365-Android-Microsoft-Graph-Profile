@@ -1,6 +1,6 @@
 # Office 365 Profile sample for Android
 
-The first page presents you with a list of users. The second page displays information about any user you choose to view. All of this information, including files shared with the user, the user's alias, hire date, manager, direct reports, and groups comes from the [Office 365 unified endpoint](https://msdn.microsoft.com/office/office365/howto/office-365-unified-api-overview "Office 365 unified endpoint").
+The first page presents you with a list of users. The second page displays information about any user you choose to view. All of this information, including files shared with the user, the user's alias, hire date, manager, direct reports, and groups comes from the [Office 365 unified endpoint (preview)](http://aka.ms/o365-unified-api "Office 365 unified endpoint (preview)").
 
 The following image shows the user's page that displays the information mentioned above:
 
@@ -53,6 +53,7 @@ We'd love to hear your feedback on this Profile sample for Android. Here's how y
 ## Additional resources
 
 * [Overview of developing on the Office 365 platform](http://aka.ms/o365-android-connect-platformoverview)
+* [Office 365 unified API overview (preview)](http://aka.ms/o365-unified-api)
 * [Office 365 SDK for Android](http://aka.ms/o365-android-connect-sdk)
 * [Getting Started with Android](http://aka.ms/o365-android-connect-getstarted)
 * [Office 365 API code samples and videos](http://aka.ms/o365-android-connect-codesamples)
