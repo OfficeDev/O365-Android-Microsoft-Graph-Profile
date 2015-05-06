@@ -6,6 +6,7 @@ package com.microsoft.office365.profile;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.microsoft.aad.adal.AuthenticationCallback;
@@ -14,7 +15,7 @@ import com.microsoft.aad.adal.AuthenticationSettings;
 import com.microsoft.aad.adal.UserInfo;
 import com.microsoft.office365.profile.util.AuthenticationManager;
 
-import java.security.SecureRandom;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Application object that stores relevant user information.
@@ -49,12 +50,27 @@ public class ProfileApplication extends Application implements AuthenticationCal
     }
 
     /**
-     * Randomly generates an encryption key for devices with API level lower than 18.
+     * Generates an encryption key for devices with API level lower than 18 using the
+     * ANDROID_ID value as a seed.
+     * In production scenarios, you should come up with your own implementation of this method.
+     * Consider that your algorithm must return the same key so it can encrypt/decrypt values
+     * successfully.
      * @return The encryption key in a 32 byte long array.
      */
-    protected byte[] generateSecretKey() {
+    private byte[] generateSecretKey() {
         byte[] key = new byte[32];
-        new SecureRandom().nextBytes(key);
+        byte[] android_id = null;
+
+        try{
+            android_id = Settings.Secure.ANDROID_ID.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e){
+            Log.e(TAG, "generateSecretKey - " + e.getMessage());
+        }
+
+        for(int i = 0; i < key.length; i++){
+            key[i] = android_id[i % android_id.length];
+        }
+
         return key;
     }
 
