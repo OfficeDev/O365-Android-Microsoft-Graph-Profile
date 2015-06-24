@@ -53,7 +53,7 @@ We'd love to hear your feedback on this Profile sample for Android. Here's how y
   
 ## Additional resources
 
-* [Overview of developing on the Office 365 platform](https://msdn.microsoft.com/office/office365/howto/platform-development-overview)
+* [Office 365 APIs platform overview](https://msdn.microsoft.com/office/office365/howto/platform-development-overview)
 * [Office 365 unified API overview (preview)](https://msdn.microsoft.com/office/office365/howto/office-365-unified-api-overview)
 * [Office 365 SDK for Android](https://github.com/OfficeDev/Office-365-SDK-for-Android)
 * [Get started with Office 365 APIs in apps](https://msdn.microsoft.com/office/office365/howto/getting-started-Office-365-APIs)
