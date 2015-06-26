@@ -46,10 +46,9 @@ Once you've built the Profile sample, you can run it on an emulator or device.
 
 ## Questions and comments
 
-We'd love to hear your feedback on this Profile sample for Android. Here's how you can send your questions and suggestions to us:
+We'd love to get your feedback on the O365 Android Profile project. You can send your questions and suggestions to us in the [Issues](https://github.com/OfficeDev/O365-Android-Profile/issues) section of this repository.
 
-* In the [Issues](https://github.com/OfficeDev/O365-Android-Profile/issues) section of this repository.
-* Send an email to [docthis@microsoft.com](mailto:docthis@microsoft.com?subject=Feedback%20on%20the%20Office%20365%20Profile%20sample%20for%20Android).
+Questions about Office 365 development in general should be posted to [Stack Overflow](http://stackoverflow.com/questions/tagged/Office365+API). Make sure that your questions or comments are tagged with [Office365] and [API].
   
 ## Additional resources
 
