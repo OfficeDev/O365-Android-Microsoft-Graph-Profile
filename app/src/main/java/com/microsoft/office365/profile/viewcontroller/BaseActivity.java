@@ -6,7 +6,7 @@ package com.microsoft.office365.profile.viewcontroller;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +20,7 @@ import com.microsoft.office365.profile.util.AuthenticationManager;
 /**
  * Base activity that implements methods and fields required across all activities in the app.
  */
-public class BaseActivity extends ActionBarActivity {
+public class BaseActivity extends AppCompatActivity {
     private static final String TAG = "BaseActivity";
     private static final String PREFERENCES_NAME = "ProfilePreferences";
 
