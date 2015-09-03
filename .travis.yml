@@ -9,11 +9,7 @@ script:
 - gradle clean build
 notifications:
   slack:
-    secure: Ujri8O1nWsIjH16tcPhjC5t5ow+m4biX2R6/vLUYzMmxa6CLgws+MR+JedEoIQmgK5IQ/u5Hnd2CnpOriOolYEAkv3d/L8Hzc0vbSlKSEENfX3FVCTeG8cKlAvfoLSLasKokAJ0GDt1cSZLxRCWhkvsQuiNHTupDRGM3XAncbAs=
-    on_success: never
-    on_failure: always
-    on_start: never
-
+    secure: FIBbOk1EY0/Z47ZftHHmSEyrStOmk43YjMzM6Ek7F094SxaP5smwcSur91ZkKBHuTZV0FeI7GEGdaj5NDCU1cfOtmgIH4g+/TgDD3NtN+N6tzIRBpqjVwbUo+sIkEqSQ2nkCL3rYfLi8IiBLHwbVkGwOibOOeJ+BUNnOmlWsGfo=
   email:
     recipients:
     - jak@microsoft.com
