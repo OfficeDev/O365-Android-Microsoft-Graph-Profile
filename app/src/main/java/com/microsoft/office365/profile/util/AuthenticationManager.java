@@ -70,7 +70,7 @@ public class AuthenticationManager {
      * By default, you would use this in an asynchronous mode, but you can also call getTokens in
      * synchronously by appending get() to getTokens. For example, getTokens(null).get() which
      * will return an AuthenticationResult object.
-     * @param authenticationCallback
+     * @param authenticationCallback The callback to which delegate the execution flow.
      * @return A signal to wait on before continuing execution that contains an AuthenticationResult
      * object with information about the user, and the tokens.
      */
