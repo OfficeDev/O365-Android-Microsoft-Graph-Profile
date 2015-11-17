@@ -23,8 +23,9 @@ To use the Office 365 Profile sample for Android you need the following:
 * A client ID and redirect URI values of an application registered in Microsoft Azure. The application must run the   following permissions:
     * **Office 365 unified API (preview)**
         * Read items in all site collections
+        * Read all files that user can access
         * Access directory as the signed in user
-        * Read directory data
+        * Read all users' basic profiles
 
 You can also [add a native client application in Azure](https://msdn.microsoft.com/library/azure/dn132599.aspx#BKMK_Adding) and [grant proper permissions](https://github.com/OfficeDev/O365-Android-Profile/wiki/Grant-permissions-to-the-Profile-application-in-Azure) to it.
 
