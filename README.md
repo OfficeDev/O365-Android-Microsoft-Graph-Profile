@@ -1,7 +1,7 @@
 # Office 365 Profile Sample for Android Using Microsoft Graph
 [![Build Status](https://travis-ci.org/OfficeDev/O365-Android-Profile.svg)](https://travis-ci.org/OfficeDev/O365-Android-Profile)
 
-The first page presents you with a list of users. The second page displays information about any user you choose to view. All of this information, including files shared with the user, the user's alias, hire date, manager, direct reports, and groups comes from the [Microsoft Graph](https://msdn.microsoft.com/office/office365/howto/office-365-unified-api-overview "Microsoft Graph")(previously called Office 365 unified API).
+The first page presents you with a list of users. The second page displays information about any user you choose to view. All of this information, including files shared with the user, the user's alias, hire date, manager, direct reports, and groups comes from the [Microsoft Graph](http://graph.microsoft.io/ "Overview of Microsoft Graph")(previously called Office 365 unified API).
 
 The following image shows the user's page that displays the information mentioned above:
 
@@ -54,7 +54,7 @@ Questions about Office 365 development in general should be posted to [Stack Ove
 ## Additional resources
 
 * [Office 365 APIs platform overview](https://msdn.microsoft.com/office/office365/howto/platform-development-overview)
-* [Overview of Microsoft Graph](https://msdn.microsoft.com/office/office365/howto/office-365-unified-api-overview)
+* [Overview of Microsoft Graph](http://graph.microsoft.io/)
 * [Office 365 SDK for Android](https://github.com/OfficeDev/Office-365-SDK-for-Android)
 * [Get started with Office 365 APIs in apps](https://msdn.microsoft.com/office/office365/howto/getting-started-Office-365-APIs)
 * [Office 365 API code samples and videos](https://msdn.microsoft.com/office/office365/howto/starter-projects-and-code-samples)
