@@ -1,7 +1,7 @@
-# Office 365 Profile Sample for Android Using Unified API (Preview)
+# Office 365 Profile Sample for Android Using Microsoft Graph
 [![Build Status](https://travis-ci.org/OfficeDev/O365-Android-Profile.svg)](https://travis-ci.org/OfficeDev/O365-Android-Profile)
 
-The first page presents you with a list of users. The second page displays information about any user you choose to view. All of this information, including files shared with the user, the user's alias, hire date, manager, direct reports, and groups comes from the [Office 365 unified endpoint (preview)](https://msdn.microsoft.com/office/office365/howto/office-365-unified-api-overview "Office 365 unified endpoint (preview)").
+The first page presents you with a list of users. The second page displays information about any user you choose to view. All of this information, including files shared with the user, the user's alias, hire date, manager, direct reports, and groups comes from the [Microsoft Graph](http://graph.microsoft.io/ "Overview of Microsoft Graph")(previously called Office 365 unified API).
 
 The following image shows the user's page that displays the information mentioned above:
 
@@ -21,11 +21,11 @@ To use the Office 365 Profile sample for Android you need the following:
 * An Office 365 account. You can sign up for [an Office 365 Developer subscription](https://portal.office.com/Signup/Signup.aspx?OfferId=6881A1CB-F4EB-4db3-9F18-388898DAF510&DL=DEVELOPERPACK&ali=1#0) that includes the resources that you need to start building Office 365 apps.
       > Note: If you already have a subscription, the previous link sends you to a page that says *Sorry, you can’t add that to your current account*. In that case use an account from your current Office 365 subscription.
 * A client ID and redirect URI values of an application registered in Microsoft Azure. The application must run the   following permissions:
-  * **Office 365 unified API (preview)**
-      * Read users' files
-      * Read all users' basic profiles
-  * **Office 365 SharePoint Online**
-      * Read users' files
+    * **Office 365 unified API (preview)**
+        * Read items in all site collections
+        * Read all files that user can access
+        * Access directory as the signed in user
+        * Read all users' basic profiles
 
 You can also [add a native client application in Azure](https://msdn.microsoft.com/library/azure/dn132599.aspx#BKMK_Adding) and [grant proper permissions](https://github.com/OfficeDev/O365-Android-Profile/wiki/Grant-permissions-to-the-Profile-application-in-Azure) to it.
 
@@ -54,7 +54,7 @@ Questions about Office 365 development in general should be posted to [Stack Ove
 ## Additional resources
 
 * [Office 365 APIs platform overview](https://msdn.microsoft.com/office/office365/howto/platform-development-overview)
-* [Office 365 unified API overview (preview)](https://msdn.microsoft.com/office/office365/howto/office-365-unified-api-overview)
+* [Overview of Microsoft Graph](http://graph.microsoft.io/)
 * [Office 365 SDK for Android](https://github.com/OfficeDev/Office-365-SDK-for-Android)
 * [Get started with Office 365 APIs in apps](https://msdn.microsoft.com/office/office365/howto/getting-started-Office-365-APIs)
 * [Office 365 API code samples and videos](https://msdn.microsoft.com/office/office365/howto/starter-projects-and-code-samples)

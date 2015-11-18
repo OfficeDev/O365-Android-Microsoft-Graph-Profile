@@ -10,19 +10,19 @@ import java.net.URL;
 /**
  * Utility class that returns a URL object that represents the requested endpoint.
  * Endpoints generally follow this pattern:
- * https://graph.microsoft.com/beta/{tenant_id}/users/{user_id}/{resource}[?rest operator]
+ * https://graph.microsoft.com/v1.0/{tenant_id}/users/{user_id}/{resource}[?rest operator]
  */
 public class EndpointFactory {
     private static final String TAG = "EndpointFactory";
 
-    private static final String UNIFIED_ENDPOINT_RESOURCE_URL = "https://graph.microsoft.com/beta/";
+    private static final String UNIFIED_ENDPOINT_RESOURCE_URL = "https://graph.microsoft.com/v1.0/";
     private static final String USERS_PATH_SECTION = "/users/";
     private static final String USER_DIRECTORY_FILTER_QUERY_STRING = "?$filter=userType%20eq%20'Member'";
     private static final String THUMBNAIL_PHOTO_RESOURCE = "/thumbnailPhoto";
     private static final String MANAGER_RESOURCE = "/manager";
     private static final String DIRECT_REPORTS_RESOURCE = "/directReports";
     private static final String GROUPS_RESOURCE = "/memberOf";
-    private static final String FILES_RESOURCE = "/files";
+    private static final String FILES_RESOURCE = "/drive/root/children";
 
     /**
      * Method that builds a URL object that represents the requested endpoint.
