@@ -21,7 +21,7 @@ To use the Office 365 Profile sample for Android you need the following:
 * An Office 365 account. You can sign up for [an Office 365 Developer subscription](https://portal.office.com/Signup/Signup.aspx?OfferId=6881A1CB-F4EB-4db3-9F18-388898DAF510&DL=DEVELOPERPACK&ali=1#0) that includes the resources that you need to start building Office 365 apps.
       > Note: If you already have a subscription, the previous link sends you to a page that says *Sorry, you can’t add that to your current account*. In that case use an account from your current Office 365 subscription.
 * A client ID and redirect URI values of an application registered in Microsoft Azure. The application must run the   following permissions:
-    * **Office 365 unified API (preview)**
+    * **Microsoft Graph**
         * Read items in all site collections
         * Read all files that user can access
         * Access directory as the signed in user
