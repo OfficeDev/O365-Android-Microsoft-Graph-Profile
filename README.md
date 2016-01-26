@@ -27,7 +27,7 @@ To use the Office 365 Profile sample for Android you need the following:
         * Access directory as the signed in user
         * Read all users' basic profiles
 
-You can also [add a native client application in Azure](https://msdn.microsoft.com/library/azure/dn132599.aspx#BKMK_Adding) and [grant proper permissions](https://github.com/OfficeDev/O365-Android-Profile/wiki/Grant-permissions-to-the-Profile-application-in-Azure) to it.
+You can also [add a native client application in Azure](https://msdn.microsoft.com/office/office365/HowTo/add-common-consent-manually#bk_RegisterNativeApp) and [grant proper permissions](https://github.com/OfficeDev/O365-Android-Profile/wiki/Grant-permissions-to-the-Profile-application-in-Azure) to it.
 
 ## Open the sample using Android Studio
 
@@ -41,7 +41,7 @@ You can also [add a native client application in Azure](https://msdn.microsoft.c
 	2. Find the REDIRECT\_URI constant and set its String value equal to the redirect URI you registered in Azure Active Directory.
     ![Office 365 Profile sample](/readme-images/O365-Android-Profile-Constants.png "Client ID and Redirect URI values in Constants file")
 
-    > Note: If you don't have CLIENT\_ID and REDIRECT\_URI values, [add a native client application in Azure](https://msdn.microsoft.com/library/azure/dn132599.aspx#BKMK_Adding) and take note of the CLIENT\_ID and REDIRECT_URI.
+    > Note: If you don't have CLIENT\_ID and REDIRECT\_URI values, [add a native client application in Azure](https://msdn.microsoft.com/office/office365/HowTo/add-common-consent-manually#bk_RegisterNativeApp) and take note of the CLIENT\_ID and REDIRECT_URI.
 
 Once you've built the Profile sample, you can run it on an emulator or device.
 
