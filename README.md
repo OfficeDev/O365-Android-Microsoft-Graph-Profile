@@ -1,5 +1,5 @@
 # Office 365 Profile Sample for Android Using Microsoft Graph
-[![Build Status](https://travis-ci.org/OfficeDev/O365-Android-Profile.svg)](https://travis-ci.org/OfficeDev/O365-Android-Profile)
+[![Build Status](https://travis-ci.org/OfficeDev/O365-Android-Microsoft-Graph-Profile.svg?branch=master)](https://travis-ci.org/OfficeDev/O365-Android-Microsoft-Graph-Profile)
 
 The first page presents you with a list of users. The second page displays information about any user you choose to view. All of this information, including files shared with the user, the user's alias, hire date, manager, direct reports, and groups comes from [Microsoft Graph](http://graph.microsoft.io/ "Overview of Microsoft Graph") (previously called Office 365 unified API).
 
